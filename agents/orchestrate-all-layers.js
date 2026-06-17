@@ -18,10 +18,11 @@ class MasterOrchestrator {
 
   run() {
     console.log('\n╔════════════════════════════════════════════════════════════╗');
-    console.log('║   MASTER ORCHESTRATOR: 6-Layer Agent Pipeline              ║');
+    console.log('║   MASTER ORCHESTRATOR: 7-Layer Agent Pipeline              ║');
     console.log('║   Multi-Agent Quality Engineering Orchestration            ║');
     console.log('╚════════════════════════════════════════════════════════════╝\n');
 
+    this.layer0_TicketIntake();
     this.layer1_RequirementsParser();
     this.layer2_TestStrategyGenerator();
     this.layer3_ContextRetrieval();
@@ -30,6 +31,22 @@ class MasterOrchestrator {
     this.layer6_SelfHealing();
 
     this.printFinalSummary();
+  }
+
+  layer0_TicketIntake() {
+    console.log('┌──────────────────────────────────────────────────────────┐');
+    console.log('│ ▶ LAYER 0: Ticket Intake & PR Creation (Jira/GitHub)   │');
+    console.log('└──────────────────────────────────────────────────────────┘\n');
+
+    try {
+      execSync(`node ${path.join(this.agentsDir, 'agent-layer0-ticket-intake.js')} ${this.ticketId}`, {
+        stdio: 'inherit',
+      });
+      this.results.layer0 = '✅ PASSED';
+    } catch (error) {
+      console.log('⚠️  Layer 0 failed\n');
+      this.results.layer0 = '❌ FAILED';
+    }
   }
 
   layer1_RequirementsParser() {
@@ -133,6 +150,7 @@ class MasterOrchestrator {
     console.log('║                    ORCHESTRATION SUMMARY                   ║');
     console.log('╠════════════════════════════════════════════════════════════╣');
 
+    console.log(`║ Layer 0 (Ticket Intake):   ${this.results.layer0.padEnd(42)}║`);
     console.log(`║ Layer 1 (Requirements):    ${this.results.layer1.padEnd(42)}║`);
     console.log(`║ Layer 2 (Strategy):        ${this.results.layer2.padEnd(42)}║`);
     console.log(`║ Layer 3 (Context):         ${this.results.layer3.padEnd(42)}║`);
@@ -143,11 +161,12 @@ class MasterOrchestrator {
     console.log('╠════════════════════════════════════════════════════════════╣');
     console.log('║                        NEXT STEPS                          ║');
     console.log('║                                                            ║');
-    console.log('║ 1. Review generated artifacts in test-results/             ║');
-    console.log('║ 2. Review PR template if failures detected                 ║');
-    console.log('║ 3. Run tests: npm run test:ise452                          ║');
-    console.log('║ 4. View report: npm run test:report                        ║');
-    console.log('║ 5. Push to Jira: node agents/agent-layer6-selfheal.js     ║');
+    console.log('║ 1. Check Layer 0 draft PR on GitHub                        ║');
+    console.log('║ 2. Review generated artifacts in test-results/             ║');
+    console.log('║ 3. Review PR template if failures detected                 ║');
+    console.log('║ 4. Run tests: npm run test:ise452                          ║');
+    console.log('║ 5. View report: npm run test:report                        ║');
+    console.log('║ 6. Push to Jira: node agents/agent-layer6-selfheal.js     ║');
     console.log('║                                                            ║');
     console.log('╚════════════════════════════════════════════════════════════╝\n');
   }
