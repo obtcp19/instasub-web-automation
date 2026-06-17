@@ -36,11 +36,20 @@ cp .env.example .env
 ```
 
 **Required environment variables:**
+
+*Jira (for ticket fetching):*
 - `JIRA_DOMAIN` — Jira instance domain
 - `JIRA_USER_EMAIL` — Jira account email
 - `JIRA_API_TOKEN` — Jira API token ([create here](https://id.atlassian.com/manage-profile/security/api-tokens))
-- `PW_USERNAME` — TimeClock Plus test user
-- `PW_PASSWORD` — TimeClock Plus test password
+
+*GitHub (for Layer 0 PR creation):*
+- `GITHUB_TOKEN` — GitHub personal access token ([create here](https://github.com/settings/tokens))
+- `GITHUB_OWNER` — GitHub organization or username
+- `GITHUB_REPO` — Repository name (e.g., `instasub-web-automation`)
+
+*TimeClock Plus (for test execution):*
+- `PW_USERNAME` — Test user account
+- `PW_PASSWORD` — Test user password
 - `BASE_URL` — Target application URL
 - `TICKET_NAME` — Jira ticket identifier
 - `ABSENCE_EMPLOYEE_SEARCH` — Employee search term
@@ -88,10 +97,11 @@ npm run test:report
 
 ## Agent Layer System
 
-Six-layer orchestration system for advanced test automation:
+Seven-layer orchestration system for advanced test automation:
 
 | Layer | Purpose | Command |
 |-------|---------|---------|
+| **0: Ticket Intake** | Fetch Jira ticket, create feature branch, open draft PR | `npm run agent:layer0` |
 | **1: Requirements** | Parse Jira tickets into test requirements | `npm run agent:layer1` |
 | **2: Strategy** | Design test strategy from requirements | `npm run agent:layer2` |
 | **3: Context** | Retrieve and manage test context | `npm run agent:layer3` |
@@ -102,16 +112,17 @@ Six-layer orchestration system for advanced test automation:
 ### Running Agent Pipeline
 
 ```bash
-# Run complete orchestration
-npm run agent:all
+# Run complete orchestration (Layers 0-6)
+npm run agent:all ISE-1234
 
 # Run individual layers
-npm run agent:requirements
-npm run agent:strategy
-npm run agent:context
-npm run agent:codegen
-npm run agent:execution
-npm run agent:selfheal
+npm run agent:intake ISE-1234      # Layer 0: Ticket intake & PR
+npm run agent:requirements ISE-1234  # Layer 1: Parse requirements
+npm run agent:strategy               # Layer 2: Design strategy
+npm run agent:context                # Layer 3: Retrieve context
+npm run agent:codegen                # Layer 4: Generate code
+npm run agent:execution              # Layer 5: Execute tests
+npm run agent:selfheal               # Layer 6: Self-healing
 
 # Layer 5 with Docker Compose
 npm run test:layer5:compose
