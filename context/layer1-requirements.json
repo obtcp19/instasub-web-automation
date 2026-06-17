@@ -1,0 +1,298 @@
+{
+  "ticket": "ISE-1558",
+  "title": "Completed 26 pairwise regression tests for the Self absence creation flow using the administrator account (regsadmin@mailinator.com). All 26 tests passed.",
+  "priority": "Medium",
+  "status": "Open",
+  "assignee": "omerbakhtiar",
+  "created": "2026-06-17T07:59:42.230-0500",
+  "updated": "2026-06-17T07:59:45.633-0500",
+  "businessRequirements": [
+    {
+      "id": "BR-1",
+      "description": "Pairwise regression coverage for the Self absence creation flow, validating that an administrator can create absences for themselves across every reason, duration type, and substitute preference. The run confirms the form, leave balance deductions, and sub picker all behave correctly in Self mode.",
+      "testable": true
+    },
+    {
+      "id": "BR-2",
+      "description": "(Administrator role) Flow: Self absence creation (/absence/createAbsence, Self radio selected) Sub selected (Notify 1 Sub / Assign a specific sub): Sub 2",
+      "testable": true
+    }
+  ],
+  "acceptanceCriteria": [
+    "Given valid absence data, When submitted, Then record persists",
+    "Given missing required fields, When submitted, Then validation error shown",
+    "Given past date, When submitted, Then rejection error shown",
+    "Given confirmation number returned, Then system displays it to user"
+  ],
+  "testableItems": [
+    "T1: Sick / Full Day / Notify all subs on Jan 1, 2027",
+    "T2: Personal / Full Day / Notify 1 Sub on Jan 2, 2027",
+    "T3: Vacation / Full Day / Notify my favorites on Jan 3, 2027",
+    "T4: Illness-Family Member / Full Day / Assign a specific sub on Jan 4, 2027",
+    "T5: Educational Leave / Full Day / No sub required on Jan 5, 2027",
+    "T6: Professional Development / Half Day AM / Notify all subs on Jan 6, 2027",
+    "T7: Sick / Half Day AM / Notify 1 Sub on Jan 7, 2027",
+    "T8: Personal / Half Day AM / Notify my favorites on Jan 8, 2027",
+    "T9: Vacation / Half Day AM / Assign a specific sub on Jan 9, 2027",
+    "T10: Illness-Family Member / Half Day AM / No sub required on Jan 10, 2027",
+    "T11: Educational Leave / Half Day PM / Notify all subs on Jan 11, 2027",
+    "T12: Professional Development / Half Day PM / Notify 1 Sub on Jan 12, 2027",
+    "T13: Sick / Half Day PM / Notify my favorites on Jan 13, 2027",
+    "T14: Personal / Half Day PM / Assign a specific sub on Jan 14, 2027",
+    "T15: Vacation / Half Day PM / No sub required on Jan 15, 2027",
+    "T16: Illness-Family Member / Enter Time Manually (10:00–15:00) / Notify all subs on Jan 18, 2027",
+    "T17: Educational Leave / Enter Time Manually (10:00–15:00) / Notify 1 Sub on Jan 19, 2027",
+    "T18: Professional Development / Enter Time Manually (10:00–15:00) / Notify my favorites on Jan 20, 2027",
+    "T19: Sick / Enter Time Manually (10:00–15:00) / Assign a specific sub on Jan 21, 2027",
+    "T20: Personal / Enter Time Manually (10:00–15:00) / No sub required on Jan 22, 2027",
+    "T21: Vacation / 08:00–12:00 / Notify all subs on Jan 25, 2027",
+    "T22: Illness-Family Member / 10:00–14:00 / Notify 1 Sub on Jan 26, 2027",
+    "T23: Educational Leave / 09:00–11:00 / Notify my favorites on Jan 27, 2027",
+    "T24: Professional Development / 12:00–16:00 / Assign a specific sub on Feb 8, 2027",
+    "T25: Sick / 08:00–10:00 / No sub required on Feb 9, 2027",
+    "T26: Personal / 13:00–17:00 / Notify all subs on Feb 10, 2027"
+  ],
+  "pairwiseScenarios": [
+    {
+      "id": "T1",
+      "date": "Jan 1, 2027",
+      "reason": "Sick",
+      "duration": "Full Day",
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T2",
+      "date": "Jan 2, 2027",
+      "reason": "Personal",
+      "duration": "Full Day",
+      "subPreference": "Notify 1 Sub",
+      "subSelected": "Sub 2",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T3",
+      "date": "Jan 3, 2027",
+      "reason": "Vacation",
+      "duration": "Full Day",
+      "subPreference": "Notify my favorites",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T4",
+      "date": "Jan 4, 2027",
+      "reason": "Illness-Family Member",
+      "duration": "Full Day",
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 2",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T5",
+      "date": "Jan 5, 2027",
+      "reason": "Educational Leave",
+      "duration": "Full Day",
+      "subPreference": "No sub required",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T6",
+      "date": "Jan 6, 2027",
+      "reason": "Professional Development",
+      "duration": "Half Day AM",
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T7",
+      "date": "Jan 7, 2027",
+      "reason": "Sick",
+      "duration": "Half Day AM",
+      "subPreference": "Notify 1 Sub",
+      "subSelected": "Sub 2",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T8",
+      "date": "Jan 8, 2027",
+      "reason": "Personal",
+      "duration": "Half Day AM",
+      "subPreference": "Notify my favorites",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T9",
+      "date": "Jan 9, 2027",
+      "reason": "Vacation",
+      "duration": "Half Day AM",
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 2",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T10",
+      "date": "Jan 10, 2027",
+      "reason": "Illness-Family Member",
+      "duration": "Half Day AM",
+      "subPreference": "No sub required",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T11",
+      "date": "Jan 11, 2027",
+      "reason": "Educational Leave",
+      "duration": "Half Day PM",
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T12",
+      "date": "Jan 12, 2027",
+      "reason": "Professional Development",
+      "duration": "Half Day PM",
+      "subPreference": "Notify 1 Sub",
+      "subSelected": "Sub 2",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T13",
+      "date": "Jan 13, 2027",
+      "reason": "Sick",
+      "duration": "Half Day PM",
+      "subPreference": "Notify my favorites",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T14",
+      "date": "Jan 14, 2027",
+      "reason": "Personal",
+      "duration": "Half Day PM",
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 2",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T15",
+      "date": "Jan 15, 2027",
+      "reason": "Vacation",
+      "duration": "Half Day PM",
+      "subPreference": "No sub required",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T16",
+      "date": "Jan 18, 2027",
+      "reason": "Illness-Family Member",
+      "duration": "Enter Time Manually (10:00–15:00)",
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T17",
+      "date": "Jan 19, 2027",
+      "reason": "Educational Leave",
+      "duration": "Enter Time Manually (10:00–15:00)",
+      "subPreference": "Notify 1 Sub",
+      "subSelected": "Sub 2",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T18",
+      "date": "Jan 20, 2027",
+      "reason": "Professional Development",
+      "duration": "Enter Time Manually (10:00–15:00)",
+      "subPreference": "Notify my favorites",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T19",
+      "date": "Jan 21, 2027",
+      "reason": "Sick",
+      "duration": "Enter Time Manually (10:00–15:00)",
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 2",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T20",
+      "date": "Jan 22, 2027",
+      "reason": "Personal",
+      "duration": "Enter Time Manually (10:00–15:00)",
+      "subPreference": "No sub required",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T21",
+      "date": "Jan 25, 2027",
+      "reason": "Vacation",
+      "duration": "08:00–12:00",
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T22",
+      "date": "Jan 26, 2027",
+      "reason": "Illness-Family Member",
+      "duration": "10:00–14:00",
+      "subPreference": "Notify 1 Sub",
+      "subSelected": "Sub 2",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T23",
+      "date": "Jan 27, 2027",
+      "reason": "Educational Leave",
+      "duration": "09:00–11:00",
+      "subPreference": "Notify my favorites",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T24",
+      "date": "Feb 8, 2027",
+      "reason": "Professional Development",
+      "duration": "12:00–16:00",
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 2",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T25",
+      "date": "Feb 9, 2027",
+      "reason": "Sick",
+      "duration": "08:00–10:00",
+      "subPreference": "No sub required",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    },
+    {
+      "id": "T26",
+      "date": "Feb 10, 2027",
+      "reason": "Personal",
+      "duration": "13:00–17:00",
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "result": "✅ PASS"
+    }
+  ],
+  "riskFactors": [
+    {
+      "factor": "Async/Promise timeout on confirmation generation",
+      "severity": "HIGH",
+      "likelihood": "MEDIUM"
+    }
+  ]
+}

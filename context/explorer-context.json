@@ -1,0 +1,95 @@
+{
+  "layer": "Explorer",
+  "status": "skipped",
+  "mode": "planned",
+  "url": "https://instasublogin.tcpsoftware.com/",
+  "ticket": "ISE-1558",
+  "generatedAt": "2026-06-17T13:16:35.630Z",
+  "mcp": {
+    "protocol": "MCP",
+    "server": "mcp://playwright",
+    "endpoint": "mcp://playwright/explore"
+  },
+  "why": "Generates authoritative selectors and flow docs for downstream Layer 3 context retrieval and Layer 4 codegen.",
+  "coverage": {
+    "plannedCases": 26,
+    "coveredCases": 0,
+    "missingCases": [
+      "T1",
+      "T2",
+      "T3",
+      "T4",
+      "T5",
+      "T6",
+      "T7",
+      "T8",
+      "T9",
+      "T10",
+      "T11",
+      "T12",
+      "T13",
+      "T14",
+      "T15",
+      "T16",
+      "T17",
+      "T18",
+      "T19",
+      "T20",
+      "T21",
+      "T22",
+      "T23",
+      "T24",
+      "T25",
+      "T26"
+    ],
+    "coveredByOtherLayer": {
+      "layer2PlaywrightVerification": 0,
+      "layer5Execution": "covered when agent-layer5-execution.js runs the generated/current spec"
+    }
+  },
+  "snapshots": {
+    "accessibility": null,
+    "elements": {
+      "buttons": [],
+      "inputs": [],
+      "tables": []
+    }
+  },
+  "flowVerification": {
+    "mode": "mapped-from-current-spec",
+    "command": null,
+    "status": "skipped",
+    "matchedTestCases": [],
+    "missingTestCases": [
+      "T1",
+      "T2",
+      "T3",
+      "T4",
+      "T5",
+      "T6",
+      "T7",
+      "T8",
+      "T9",
+      "T10",
+      "T11",
+      "T12",
+      "T13",
+      "T14",
+      "T15",
+      "T16",
+      "T17",
+      "T18",
+      "T19",
+      "T20",
+      "T21",
+      "T22",
+      "T23",
+      "T24",
+      "T25",
+      "T26"
+    ]
+  },
+  "notes": [
+    "Explorer browser launch skipped. Run Layer 2 with --explore to capture live UI selectors."
+  ]
+}

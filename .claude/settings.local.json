@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(STORAGE_STATE=playwright/.auth/user.json BASE_URL=https://instasub-staging.tcpsoftware.com npx playwright test tests/ISE-1551.spec.ts --project=chromium)"
+    ]
+  }
+}

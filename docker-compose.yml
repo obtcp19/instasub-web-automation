@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  playwright-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: instasub-playwright-tests
+    environment:
+      - BASE_URL=http://localhost:3000
+      - DATABASE_URL=postgresql://user:password@postgres:5432/testdb
+      - JIRA_DOMAIN=${JIRA_DOMAIN}
+      - JIRA_USER_EMAIL=${JIRA_USER_EMAIL}
+      - JIRA_API_TOKEN=${JIRA_API_TOKEN}
+    volumes:
+      - ./test-results:/app/test-results
+      - ./playwright-report:/app/playwright-report
+    depends_on:
+      - postgres
+    networks:
+      - test-network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: instasub-postgres-test
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=testdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - test-network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U user -d testdb']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Optional: Web server for application under test
+  # web:
+  #   image: node:18-alpine
+  #   working_dir: /app
+  #   volumes:
+  #     - ./app:/app
+  #   ports:
+  #     - "3000:3000"
+  #   command: npm run dev
+  #   networks:
+  #     - test-network
+
+volumes:
+  postgres_data:
+
+networks:
+  test-network:
+    driver: bridge
