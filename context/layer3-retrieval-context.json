@@ -1,0 +1,64 @@
+{
+  "layer": 3,
+  "generatedAt": "2026-06-17T13:18:50.451Z",
+  "source": "context/layer2-strategy-context.json",
+  "explorerCovered": true,
+  "explorerContext": "context/explorer-context.json",
+  "indexed": 3,
+  "queries": [
+    "Completed 26 pairwise regression tests for the Self absence creation flow using the administrator account (regsadmin@mailinator.com). All 26 tests passed.",
+    "playwright page object model selectors",
+    "explorer accessibility snapshot buttons inputs tables",
+    "login username password button selectors",
+    "absence create employee duration substitute preference",
+    "leave balance verification deduction",
+    "Sick absence with Full Day and Notify all subs",
+    "Personal absence with Full Day and Notify 1 Sub",
+    "Vacation absence with Full Day and Notify my favorites",
+    "Illness-Family Member absence with Full Day and Assign a specific sub",
+    "Educational Leave absence with Full Day and No sub required",
+    "Professional Development absence with Half Day AM and Notify all subs",
+    "Sick absence with Half Day AM and Notify 1 Sub",
+    "Personal absence with Half Day AM and Notify my favorites",
+    "Vacation absence with Half Day AM and Assign a specific sub",
+    "Illness-Family Member absence with Half Day AM and No sub required",
+    "Educational Leave absence with Half Day PM and Notify all subs",
+    "Professional Development absence with Half Day PM and Notify 1 Sub",
+    "Sick absence with Half Day PM and Notify my favorites",
+    "Personal absence with Half Day PM and Assign a specific sub",
+    "Vacation absence with Half Day PM and No sub required",
+    "Illness-Family Member absence with Enter Time Manually (10:00–15:00) and Notify all subs",
+    "Educational Leave absence with Enter Time Manually (10:00–15:00) and Notify 1 Sub",
+    "Professional Development absence with Enter Time Manually (10:00–15:00) and Notify my favorites",
+    "Sick absence with Enter Time Manually (10:00–15:00) and Assign a specific sub",
+    "Personal absence with Enter Time Manually (10:00–15:00) and No sub required",
+    "Vacation absence with 08:00–12:00 and Notify all subs",
+    "Illness-Family Member absence with 10:00–14:00 and Notify 1 Sub",
+    "Educational Leave absence with 09:00–11:00 and Notify my favorites",
+    "Professional Development absence with 12:00–16:00 and Assign a specific sub",
+    "Review step shows selected reason and date before submit",
+    "Successful submit is detected by response or accepted UI state",
+    "Leave balance is captured before suite execution and is lower after all successful submissions",
+    "serial when tests mutate a shared employee leave balance"
+  ],
+  "assets": [
+    {
+      "path": "tests/ISE-452-absence-creation.spec.ts",
+      "fileName": "ISE-452-absence-creation.spec.ts",
+      "type": "Spec",
+      "similarity": 0.2246760129928589
+    },
+    {
+      "path": "utilities/DatabaseHelper.ts",
+      "fileName": "DatabaseHelper.ts",
+      "type": "Utility",
+      "similarity": 0.1349053978919983
+    },
+    {
+      "path": "pom/AbsenceCreationPage.ts",
+      "fileName": "AbsenceCreationPage.ts",
+      "type": "POM",
+      "similarity": 0.10517913103103638
+    }
+  ]
+}

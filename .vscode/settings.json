@@ -1,0 +1,22 @@
+{
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/test-results/**": true,
+    "**/playwright-report/**": true,
+    "**/blob-report/**": true,
+    "**/vector-db/.lancedb/**": true,
+    "**/.cache/**": true,
+    "**/playwright/.cache/**": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/test-results": true,
+    "**/playwright-report": true,
+    "**/blob-report": true,
+    "**/vector-db/.lancedb": true,
+    "**/.cache": true
+  },
+  "files.exclude": {
+    "**/node_modules": true
+  }
+}

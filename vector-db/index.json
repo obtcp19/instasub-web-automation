@@ -1,0 +1,17 @@
+{
+  "documents": [
+    {
+      "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/AbsenceCreationPage.ts",
+      "fileName": "AbsenceCreationPage.ts",
+      "content": "import { Page, Locator } from '@playwright/test';\n\nexport class AbsenceCreationPage {\n  readonly page: Page;\n  readonly teacherDropdown: Locator;\n  readonly leaveReasonDropdown: Locator;\n  readonly dateInput: Locator;\n  readonly submitButton: Locator;\n  readonly confirmationNumberDisplay: Locator;\n  readonly errorMessageContainer: Locator;\n\n  constructor(page: Page) {\n    this.page = page;\n    this.teacherDropdown = page.locator('select[data-testid=\"teacher-select\"]');\n    this.leaveReasonDropdown = page.locator('select[data-testid=\"leave-reason-select\"]');\n    this.dateInput = page.locator('input[data-testid=\"absence-date-input\"]');\n    this.submitButton = page.locator('button[data-testid=\"submit-absence-btn\"]');\n    this.confirmationNumberDisplay = page.locator('div[data-testid=\"confirmation-number\"]');\n    this.errorMessageContainer = page.locator('div[data-testid=\"error-message\"]');\n  }\n\n  async navigateTo() {\n    await this.page.goto('/absence/create');\n    await this.page.waitForLoadState('networkidle');\n  }\n\n  async selectTeacher(teacherName: string) {\n    await this.teacherDropdown.selectOption({ label: teacherName });\n  }\n\n  async selectLeaveReason(reason: string) {\n    await this.leaveReasonDropdown.selectOption({ label: reason });\n  }\n\n  async setDate(date: string) {\n    await this.dateInput.fill(date);\n  }\n\n  async submitAbsence() {\n    await this.submitButton.click();\n  }\n\n  async getConfirmationNumber(): Promise<string | null> {\n    await this.confirmationNumberDisplay.waitFor({ state: 'visible', timeout: 10000 });\n    return await this.confirmationNumberDisplay.textContent();\n  }\n\n  async getErrorMessage(): Promise<string | null> {\n    return await this.errorMessageContainer.textContent();\n  }\n\n  async isErrorDisplayed(): Promise<boolean> {\n    return await this.errorMessageContainer.isVisible();\n  }\n}\n",
+      "type": "POM"
+    },
+    {
+      "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/utilities/DatabaseHelper.ts",
+      "fileName": "DatabaseHelper.ts",
+      "content": "import { Client } from 'pg';\n\nexport class DatabaseHelper {\n  private client: Client;\n\n  constructor(connectionString: string) {\n    this.client = new Client({ connectionString });\n  }\n\n  async connect() {\n    await this.client.connect();\n  }\n\n  async disconnect() {\n    await this.client.end();\n  }\n\n  async getAbsenceByConfirmationNumber(confirmationNumber: string): Promise<any> {\n    const result = await this.client.query(\n      'SELECT * FROM absences WHERE confirmation_number = $1',\n      [confirmationNumber]\n    );\n    return result.rows[0] || null;\n  }\n\n  async deleteAbsencesByTeacher(teacherName: string) {\n    await this.client.query(\n      'DELETE FROM absences WHERE teacher_name = $1',\n      [teacherName]\n    );\n  }\n\n  async countAbsencesForTeacher(teacherName: string): Promise<number> {\n    const result = await this.client.query(\n      'SELECT COUNT(*) as count FROM absences WHERE teacher_name = $1',\n      [teacherName]\n    );\n    return parseInt(result.rows[0].count, 10);\n  }\n}\n",
+      "type": "Utility"
+    }
+  ],
+  "timestamp": "2026-06-15T12:13:08.689Z"
+}
