@@ -1,0 +1,2213 @@
+{
+  "layer": 3,
+  "generatedAt": "2026-06-18T10:20:53.536Z",
+  "status": "captured",
+  "purpose": "Manual Playwright MCP context handoff for Layer 4 code generation.",
+  "ticket": "ISE-1559",
+  "mcp": {
+    "protocol": "MCP",
+    "server": "mcp://playwright",
+    "capabilities": [
+      "manual-playwright-execution",
+      "manual-playwright-listing",
+      "browser-selector-capture",
+      "accessibility-tree-snapshot",
+      "ui-element-indexing",
+      "layer4-codegen-context-handoff"
+    ],
+    "endpoints": {
+      "listTests": "mcp://playwright/list-tests",
+      "runTests": "mcp://playwright/run-tests",
+      "explore": "mcp://playwright/explore"
+    }
+  },
+  "artifacts": {
+    "manualMcpContext": "context/mcp-playwright-context.json",
+    "explorerContext": "context/explorer-context.json",
+    "layer3RetrievalContext": "context/layer3-retrieval-context.json"
+  },
+  "testPlan": {
+    "source": "context/layer2-test-plan.json",
+    "cases": 26
+  },
+  "verification": {
+    "status": "verified",
+    "mode": "list",
+    "ticket": "ISE-1559",
+    "spec": "tests/ISE-1559.spec.ts",
+    "command": "npx playwright test tests/ISE-1559.spec.ts --project=chromium --workers=1 --list",
+    "discoveredTests": [
+      "auth.setup.ts:39:1 › authenticate",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T1: Sick absence with Full Day and Notify all subs",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T2: Personal absence with Full Day and Notify 1 Sub",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T3: Vacation absence with Full Day and Notify my favorites",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T23: Educational Leave absence with 09:00-11:00 and Notify my favorites",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required",
+      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs"
+    ],
+    "matchedTestCases": [
+      {
+        "id": "T1",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T1: Sick absence with Full Day and Notify all subs"
+      },
+      {
+        "id": "T2",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T2: Personal absence with Full Day and Notify 1 Sub"
+      },
+      {
+        "id": "T3",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T3: Vacation absence with Full Day and Notify my favorites"
+      },
+      {
+        "id": "T4",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub"
+      },
+      {
+        "id": "T5",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required"
+      },
+      {
+        "id": "T6",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs"
+      },
+      {
+        "id": "T7",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub"
+      },
+      {
+        "id": "T8",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites"
+      },
+      {
+        "id": "T9",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub"
+      },
+      {
+        "id": "T10",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required"
+      },
+      {
+        "id": "T11",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs"
+      },
+      {
+        "id": "T12",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub"
+      },
+      {
+        "id": "T13",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites"
+      },
+      {
+        "id": "T14",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub"
+      },
+      {
+        "id": "T15",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required"
+      },
+      {
+        "id": "T16",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs"
+      },
+      {
+        "id": "T17",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub"
+      },
+      {
+        "id": "T18",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites"
+      },
+      {
+        "id": "T19",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub"
+      },
+      {
+        "id": "T20",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required"
+      },
+      {
+        "id": "T21",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs"
+      },
+      {
+        "id": "T22",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub"
+      },
+      {
+        "id": "T23",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T23: Educational Leave absence with 09:00-11:00 and Notify my favorites"
+      },
+      {
+        "id": "T24",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub"
+      },
+      {
+        "id": "T25",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required"
+      },
+      {
+        "id": "T26",
+        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs"
+      }
+    ],
+    "missingTestCases": [],
+    "exitCode": 0,
+    "outputTail": "ify all subs\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T2: Personal absence with Full Day and Notify 1 Sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T3: Vacation absence with Full Day and Notify my favorites\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T23: Educational Leave absence with 09:00-11:00 and Notify my favorites\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs\nTotal: 27 tests in 2 files",
+    "notes": [],
+    "verifiedAt": "2026-06-18T10:20:28.602Z"
+  },
+  "explorerContext": {
+    "layer": 3,
+    "source": "manual-playwright-mcp",
+    "status": "captured",
+    "mode": "browser",
+    "url": "https://instasublogin.tcpsoftware.com/",
+    "ticket": "ISE-1559",
+    "generatedAt": "2026-06-18T10:20:29.572Z",
+    "mcp": {
+      "protocol": "MCP",
+      "server": "mcp://playwright",
+      "endpoint": "mcp://playwright/explore"
+    },
+    "why": "Layer 3 captures authoritative selectors and flow docs for downstream Layer 4 codegen.",
+    "coverage": {
+      "plannedCases": 26,
+      "coveredCases": 26,
+      "missingCases": [],
+      "coveredByOtherLayer": {
+        "layer3PlaywrightMcp": 26,
+        "layer5Execution": "covered when agent-layer5-execution.js runs the generated/current spec"
+      }
+    },
+    "snapshots": {
+      "accessibility": {
+        "role": "document",
+        "name": "InstaSub",
+        "textPreview": "Loading...\nmenu\n\n \nsettings\nHelp arrow_drop_down\nnotification_important\nLeave Balance\nAs of 06/18/2026\nAbsences\nWho's Available\nNew\nUpcoming ()\nPast ()\nDenied ()\n1\nCreate Absence\n2\nAdditional Information\n3\nDone\nStart date\nEnd date\nReason\nReason\t\nDuration\nFull Day\t\nStart time\nEnd time\nSelect Substitute Preference\nSelect Substitute Preference\t\nadd_circle_outline  Add Class\nNEXT\nPayroll Notes\nMax 50 characters\n0/50\nNotes to Substitutes\nMax 50 characters\n0/50\nAttachment\nfile_uploadUpload attachment\nBack\nNext\nBack\nCreate Absence"
+      },
+      "elements": {
+        "buttons": [
+          {
+            "text": "",
+            "role": "button",
+            "selector": "button",
+            "recommendedLocator": "button",
+            "disabled": false
+          },
+          {
+            "text": "menu",
+            "role": "button",
+            "selector": "button:nth-of-type(1)",
+            "recommendedLocator": "getByRole('button', { name: \"menu\" })",
+            "disabled": false
+          },
+          {
+            "text": "settings",
+            "role": "button",
+            "selector": "button:nth-of-type(2)",
+            "recommendedLocator": "getByRole('button', { name: \"settings\" })",
+            "disabled": false
+          },
+          {
+            "text": "notification_important",
+            "role": "button",
+            "selector": "button:nth-of-type(3)",
+            "recommendedLocator": "getByRole('button', { name: \"notification_important\" })",
+            "disabled": false
+          },
+          {
+            "text": "Who's Available",
+            "role": "button",
+            "selector": "button",
+            "recommendedLocator": "getByRole('button', { name: \"Who's Available\" })",
+            "disabled": false
+          },
+          {
+            "text": "Open calendar",
+            "role": "button",
+            "selector": "button",
+            "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+            "disabled": false
+          },
+          {
+            "text": "Open calendar",
+            "role": "button",
+            "selector": "button",
+            "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+            "disabled": false
+          },
+          {
+            "text": "add_circle_outline Add Class",
+            "role": "button",
+            "selector": "button",
+            "recommendedLocator": "getByRole('button', { name: \"add_circle_outline Add Class\" })",
+            "disabled": false
+          },
+          {
+            "text": "NEXT",
+            "role": "button",
+            "selector": "button",
+            "recommendedLocator": "getByRole('button', { name: \"NEXT\" })",
+            "disabled": false
+          },
+          {
+            "text": "file_uploadUpload attachment",
+            "role": "button",
+            "selector": "button",
+            "recommendedLocator": "getByRole('button', { name: \"file_uploadUpload attachment\" })",
+            "disabled": false
+          },
+          {
+            "text": "Back",
+            "role": "button",
+            "selector": "button:nth-of-type(1)",
+            "recommendedLocator": "getByRole('button', { name: \"Back\" })",
+            "disabled": false
+          },
+          {
+            "text": "Next",
+            "role": "button",
+            "selector": "button:nth-of-type(2)",
+            "recommendedLocator": "getByRole('button', { name: \"Next\" })",
+            "disabled": false
+          },
+          {
+            "text": "Back",
+            "role": "button",
+            "selector": "button:nth-of-type(1)",
+            "recommendedLocator": "getByRole('button', { name: \"Back\" })",
+            "disabled": false
+          },
+          {
+            "text": "Create Absence",
+            "role": "button",
+            "selector": "button:nth-of-type(2)",
+            "recommendedLocator": "getByRole('button', { name: \"Create Absence\" })",
+            "disabled": false
+          }
+        ],
+        "inputs": [
+          {
+            "label": "Start Date",
+            "type": "input",
+            "selector": "#mat-input-0",
+            "recommendedLocator": "#mat-input-0",
+            "formControlName": "AbsenceStartDate",
+            "required": false
+          },
+          {
+            "label": "End Date",
+            "type": "input",
+            "selector": "#mat-input-1",
+            "recommendedLocator": "#mat-input-1",
+            "formControlName": "AbsenceEndDate",
+            "required": false
+          },
+          {
+            "label": "Reason",
+            "type": "listbox",
+            "selector": "#mat-select-0",
+            "recommendedLocator": "#mat-select-0",
+            "formControlName": "Reason",
+            "required": false
+          },
+          {
+            "label": "Duration",
+            "type": "listbox",
+            "selector": "#mat-select-3",
+            "recommendedLocator": "#mat-select-3",
+            "formControlName": "Duration",
+            "required": false
+          },
+          {
+            "label": "Start Time",
+            "type": "time",
+            "selector": "#mat-input-4",
+            "recommendedLocator": "#mat-input-4",
+            "formControlName": "StartTime",
+            "required": false
+          },
+          {
+            "label": "End Time",
+            "type": "time",
+            "selector": "#mat-input-5",
+            "recommendedLocator": "#mat-input-5",
+            "formControlName": "EndTime",
+            "required": false
+          },
+          {
+            "label": "Select Substitute Preference",
+            "type": "listbox",
+            "selector": "#mat-select-1",
+            "recommendedLocator": "#mat-select-1",
+            "formControlName": "AbsenceType",
+            "required": false
+          },
+          {
+            "label": "Contact Substitutes",
+            "type": "listbox",
+            "selector": "#mat-select-2",
+            "recommendedLocator": "#mat-select-2",
+            "formControlName": null,
+            "required": false
+          },
+          {
+            "label": "on",
+            "type": "checkbox",
+            "selector": "#mat-slide-toggle-1-input",
+            "recommendedLocator": "#mat-slide-toggle-1-input",
+            "formControlName": null,
+            "required": false
+          },
+          {
+            "label": "Payroll Notes",
+            "type": "textarea",
+            "selector": "#mat-input-2",
+            "recommendedLocator": "#mat-input-2",
+            "formControlName": "PayRollNotes",
+            "required": false
+          },
+          {
+            "label": "Notes to substitute",
+            "type": "textarea",
+            "selector": "#mat-input-3",
+            "recommendedLocator": "#mat-input-3",
+            "formControlName": "NotesToSubstitute",
+            "required": false
+          },
+          {
+            "label": "",
+            "type": "file",
+            "selector": "#UploadButton",
+            "recommendedLocator": "#UploadButton",
+            "formControlName": null,
+            "required": false
+          }
+        ],
+        "tables": []
+      },
+      "pages": [
+        {
+          "label": "landing",
+          "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence?announcement=true",
+          "title": "InstaSub",
+          "activeStep": "Create Absence",
+          "elements": {
+            "buttons": [
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "menu",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"menu\" })",
+                "disabled": false
+              },
+              {
+                "text": "settings",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"settings\" })",
+                "disabled": false
+              },
+              {
+                "text": "notification_important",
+                "role": "button",
+                "selector": "button:nth-of-type(3)",
+                "recommendedLocator": "getByRole('button', { name: \"notification_important\" })",
+                "disabled": false
+              },
+              {
+                "text": "Who's Available",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Who's Available\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "add_circle_outline Add Class",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"add_circle_outline Add Class\" })",
+                "disabled": false
+              },
+              {
+                "text": "NEXT",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"NEXT\" })",
+                "disabled": false
+              },
+              {
+                "text": "file_uploadUpload attachment",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"file_uploadUpload attachment\" })",
+                "disabled": false
+              },
+              {
+                "text": "Back",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"Back\" })",
+                "disabled": false
+              },
+              {
+                "text": "Next",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"Next\" })",
+                "disabled": false
+              },
+              {
+                "text": "Back",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"Back\" })",
+                "disabled": false
+              },
+              {
+                "text": "Create Absence",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"Create Absence\" })",
+                "disabled": false
+              }
+            ],
+            "inputs": [
+              {
+                "label": "Start Date",
+                "type": "input",
+                "selector": "#mat-input-0",
+                "recommendedLocator": "#mat-input-0",
+                "formControlName": "AbsenceStartDate",
+                "required": false
+              },
+              {
+                "label": "End Date",
+                "type": "input",
+                "selector": "#mat-input-1",
+                "recommendedLocator": "#mat-input-1",
+                "formControlName": "AbsenceEndDate",
+                "required": false
+              },
+              {
+                "label": "Reason",
+                "type": "listbox",
+                "selector": "#mat-select-0",
+                "recommendedLocator": "#mat-select-0",
+                "formControlName": "Reason",
+                "required": false
+              },
+              {
+                "label": "Duration",
+                "type": "listbox",
+                "selector": "#mat-select-3",
+                "recommendedLocator": "#mat-select-3",
+                "formControlName": "Duration",
+                "required": false
+              },
+              {
+                "label": "Start Time",
+                "type": "time",
+                "selector": "#mat-input-4",
+                "recommendedLocator": "#mat-input-4",
+                "formControlName": "StartTime",
+                "required": false
+              },
+              {
+                "label": "End Time",
+                "type": "time",
+                "selector": "#mat-input-5",
+                "recommendedLocator": "#mat-input-5",
+                "formControlName": "EndTime",
+                "required": false
+              },
+              {
+                "label": "Select Substitute Preference",
+                "type": "listbox",
+                "selector": "#mat-select-1",
+                "recommendedLocator": "#mat-select-1",
+                "formControlName": "AbsenceType",
+                "required": false
+              },
+              {
+                "label": "Contact Substitutes",
+                "type": "listbox",
+                "selector": "#mat-select-2",
+                "recommendedLocator": "#mat-select-2",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "on",
+                "type": "checkbox",
+                "selector": "#mat-slide-toggle-1-input",
+                "recommendedLocator": "#mat-slide-toggle-1-input",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "Payroll Notes",
+                "type": "textarea",
+                "selector": "#mat-input-2",
+                "recommendedLocator": "#mat-input-2",
+                "formControlName": "PayRollNotes",
+                "required": false
+              },
+              {
+                "label": "Notes to substitute",
+                "type": "textarea",
+                "selector": "#mat-input-3",
+                "recommendedLocator": "#mat-input-3",
+                "formControlName": "NotesToSubstitute",
+                "required": false
+              },
+              {
+                "label": "",
+                "type": "file",
+                "selector": "#UploadButton",
+                "recommendedLocator": "#UploadButton",
+                "formControlName": null,
+                "required": false
+              }
+            ],
+            "tables": []
+          }
+        },
+        {
+          "label": "create-absence-empty",
+          "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+          "title": "InstaSub",
+          "activeStep": "Create Absence",
+          "elements": {
+            "buttons": [
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "menu",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"menu\" })",
+                "disabled": false
+              },
+              {
+                "text": "settings",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"settings\" })",
+                "disabled": false
+              },
+              {
+                "text": "notification_important",
+                "role": "button",
+                "selector": "button:nth-of-type(3)",
+                "recommendedLocator": "getByRole('button', { name: \"notification_important\" })",
+                "disabled": false
+              },
+              {
+                "text": "Who's Available",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Who's Available\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "add_circle_outline Add Class",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"add_circle_outline Add Class\" })",
+                "disabled": false
+              },
+              {
+                "text": "NEXT",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"NEXT\" })",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "button:nth-of-type(1)",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "button:nth-of-type(2)",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "button:nth-of-type(1)",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "button:nth-of-type(2)",
+                "disabled": false
+              }
+            ],
+            "inputs": [
+              {
+                "label": "Start Date",
+                "type": "input",
+                "selector": "#mat-input-0",
+                "recommendedLocator": "#mat-input-0",
+                "formControlName": "AbsenceStartDate",
+                "required": false
+              },
+              {
+                "label": "End Date",
+                "type": "input",
+                "selector": "#mat-input-1",
+                "recommendedLocator": "#mat-input-1",
+                "formControlName": "AbsenceEndDate",
+                "required": false
+              },
+              {
+                "label": "Reason",
+                "type": "listbox",
+                "selector": "#mat-select-0",
+                "recommendedLocator": "#mat-select-0",
+                "formControlName": "Reason",
+                "required": false
+              },
+              {
+                "label": "Duration",
+                "type": "listbox",
+                "selector": "#mat-select-3",
+                "recommendedLocator": "#mat-select-3",
+                "formControlName": "Duration",
+                "required": false
+              },
+              {
+                "label": "Start Time",
+                "type": "time",
+                "selector": "#mat-input-4",
+                "recommendedLocator": "#mat-input-4",
+                "formControlName": "StartTime",
+                "required": false
+              },
+              {
+                "label": "End Time",
+                "type": "time",
+                "selector": "#mat-input-5",
+                "recommendedLocator": "#mat-input-5",
+                "formControlName": "EndTime",
+                "required": false
+              },
+              {
+                "label": "Select Substitute Preference",
+                "type": "listbox",
+                "selector": "#mat-select-1",
+                "recommendedLocator": "#mat-select-1",
+                "formControlName": "AbsenceType",
+                "required": false
+              },
+              {
+                "label": "Contact Substitutes",
+                "type": "listbox",
+                "selector": "#mat-select-2",
+                "recommendedLocator": "#mat-select-2",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "on",
+                "type": "checkbox",
+                "selector": "#mat-slide-toggle-1-input",
+                "recommendedLocator": "#mat-slide-toggle-1-input",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "Payroll Notes",
+                "type": "textarea",
+                "selector": "#mat-input-2",
+                "recommendedLocator": "#mat-input-2",
+                "formControlName": "PayRollNotes",
+                "required": false
+              },
+              {
+                "label": "Notes to substitute",
+                "type": "textarea",
+                "selector": "#mat-input-3",
+                "recommendedLocator": "#mat-input-3",
+                "formControlName": "NotesToSubstitute",
+                "required": false
+              },
+              {
+                "label": "",
+                "type": "file",
+                "selector": "#UploadButton",
+                "recommendedLocator": "#UploadButton",
+                "formControlName": null,
+                "required": false
+              }
+            ],
+            "tables": []
+          }
+        },
+        {
+          "label": "create-absence-filled",
+          "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+          "title": "InstaSub",
+          "activeStep": "Create Absence",
+          "elements": {
+            "buttons": [
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "menu",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"menu\" })",
+                "disabled": false
+              },
+              {
+                "text": "settings",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"settings\" })",
+                "disabled": false
+              },
+              {
+                "text": "notification_important",
+                "role": "button",
+                "selector": "button:nth-of-type(3)",
+                "recommendedLocator": "getByRole('button', { name: \"notification_important\" })",
+                "disabled": false
+              },
+              {
+                "text": "Who's Available",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Who's Available\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "add_circle_outline Add Class",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"add_circle_outline Add Class\" })",
+                "disabled": false
+              },
+              {
+                "text": "NEXT",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"NEXT\" })",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "button:nth-of-type(1)",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "button:nth-of-type(2)",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "button:nth-of-type(1)",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "button:nth-of-type(2)",
+                "disabled": false
+              }
+            ],
+            "inputs": [
+              {
+                "label": "Start Date",
+                "type": "input",
+                "selector": "#mat-input-0",
+                "recommendedLocator": "#mat-input-0",
+                "formControlName": "AbsenceStartDate",
+                "required": false
+              },
+              {
+                "label": "End Date",
+                "type": "input",
+                "selector": "#mat-input-1",
+                "recommendedLocator": "#mat-input-1",
+                "formControlName": "AbsenceEndDate",
+                "required": false
+              },
+              {
+                "label": "Reason",
+                "type": "listbox",
+                "selector": "#mat-select-0",
+                "recommendedLocator": "#mat-select-0",
+                "formControlName": "Reason",
+                "required": false
+              },
+              {
+                "label": "Duration",
+                "type": "listbox",
+                "selector": "#mat-select-3",
+                "recommendedLocator": "#mat-select-3",
+                "formControlName": "Duration",
+                "required": false
+              },
+              {
+                "label": "Start Time",
+                "type": "time",
+                "selector": "#mat-input-4",
+                "recommendedLocator": "#mat-input-4",
+                "formControlName": "StartTime",
+                "required": false
+              },
+              {
+                "label": "End Time",
+                "type": "time",
+                "selector": "#mat-input-5",
+                "recommendedLocator": "#mat-input-5",
+                "formControlName": "EndTime",
+                "required": false
+              },
+              {
+                "label": "Select Substitute Preference",
+                "type": "listbox",
+                "selector": "#mat-select-1",
+                "recommendedLocator": "#mat-select-1",
+                "formControlName": "AbsenceType",
+                "required": false
+              },
+              {
+                "label": "Contact Substitutes",
+                "type": "listbox",
+                "selector": "#mat-select-2",
+                "recommendedLocator": "#mat-select-2",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "on",
+                "type": "checkbox",
+                "selector": "#mat-slide-toggle-1-input",
+                "recommendedLocator": "#mat-slide-toggle-1-input",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "Payroll Notes",
+                "type": "textarea",
+                "selector": "#mat-input-2",
+                "recommendedLocator": "#mat-input-2",
+                "formControlName": "PayRollNotes",
+                "required": false
+              },
+              {
+                "label": "Notes to substitute",
+                "type": "textarea",
+                "selector": "#mat-input-3",
+                "recommendedLocator": "#mat-input-3",
+                "formControlName": "NotesToSubstitute",
+                "required": false
+              },
+              {
+                "label": "",
+                "type": "file",
+                "selector": "#UploadButton",
+                "recommendedLocator": "#UploadButton",
+                "formControlName": null,
+                "required": false
+              }
+            ],
+            "tables": []
+          }
+        },
+        {
+          "label": "after-first-next-Additional Information",
+          "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+          "title": "InstaSub",
+          "activeStep": "Additional Information",
+          "elements": {
+            "buttons": [
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "menu",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"menu\" })",
+                "disabled": false
+              },
+              {
+                "text": "settings",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"settings\" })",
+                "disabled": false
+              },
+              {
+                "text": "notification_important",
+                "role": "button",
+                "selector": "button:nth-of-type(3)",
+                "recommendedLocator": "getByRole('button', { name: \"notification_important\" })",
+                "disabled": false
+              },
+              {
+                "text": "Who's Available",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Who's Available\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "file_uploadUpload attachment",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"file_uploadUpload attachment\" })",
+                "disabled": false
+              },
+              {
+                "text": "Back",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"Back\" })",
+                "disabled": false
+              },
+              {
+                "text": "Next",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"Next\" })",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "button:nth-of-type(1)",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "button:nth-of-type(2)",
+                "disabled": false
+              }
+            ],
+            "inputs": [
+              {
+                "label": "Start Date",
+                "type": "input",
+                "selector": "#mat-input-0",
+                "recommendedLocator": "#mat-input-0",
+                "formControlName": "AbsenceStartDate",
+                "required": false
+              },
+              {
+                "label": "End Date",
+                "type": "input",
+                "selector": "#mat-input-1",
+                "recommendedLocator": "#mat-input-1",
+                "formControlName": "AbsenceEndDate",
+                "required": false
+              },
+              {
+                "label": "Reason",
+                "type": "listbox",
+                "selector": "#mat-select-0",
+                "recommendedLocator": "#mat-select-0",
+                "formControlName": "Reason",
+                "required": false
+              },
+              {
+                "label": "Duration",
+                "type": "listbox",
+                "selector": "#mat-select-3",
+                "recommendedLocator": "#mat-select-3",
+                "formControlName": "Duration",
+                "required": false
+              },
+              {
+                "label": "Start Time",
+                "type": "time",
+                "selector": "#mat-input-4",
+                "recommendedLocator": "#mat-input-4",
+                "formControlName": "StartTime",
+                "required": false
+              },
+              {
+                "label": "End Time",
+                "type": "time",
+                "selector": "#mat-input-5",
+                "recommendedLocator": "#mat-input-5",
+                "formControlName": "EndTime",
+                "required": false
+              },
+              {
+                "label": "Select Substitute Preference",
+                "type": "listbox",
+                "selector": "#mat-select-1",
+                "recommendedLocator": "#mat-select-1",
+                "formControlName": "AbsenceType",
+                "required": false
+              },
+              {
+                "label": "Contact Substitutes",
+                "type": "listbox",
+                "selector": "#mat-select-2",
+                "recommendedLocator": "#mat-select-2",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "on",
+                "type": "checkbox",
+                "selector": "#mat-slide-toggle-1-input",
+                "recommendedLocator": "#mat-slide-toggle-1-input",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "Payroll Notes",
+                "type": "textarea",
+                "selector": "#mat-input-2",
+                "recommendedLocator": "#mat-input-2",
+                "formControlName": "PayRollNotes",
+                "required": false
+              },
+              {
+                "label": "Notes to substitute",
+                "type": "textarea",
+                "selector": "#mat-input-3",
+                "recommendedLocator": "#mat-input-3",
+                "formControlName": "NotesToSubstitute",
+                "required": false
+              },
+              {
+                "label": "",
+                "type": "file",
+                "selector": "#UploadButton",
+                "recommendedLocator": "#UploadButton",
+                "formControlName": null,
+                "required": false
+              }
+            ],
+            "tables": []
+          }
+        },
+        {
+          "label": "additional-information-filled",
+          "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+          "title": "InstaSub",
+          "activeStep": "Additional Information",
+          "elements": {
+            "buttons": [
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "menu",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"menu\" })",
+                "disabled": false
+              },
+              {
+                "text": "settings",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"settings\" })",
+                "disabled": false
+              },
+              {
+                "text": "notification_important",
+                "role": "button",
+                "selector": "button:nth-of-type(3)",
+                "recommendedLocator": "getByRole('button', { name: \"notification_important\" })",
+                "disabled": false
+              },
+              {
+                "text": "Who's Available",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Who's Available\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "file_uploadUpload attachment",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"file_uploadUpload attachment\" })",
+                "disabled": false
+              },
+              {
+                "text": "Back",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"Back\" })",
+                "disabled": false
+              },
+              {
+                "text": "Next",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"Next\" })",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "button:nth-of-type(1)",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "button:nth-of-type(2)",
+                "disabled": false
+              }
+            ],
+            "inputs": [
+              {
+                "label": "Start Date",
+                "type": "input",
+                "selector": "#mat-input-0",
+                "recommendedLocator": "#mat-input-0",
+                "formControlName": "AbsenceStartDate",
+                "required": false
+              },
+              {
+                "label": "End Date",
+                "type": "input",
+                "selector": "#mat-input-1",
+                "recommendedLocator": "#mat-input-1",
+                "formControlName": "AbsenceEndDate",
+                "required": false
+              },
+              {
+                "label": "Reason",
+                "type": "listbox",
+                "selector": "#mat-select-0",
+                "recommendedLocator": "#mat-select-0",
+                "formControlName": "Reason",
+                "required": false
+              },
+              {
+                "label": "Duration",
+                "type": "listbox",
+                "selector": "#mat-select-3",
+                "recommendedLocator": "#mat-select-3",
+                "formControlName": "Duration",
+                "required": false
+              },
+              {
+                "label": "Start Time",
+                "type": "time",
+                "selector": "#mat-input-4",
+                "recommendedLocator": "#mat-input-4",
+                "formControlName": "StartTime",
+                "required": false
+              },
+              {
+                "label": "End Time",
+                "type": "time",
+                "selector": "#mat-input-5",
+                "recommendedLocator": "#mat-input-5",
+                "formControlName": "EndTime",
+                "required": false
+              },
+              {
+                "label": "Select Substitute Preference",
+                "type": "listbox",
+                "selector": "#mat-select-1",
+                "recommendedLocator": "#mat-select-1",
+                "formControlName": "AbsenceType",
+                "required": false
+              },
+              {
+                "label": "Contact Substitutes",
+                "type": "listbox",
+                "selector": "#mat-select-2",
+                "recommendedLocator": "#mat-select-2",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "on",
+                "type": "checkbox",
+                "selector": "#mat-slide-toggle-1-input",
+                "recommendedLocator": "#mat-slide-toggle-1-input",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "Payroll Notes",
+                "type": "textarea",
+                "selector": "#mat-input-2",
+                "recommendedLocator": "#mat-input-2",
+                "formControlName": "PayRollNotes",
+                "required": false
+              },
+              {
+                "label": "Notes to substitute",
+                "type": "textarea",
+                "selector": "#mat-input-3",
+                "recommendedLocator": "#mat-input-3",
+                "formControlName": "NotesToSubstitute",
+                "required": false
+              },
+              {
+                "label": "",
+                "type": "file",
+                "selector": "#UploadButton",
+                "recommendedLocator": "#UploadButton",
+                "formControlName": null,
+                "required": false
+              }
+            ],
+            "tables": []
+          }
+        },
+        {
+          "label": "after-second-next-Done",
+          "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+          "title": "InstaSub",
+          "activeStep": "Done",
+          "elements": {
+            "buttons": [
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "menu",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"menu\" })",
+                "disabled": false
+              },
+              {
+                "text": "settings",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"settings\" })",
+                "disabled": false
+              },
+              {
+                "text": "notification_important",
+                "role": "button",
+                "selector": "button:nth-of-type(3)",
+                "recommendedLocator": "getByRole('button', { name: \"notification_important\" })",
+                "disabled": false
+              },
+              {
+                "text": "Who's Available",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Who's Available\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "button:nth-of-type(1)",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "button:nth-of-type(2)",
+                "disabled": false
+              },
+              {
+                "text": "Back",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"Back\" })",
+                "disabled": false
+              },
+              {
+                "text": "Create Absence",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"Create Absence\" })",
+                "disabled": false
+              }
+            ],
+            "inputs": [
+              {
+                "label": "Start Date",
+                "type": "input",
+                "selector": "#mat-input-0",
+                "recommendedLocator": "#mat-input-0",
+                "formControlName": "AbsenceStartDate",
+                "required": false
+              },
+              {
+                "label": "End Date",
+                "type": "input",
+                "selector": "#mat-input-1",
+                "recommendedLocator": "#mat-input-1",
+                "formControlName": "AbsenceEndDate",
+                "required": false
+              },
+              {
+                "label": "Reason",
+                "type": "listbox",
+                "selector": "#mat-select-0",
+                "recommendedLocator": "#mat-select-0",
+                "formControlName": "Reason",
+                "required": false
+              },
+              {
+                "label": "Duration",
+                "type": "listbox",
+                "selector": "#mat-select-3",
+                "recommendedLocator": "#mat-select-3",
+                "formControlName": "Duration",
+                "required": false
+              },
+              {
+                "label": "Start Time",
+                "type": "time",
+                "selector": "#mat-input-4",
+                "recommendedLocator": "#mat-input-4",
+                "formControlName": "StartTime",
+                "required": false
+              },
+              {
+                "label": "End Time",
+                "type": "time",
+                "selector": "#mat-input-5",
+                "recommendedLocator": "#mat-input-5",
+                "formControlName": "EndTime",
+                "required": false
+              },
+              {
+                "label": "Select Substitute Preference",
+                "type": "listbox",
+                "selector": "#mat-select-1",
+                "recommendedLocator": "#mat-select-1",
+                "formControlName": "AbsenceType",
+                "required": false
+              },
+              {
+                "label": "Contact Substitutes",
+                "type": "listbox",
+                "selector": "#mat-select-2",
+                "recommendedLocator": "#mat-select-2",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "on",
+                "type": "checkbox",
+                "selector": "#mat-slide-toggle-1-input",
+                "recommendedLocator": "#mat-slide-toggle-1-input",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "Payroll Notes",
+                "type": "textarea",
+                "selector": "#mat-input-2",
+                "recommendedLocator": "#mat-input-2",
+                "formControlName": "PayRollNotes",
+                "required": false
+              },
+              {
+                "label": "Notes to substitute",
+                "type": "textarea",
+                "selector": "#mat-input-3",
+                "recommendedLocator": "#mat-input-3",
+                "formControlName": "NotesToSubstitute",
+                "required": false
+              },
+              {
+                "label": "",
+                "type": "file",
+                "selector": "#UploadButton",
+                "recommendedLocator": "#UploadButton",
+                "formControlName": null,
+                "required": false
+              }
+            ],
+            "tables": []
+          }
+        },
+        {
+          "label": "done-review",
+          "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+          "title": "InstaSub",
+          "activeStep": "Done",
+          "elements": {
+            "buttons": [
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "menu",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"menu\" })",
+                "disabled": false
+              },
+              {
+                "text": "settings",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"settings\" })",
+                "disabled": false
+              },
+              {
+                "text": "notification_important",
+                "role": "button",
+                "selector": "button:nth-of-type(3)",
+                "recommendedLocator": "getByRole('button', { name: \"notification_important\" })",
+                "disabled": false
+              },
+              {
+                "text": "Who's Available",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Who's Available\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "Open calendar",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "button",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "button:nth-of-type(1)",
+                "disabled": false
+              },
+              {
+                "text": "",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "button:nth-of-type(2)",
+                "disabled": false
+              },
+              {
+                "text": "Back",
+                "role": "button",
+                "selector": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"Back\" })",
+                "disabled": false
+              },
+              {
+                "text": "Create Absence",
+                "role": "button",
+                "selector": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"Create Absence\" })",
+                "disabled": false
+              }
+            ],
+            "inputs": [
+              {
+                "label": "Start Date",
+                "type": "input",
+                "selector": "#mat-input-0",
+                "recommendedLocator": "#mat-input-0",
+                "formControlName": "AbsenceStartDate",
+                "required": false
+              },
+              {
+                "label": "End Date",
+                "type": "input",
+                "selector": "#mat-input-1",
+                "recommendedLocator": "#mat-input-1",
+                "formControlName": "AbsenceEndDate",
+                "required": false
+              },
+              {
+                "label": "Reason",
+                "type": "listbox",
+                "selector": "#mat-select-0",
+                "recommendedLocator": "#mat-select-0",
+                "formControlName": "Reason",
+                "required": false
+              },
+              {
+                "label": "Duration",
+                "type": "listbox",
+                "selector": "#mat-select-3",
+                "recommendedLocator": "#mat-select-3",
+                "formControlName": "Duration",
+                "required": false
+              },
+              {
+                "label": "Start Time",
+                "type": "time",
+                "selector": "#mat-input-4",
+                "recommendedLocator": "#mat-input-4",
+                "formControlName": "StartTime",
+                "required": false
+              },
+              {
+                "label": "End Time",
+                "type": "time",
+                "selector": "#mat-input-5",
+                "recommendedLocator": "#mat-input-5",
+                "formControlName": "EndTime",
+                "required": false
+              },
+              {
+                "label": "Select Substitute Preference",
+                "type": "listbox",
+                "selector": "#mat-select-1",
+                "recommendedLocator": "#mat-select-1",
+                "formControlName": "AbsenceType",
+                "required": false
+              },
+              {
+                "label": "Contact Substitutes",
+                "type": "listbox",
+                "selector": "#mat-select-2",
+                "recommendedLocator": "#mat-select-2",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "on",
+                "type": "checkbox",
+                "selector": "#mat-slide-toggle-1-input",
+                "recommendedLocator": "#mat-slide-toggle-1-input",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "Payroll Notes",
+                "type": "textarea",
+                "selector": "#mat-input-2",
+                "recommendedLocator": "#mat-input-2",
+                "formControlName": "PayRollNotes",
+                "required": false
+              },
+              {
+                "label": "Notes to substitute",
+                "type": "textarea",
+                "selector": "#mat-input-3",
+                "recommendedLocator": "#mat-input-3",
+                "formControlName": "NotesToSubstitute",
+                "required": false
+              },
+              {
+                "label": "",
+                "type": "file",
+                "selector": "#UploadButton",
+                "recommendedLocator": "#UploadButton",
+                "formControlName": null,
+                "required": false
+              }
+            ],
+            "tables": []
+          }
+        }
+      ]
+    },
+    "flowVerification": {
+      "mode": "mapped-from-current-spec",
+      "command": "npx playwright test tests/ISE-1559.spec.ts --project=chromium --workers=1 --list",
+      "status": "verified",
+      "matchedTestCases": [
+        {
+          "id": "T1",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T1: Sick absence with Full Day and Notify all subs"
+        },
+        {
+          "id": "T2",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T2: Personal absence with Full Day and Notify 1 Sub"
+        },
+        {
+          "id": "T3",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T3: Vacation absence with Full Day and Notify my favorites"
+        },
+        {
+          "id": "T4",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub"
+        },
+        {
+          "id": "T5",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required"
+        },
+        {
+          "id": "T6",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs"
+        },
+        {
+          "id": "T7",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub"
+        },
+        {
+          "id": "T8",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites"
+        },
+        {
+          "id": "T9",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub"
+        },
+        {
+          "id": "T10",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required"
+        },
+        {
+          "id": "T11",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs"
+        },
+        {
+          "id": "T12",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub"
+        },
+        {
+          "id": "T13",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites"
+        },
+        {
+          "id": "T14",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub"
+        },
+        {
+          "id": "T15",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required"
+        },
+        {
+          "id": "T16",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs"
+        },
+        {
+          "id": "T17",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub"
+        },
+        {
+          "id": "T18",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites"
+        },
+        {
+          "id": "T19",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub"
+        },
+        {
+          "id": "T20",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required"
+        },
+        {
+          "id": "T21",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs"
+        },
+        {
+          "id": "T22",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub"
+        },
+        {
+          "id": "T23",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T23: Educational Leave absence with 09:00-11:00 and Notify my favorites"
+        },
+        {
+          "id": "T24",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub"
+        },
+        {
+          "id": "T25",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required"
+        },
+        {
+          "id": "T26",
+          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs"
+        }
+      ],
+      "missingTestCases": []
+    },
+    "notes": [],
+    "finalUrl": "https://instasublogin.tcpsoftware.com/absence/createAbsence?announcement=true",
+    "title": "InstaSub",
+    "flowDocs": {
+      "login": {
+        "url": "https://instasublogin.tcpsoftware.com/",
+        "selectors": {
+          "username": "input[formcontrolname=\"userName\"]",
+          "password": "input[formcontrolname=\"password\"]",
+          "loginButton": "getByRole(\"button\", { name: \"Login\" })"
+        },
+        "steps": [
+          "Open login URL",
+          "Fill username",
+          "Fill password",
+          "Click Login",
+          "Verify Login button disappears or app navigates away"
+        ]
+      },
+      "wizardExploration": {
+        "scenario": {
+          "id": "T1",
+          "date": "10/16/2026",
+          "reason": "Sick",
+          "duration": "Full Day",
+          "subPreference": "Notify all subs",
+          "notes": "Layer 3 MCP selector exploration only"
+        },
+        "actions": [
+          "Filled start date via input[formcontrolname=\"AbsenceStartDate\"]",
+          "Filled end date via input[formcontrolname=\"AbsenceEndDate\"]",
+          "Selected reason \"Sick\" via mat-select[formcontrolname=\"Reason\"]",
+          "Selected duration \"Full Day\" via mat-select[formcontrolname=\"Duration\"]",
+          "Selected substitute preference \"Notify all subs\" via mat-select[formcontrolname=\"AbsenceType\"]",
+          "Clicked NEXT from Create Absence to Additional Information",
+          "Filled 2 additional information textarea(s)",
+          "Clicked NEXT from Additional Information to Done"
+        ],
+        "capturedPages": [
+          {
+            "label": "create-absence-empty",
+            "activeStep": "Create Absence",
+            "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+            "buttons": 14,
+            "inputs": 12,
+            "tables": 0
+          },
+          {
+            "label": "create-absence-filled",
+            "activeStep": "Create Absence",
+            "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+            "buttons": 14,
+            "inputs": 12,
+            "tables": 0
+          },
+          {
+            "label": "after-first-next-Additional Information",
+            "activeStep": "Additional Information",
+            "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+            "buttons": 14,
+            "inputs": 12,
+            "tables": 0
+          },
+          {
+            "label": "additional-information-filled",
+            "activeStep": "Additional Information",
+            "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+            "buttons": 14,
+            "inputs": 12,
+            "tables": 0
+          },
+          {
+            "label": "after-second-next-Done",
+            "activeStep": "Done",
+            "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+            "buttons": 14,
+            "inputs": 12,
+            "tables": 0
+          },
+          {
+            "label": "done-review",
+            "activeStep": "Done",
+            "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+            "buttons": 14,
+            "inputs": 12,
+            "tables": 0
+          }
+        ]
+      },
+      "generatedCases": [
+        {
+          "id": "T1",
+          "title": "Sick absence with Full Day and Notify all subs",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T2",
+          "title": "Personal absence with Full Day and Notify 1 Sub",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T3",
+          "title": "Vacation absence with Full Day and Notify my favorites",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T4",
+          "title": "Illness-Family Member absence with Full Day and Assign a specific sub",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T5",
+          "title": "Educational Leave absence with Full Day and No sub required",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T6",
+          "title": "Professional Development absence with Half Day AM and Notify all subs",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T7",
+          "title": "Sick absence with Half Day AM and Notify 1 Sub",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T8",
+          "title": "Personal absence with Half Day AM and Notify my favorites",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T9",
+          "title": "Vacation absence with Half Day AM and Assign a specific sub",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T10",
+          "title": "Illness-Family Member absence with Half Day AM and No sub required",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T11",
+          "title": "Educational Leave absence with Half Day PM and Notify all subs",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T12",
+          "title": "Professional Development absence with Half Day PM and Notify 1 Sub",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T13",
+          "title": "Sick absence with Half Day PM and Notify my favorites",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T14",
+          "title": "Personal absence with Half Day PM and Assign a specific sub",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T15",
+          "title": "Vacation absence with Half Day PM and No sub required",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T16",
+          "title": "Illness-Family Member absence with Enter Time Manually (10:00–15:00) and Notify all subs",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T17",
+          "title": "Educational Leave absence with Enter Time Manually (10:00–15:00) and Notify 1 Sub",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T18",
+          "title": "Professional Development absence with Enter Time Manually (10:00–15:00) and Notify my favorites",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T19",
+          "title": "Sick absence with Enter Time Manually (10:00–15:00) and Assign a specific sub",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T20",
+          "title": "Personal absence with Enter Time Manually (10:00–15:00) and No sub required",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T21",
+          "title": "Vacation absence with 08:00–12:00 and Notify all subs",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T22",
+          "title": "Illness-Family Member absence with 10:00–14:00 and Notify 1 Sub",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T23",
+          "title": "Educational Leave absence with 09:00–11:00 and Notify my favorites",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T24",
+          "title": "Professional Development absence with 12:00–16:00 and Assign a specific sub",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T25",
+          "title": "Sick absence with 08:00–10:00 and No sub required",
+          "verification": "requires-codegen-or-manual-exploration"
+        },
+        {
+          "id": "T26",
+          "title": "Personal absence with 13:00–17:00 and Notify all subs",
+          "verification": "requires-codegen-or-manual-exploration"
+        }
+      ]
+    },
+    "explorerActions": [
+      "Filled start date via input[formcontrolname=\"AbsenceStartDate\"]",
+      "Filled end date via input[formcontrolname=\"AbsenceEndDate\"]",
+      "Selected reason \"Sick\" via mat-select[formcontrolname=\"Reason\"]",
+      "Selected duration \"Full Day\" via mat-select[formcontrolname=\"Duration\"]",
+      "Selected substitute preference \"Notify all subs\" via mat-select[formcontrolname=\"AbsenceType\"]",
+      "Clicked NEXT from Create Absence to Additional Information",
+      "Filled 2 additional information textarea(s)",
+      "Clicked NEXT from Additional Information to Done"
+    ]
+  },
+  "codegenHints": {
+    "consumeInLayer4": true,
+    "preferExplorerSelectors": true,
+    "preferExecutedSpecTitles": false,
+    "targetSpec": "tests/ISE-1559.spec.ts"
+  }
+}

@@ -94,12 +94,19 @@ class Layer4Agent {
    */
   buildQueries(testPlan) {
     const layer2Context = this.loadJson(path.join(this.contextDir, 'layer2-strategy-context.json'), null);
+    const manualMcpContext = this.loadJson(path.join(this.contextDir, 'mcp-playwright-context.json'), null);
     const explorerContext = this.loadJson(path.join(this.contextDir, 'explorer-context.json'), null);
     const queries = testPlan
       .map((tc) => tc && tc.description)
       .filter(Boolean);
     if (layer2Context?.retrievalQueries) queries.push(...layer2Context.retrievalQueries);
     if (layer2Context?.codegenHints?.requiredAssertions) queries.push(...layer2Context.codegenHints.requiredAssertions);
+    if (manualMcpContext?.verification?.discoveredTests) {
+      queries.push(...manualMcpContext.verification.discoveredTests);
+    }
+    if (manualMcpContext?.codegenHints?.targetSpec) {
+      queries.push(`target spec ${manualMcpContext.codegenHints.targetSpec}`);
+    }
     if (explorerContext?.snapshots?.elements?.inputs) {
       queries.push(...explorerContext.snapshots.elements.inputs.map((input) => `input ${input.label} ${input.selector}`));
     }
@@ -233,7 +240,9 @@ class Layer4Agent {
 
     console.log(`🧭 Detected ${requestType} pairwise absence plan — generated executable wizard flow.`);
     if (requestType === 'Employee') {
-      console.log('   • Employee search uses "user third" with fallback matching');
+      console.log('   • Employee search uses configured ABSENCE_EMPLOYEE_SEARCH/ABSENCE_EMPLOYEE_LABEL values');
+    } else if (requestType === 'Teacher') {
+      console.log('   • Teacher flow uses direct absence UI and skips admin radio/search selection');
     } else {
       console.log('   • Self flow skips Employee radio/search selection');
     }
@@ -260,6 +269,7 @@ class Layer4Agent {
       .filter(Boolean)
       .join(' ');
 
+    if (this.ticketId === 'ISE-1559') return 'Teacher';
     if (/\bself\b/i.test(searchable) || this.ticketId === 'ISE-1558') return 'Self';
     return 'Employee';
   }
@@ -279,16 +289,28 @@ class Layer4Agent {
 
   _renderEmployeePairwiseSpec(scenarios, requestType = 'Employee') {
     const requestArg = requestType === 'Employee' ? '' : `, { requestType: '${requestType}' }`;
+    const teacherGuard = this.ticketId === 'ISE-1559' ? `
+const EXPECTED_USERNAME = 'staffuser210@mailinator.com';
+` : '';
+    const beforeAll = this.ticketId === 'ISE-1559' ? `
+  test.beforeAll(() => {
+    if (process.env.Teacher_USERNAME !== EXPECTED_USERNAME) {
+      throw new Error(\`ISE-1559 must use Teacher_USERNAME=\${EXPECTED_USERNAME}. Current Teacher_USERNAME=\${process.env.Teacher_USERNAME || '(unset)'}\`);
+    }
+  });
+` : '';
 
     return `import { test, Page } from '@playwright/test';
 import { AbsenceFormPage, AbsenceScenario } from '../pom/AbsenceFormPage.page';
 
+${teacherGuard}
 const scenarios: AbsenceScenario[] = ${this._formatTsLiteral(scenarios)};
 
 test.describe('${this.ticketId}: ${requestType} absence pairwise regression', () => {
   let page: Page;
   let absencePage: AbsenceFormPage;
 
+${beforeAll}
   test.beforeEach(async ({ browser }) => {
     page = await browser.newPage();
     absencePage = new AbsenceFormPage(page);
@@ -375,6 +397,7 @@ test.describe('${this.ticketId}: ${requestType} absence pairwise regression', ()
     const contextPlanPath = path.join(this.contextDir, 'layer2-test-plan.json');
     const layer2ContextPath = path.join(this.contextDir, 'layer2-strategy-context.json');
     const layer3ContextPath = path.join(this.contextDir, 'layer3-retrieval-context.json');
+    const manualMcpContextPath = path.join(this.contextDir, 'mcp-playwright-context.json');
     const explorerContextPath = path.join(this.contextDir, 'explorer-context.json');
     const planPath = path.join(this.testResultsDir, 'LAYER2-TEST-PLAN.json');
 
@@ -388,12 +411,19 @@ test.describe('${this.ticketId}: ${requestType} absence pairwise regression', ()
 
     const layer2Context = this.loadJson(layer2ContextPath, null);
     const layer3Context = this.loadJson(layer3ContextPath, null);
+    const manualMcpContext = this.loadJson(manualMcpContextPath, null);
     const explorerContext = this.loadJson(explorerContextPath, null);
     if (layer2Context) {
       console.log(`📎 Loaded Layer 2 strategy context for ${layer2Context.ticket || this.ticketId}`);
     }
     if (layer3Context) {
       console.log(`📎 Loaded Layer 3 retrieval context with ${layer3Context.assets?.length || 0} asset hint(s)`);
+    }
+    if (manualMcpContext) {
+      console.log(
+        `📎 Loaded Layer 3 manual MCP context (${manualMcpContext.status}) with ` +
+          `${manualMcpContext.verification?.discoveredTests?.length || 0} discovered test(s)`
+      );
     }
     if (explorerContext) {
       console.log(

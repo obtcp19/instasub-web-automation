@@ -116,16 +116,27 @@ Seven-layer orchestration system for advanced test automation:
 npm run agent:all ISE-1234
 
 # Run individual layers
-npm run agent:intake ISE-1234      # Layer 0: Ticket intake & PR
-npm run agent:requirements ISE-1234  # Layer 1: Parse requirements
-npm run agent:strategy               # Layer 2: Design strategy
-npm run agent:context                # Layer 3: Retrieve context
-npm run agent:codegen                # Layer 4: Generate code
-npm run agent:execution              # Layer 5: Execute tests
-npm run agent:selfheal               # Layer 6: Self-healing
+npm run agent:intake ISE-1234                          # Layer 0: Ticket intake & PR
+npm run agent:requirements ISE-1234                    # Layer 1: Parse requirements
+npm run agent:strategy                                 # Layer 2: Design strategy
+npm run agent:context ISE-1234 --manual-mcp --explore --headed  # Layer 3: Capture context with MCP
+npm run agent:codegen                                  # Layer 4: Generate code
+npm run agent:execution                                # Layer 5: Execute tests
+npm run agent:selfheal                                 # Layer 6: Self-healing
 
 # Layer 5 with Docker Compose
 npm run test:layer5:compose
+```
+
+**Layer 3 (Context Retrieval) Parameters:**
+- `ISE-XXXX` — Jira ticket number (required)
+- `--manual-mcp` — Capture Playwright MCP context for Layer 4 codegen
+- `--explore` — Explore UI selectors and elements
+- `--headed` — Run browser in headed mode (visible)
+
+Example:
+```bash
+node agents/agent-layer3-context.js ISE-1559 --manual-mcp --explore --headed
 ```
 
 ## Vector Database

@@ -1,5 +1,14 @@
 const { expect } = require('@playwright/test');
 
+export interface AbsenceScenario {
+  id: string;
+  date: string;
+  reason: string;
+  duration: string;
+  subPreference: string;
+  subSelected?: string;
+}
+
 /**
  * Page object for the live InstaSub Employee absence wizard.
  *
@@ -7,7 +16,7 @@ const { expect } = require('@playwright/test');
  * CDK overlay, the employee field is an autocomplete, and Step 2/3 panels stay
  * attached while hidden. Methods here target visible controls only.
  */
-class AbsenceFormPage {
+export class AbsenceFormPage {
   constructor(page) {
     this.page = page;
     this.timeout = 10000;
@@ -33,7 +42,7 @@ class AbsenceFormPage {
     scenario.date = await this.setDates(scenario.date, scenario.date);
     await this.selectReason(scenario.reason);
     await this.setDuration(scenario.duration);
-    await this.selectSubstitutePreference(scenario.subPreference);
+    scenario.subPreference = await this.selectSubstitutePreference(scenario.subPreference);
 
     if (this.requiresSpecificSub(scenario.subPreference)) {
       await this.selectSubstitute(scenario.subSelected || 'Sub 2');
@@ -49,6 +58,11 @@ class AbsenceFormPage {
   }
 
   async prepareRequestType(requestType) {
+    if (['Teacher', 'TeacherDirect', 'Direct'].includes(requestType)) {
+      await this.waitForAppIdle();
+      return;
+    }
+
     if (requestType === 'Employee') {
       await this.selectEmployeeForAbsence();
       return;
@@ -61,7 +75,7 @@ class AbsenceFormPage {
   }
 
   async selectEmployeeForAbsence() {
-    const employeeSearchText = process.env.ABSENCE_EMPLOYEE_SEARCH || 'user third';
+    const employeeSearchText = process.env.ABSENCE_EMPLOYEE_SEARCH || 'staffuser210@mailinator.com';
     const employeeLabel = process.env.ABSENCE_EMPLOYEE_LABEL || employeeSearchText;
 
     await this.selectRequestType('Employee');
@@ -185,8 +199,8 @@ class AbsenceFormPage {
   }
 
   async selectEmployee(searchText, employeeLabel) {
-    const queries = this.uniqueValues(['third', searchText, 'user third']);
-    const labels = this.uniqueValues([employeeLabel, searchText, 'THIRDSCHOOL Kips Employee']);
+    const queries = this.uniqueValues([searchText, employeeLabel]);
+    const labels = this.uniqueValues([employeeLabel, searchText]);
 
     for (const query of queries) {
       await this.searchEmployee(query);
@@ -272,15 +286,33 @@ class AbsenceFormPage {
 
   async selectSubstitutePreference(preference) {
     await this.chooseOption(this.substitutePreference, preference);
-    await this.dismissPreferenceAlert();
+    const alertText = await this.dismissPreferenceAlert();
+
+    if (/notify my favorites/i.test(preference) && /no preferred substitute/i.test(alertText)) {
+      const fallbackPreference = process.env.ABSENCE_FAVORITES_FALLBACK || 'Notify all subs';
+      await this.chooseOption(this.substitutePreference, fallbackPreference);
+      await this.dismissPreferenceAlert();
+      return fallbackPreference;
+    }
+
+    return preference;
   }
 
   async dismissPreferenceAlert() {
+    const alert = this.page
+      .locator('[role="alert"]:visible, .mat-snack-bar-container:visible, .toast:visible, .cdk-overlay-container:visible')
+      .first();
+    let alertText = await alert.textContent({ timeout: 1000 }).catch(() => '');
+    const noPreferredSubstitute = this.page.getByText(/There is no preferred substitute/i).first();
+    if (await noPreferredSubstitute.isVisible({ timeout: 1000 }).catch(() => false)) {
+      alertText = `${alertText} There is no preferred substitute.`;
+    }
     const alertButton = this.page.locator('button:has-text("dismiss"):visible, button[aria-label*="dismiss" i]:visible').first();
     if (await alertButton.isVisible({ timeout: 2000 }).catch(() => false)) {
       await alertButton.click().catch(() => {});
       await this.waitForAppIdle();
     }
+    return alertText || '';
   }
 
   async selectSubstitute(subName) {
@@ -326,6 +358,11 @@ class AbsenceFormPage {
       if (step === 'Additional Information' || step === 'Done') return step;
 
       lastErrors = await this.visibleValidationErrors();
+      if (/notify my favorites/i.test(scenario.subPreference) && await this.hasNoPreferredSubstituteAlert()) {
+        scenario.subPreference = await this.selectFavoritesFallbackPreference();
+        continue;
+      }
+
       if (!(await this.startDate.isVisible().catch(() => false))) {
         throw new Error(
           `Could not advance from Create Absence and date fields are not visible. ` +
@@ -337,9 +374,9 @@ class AbsenceFormPage {
       if (attempt < maxAttempts - 1) {
         const retryDate = AbsenceFormPage.nextRetryDate();
         scenario.date = await this.setDates(retryDate, retryDate);
+        scenario.subPreference = await this.recoverSubstitutePreference(scenario.subPreference);
 
         if (this.requiresSpecificSub(scenario.subPreference)) {
-          await this.selectSubstitutePreference(scenario.subPreference);
           await this.selectSubstitute(scenario.subSelected || 'Sub 2');
         }
       }
@@ -350,6 +387,28 @@ class AbsenceFormPage {
         `Final step: ${lastStep || '(unknown)'}. ` +
         `Visible validation errors: ${lastErrors.join(' | ') || '(none)'}`
     );
+  }
+
+  async recoverSubstitutePreference(preference) {
+    const selectedText = (await this.substitutePreference.textContent().catch(() => ''))?.trim() || '';
+    if (selectedText.includes(preference)) return preference;
+    return this.selectSubstitutePreference(preference);
+  }
+
+  async hasNoPreferredSubstituteAlert() {
+    return this.page
+      .getByText(/There is no preferred substitute/i)
+      .first()
+      .isVisible({ timeout: 1000 })
+      .catch(() => false);
+  }
+
+  async selectFavoritesFallbackPreference() {
+    const fallbackPreference = process.env.ABSENCE_FAVORITES_FALLBACK || 'Notify all subs';
+    await this.dismissPreferenceAlert();
+    await this.chooseOption(this.substitutePreference, fallbackPreference);
+    await this.dismissPreferenceAlert();
+    return fallbackPreference;
   }
 
   async clickNext() {

@@ -1,13 +1,13 @@
 {
   "layer": 2,
-  "ticket": "ISE-1558",
-  "generatedAt": "2026-06-17T13:16:35.630Z",
+  "ticket": "ISE-1559",
+  "generatedAt": "2026-06-18T09:16:08.397Z",
   "sourceRequirements": {
     "path": "context/layer1-requirements.json",
     "found": true,
-    "title": "Completed 26 pairwise regression tests for the Self absence creation flow using the administrator account (regsadmin@mailinator.com). All 26 tests passed.",
+    "title": "Completed 26 pairwise regression tests for the Employee absence creation flow, logged in to the teacher account (username staffuser210@mailinator.com, password [redacted]). All 26 tests passe",
     "priority": "Medium",
-    "acceptanceCriteriaCount": 4,
+    "acceptanceCriteriaCount": 11,
     "testableItemsCount": 26
   },
   "artifacts": {
@@ -40,7 +40,7 @@
     }
   },
   "retrievalQueries": [
-    "Completed 26 pairwise regression tests for the Self absence creation flow using the administrator account (regsadmin@mailinator.com). All 26 tests passed.",
+    "Completed 26 pairwise regression tests for the Employee absence creation flow, logged in to the teacher account (username staffuser210@mailinator.com, password [redacted]). All 26 tests passe",
     "playwright page object model selectors",
     "explorer accessibility snapshot buttons inputs tables",
     "login username password button selectors",
@@ -72,7 +72,7 @@
     "Professional Development absence with 12:00–16:00 and Assign a specific sub"
   ],
   "codegenHints": {
-    "targetSpec": "tests/ISE-1558.spec.ts",
+    "targetSpec": "tests/ISE-1559.spec.ts",
     "preferExistingPom": true,
     "requiredAssertions": [
       "Review step shows selected reason and date before submit",
@@ -82,38 +82,11 @@
     "executionMode": "serial when tests mutate a shared employee leave balance",
     "strategyCoverage": {
       "planned": 26,
-      "matchedInCurrentSpec": 0,
-      "missingInCurrentSpec": [
-        "T1",
-        "T2",
-        "T3",
-        "T4",
-        "T5",
-        "T6",
-        "T7",
-        "T8",
-        "T9",
-        "T10",
-        "T11",
-        "T12",
-        "T13",
-        "T14",
-        "T15",
-        "T16",
-        "T17",
-        "T18",
-        "T19",
-        "T20",
-        "T21",
-        "T22",
-        "T23",
-        "T24",
-        "T25",
-        "T26"
-      ]
+      "matchedInCurrentSpec": 26,
+      "missingInCurrentSpec": []
     }
   },
-  "gherkinPreview": "Feature: Completed 26 pairwise regression tests for the Self absence creation flow using the administrator account (regsadmin@mailinator.com). All 26 tests passed.\n  Ticket: ISE-1558\n  Priority: Medium\n\n  Background:\n    Given the administrator is on the Employee absence creation flow\n    And the target employee is selected\n\n  Scenario: T1 - Employee absence Sick / Full Day / Notify all subs\n    Given the absence date is \"Jan 1, 2027\"\n    And the absence reason is \"Sick\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify all subs\"\n    When the employee absence is submitted\n    Then the test result should be \"✅ PASS\"\n\n  Scenario: T2 - Employee absence Personal / Full Day / Notify 1 Sub\n    Given the absence date is \"Jan 2, 2027\"\n    And the absence reason is \"Personal\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify 1 Sub\"\n    And the substitute selected is \"Sub 2\"\n    When the employee absence is submitted\n    Then the test result should be \"✅ PASS\"\n\n  Scenario: T3 - Employee absence Vacation / Full Day / Notify my favorites\n    Given the absence date is \"Jan 3, 2027\"\n    And the absence reason is \"Vacation\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify my favorites\"\n    When the employee absence is submitted\n    Then the test result should be \"✅ PASS\"\n\n  Scenario: T4 - Employee absence Illness-Family Member / Full Day / Assign a specific sub\n    Given the absence date is \"Jan 4, 2027\"\n    And the absence reason is \"Illness-Family Member\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Assign a specific sub\"\n    And the substitute selected is \"Sub 2\"\n    When the employee absence is submitted",
+  "gherkinPreview": "Feature: Completed 26 pairwise regression tests for the Employee absence creation flow, logged in to the teacher account (username staffuser210@mailinator.com, password [redacted]). All 26 tests passe\n  Ticket: ISE-1559\n  Priority: Medium\n\n  Background:\n    Given the administrator is on the Employee absence creation flow\n    And the target employee is selected\n\n  Scenario: T1 - Employee absence Sick / Full Day / Notify all subs\n    Given the absence date is \"Jan 1, 2027\"\n    And the absence reason is \"Sick\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify all subs\"\n    When the employee absence is submitted\n    Then the test result should be \"(/) PASS\"\n\n  Scenario: T2 - Employee absence Personal / Full Day / Notify 1 Sub\n    Given the absence date is \"Jan 2, 2027\"\n    And the absence reason is \"Personal\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify 1 Sub\"\n    And the substitute selected is \"Sub 2\"\n    When the employee absence is submitted\n    Then the test result should be \"(/) PASS\"\n\n  Scenario: T3 - Employee absence Vacation / Full Day / Notify my favorites\n    Given the absence date is \"Jan 3, 2027\"\n    And the absence reason is \"Vacation\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify my favorites\"\n    When the employee absence is submitted\n    Then the test result should be \"(/) PASS\"\n\n  Scenario: T4 - Employee absence Illness-Family Member / Full Day / Assign a specific sub\n    Given the absence date is \"Jan 4, 2027\"\n    And the absence reason is \"Illness-Family Member\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Assign a specific sub\"\n    And the substitute selected is \"Sub 2\"\n    When the employee absence is submitted",
   "riskMatrix": [
     {
       "risk": "Async/Promise timeout on confirmation generation",
@@ -134,7 +107,7 @@
       "duration": "Full Day",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T2",
@@ -146,7 +119,7 @@
       "duration": "Full Day",
       "subPreference": "Notify 1 Sub",
       "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T3",
@@ -158,7 +131,7 @@
       "duration": "Full Day",
       "subPreference": "Notify my favorites",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T4",
@@ -170,7 +143,7 @@
       "duration": "Full Day",
       "subPreference": "Assign a specific sub",
       "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T5",
@@ -182,7 +155,7 @@
       "duration": "Full Day",
       "subPreference": "No sub required",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T6",
@@ -194,7 +167,7 @@
       "duration": "Half Day AM",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T7",
@@ -206,7 +179,7 @@
       "duration": "Half Day AM",
       "subPreference": "Notify 1 Sub",
       "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T8",
@@ -218,7 +191,7 @@
       "duration": "Half Day AM",
       "subPreference": "Notify my favorites",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T9",
@@ -230,7 +203,7 @@
       "duration": "Half Day AM",
       "subPreference": "Assign a specific sub",
       "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T10",
@@ -242,7 +215,7 @@
       "duration": "Half Day AM",
       "subPreference": "No sub required",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T11",
@@ -254,7 +227,7 @@
       "duration": "Half Day PM",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T12",
@@ -266,7 +239,7 @@
       "duration": "Half Day PM",
       "subPreference": "Notify 1 Sub",
       "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T13",
@@ -278,7 +251,7 @@
       "duration": "Half Day PM",
       "subPreference": "Notify my favorites",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T14",
@@ -290,7 +263,7 @@
       "duration": "Half Day PM",
       "subPreference": "Assign a specific sub",
       "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T15",
@@ -302,7 +275,7 @@
       "duration": "Half Day PM",
       "subPreference": "No sub required",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T16",
@@ -314,7 +287,7 @@
       "duration": "Enter Time Manually (10:00–15:00)",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T17",
@@ -326,7 +299,7 @@
       "duration": "Enter Time Manually (10:00–15:00)",
       "subPreference": "Notify 1 Sub",
       "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T18",
@@ -338,7 +311,7 @@
       "duration": "Enter Time Manually (10:00–15:00)",
       "subPreference": "Notify my favorites",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T19",
@@ -350,7 +323,7 @@
       "duration": "Enter Time Manually (10:00–15:00)",
       "subPreference": "Assign a specific sub",
       "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T20",
@@ -362,7 +335,7 @@
       "duration": "Enter Time Manually (10:00–15:00)",
       "subPreference": "No sub required",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T21",
@@ -374,7 +347,7 @@
       "duration": "08:00–12:00",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T22",
@@ -386,7 +359,7 @@
       "duration": "10:00–14:00",
       "subPreference": "Notify 1 Sub",
       "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T23",
@@ -398,7 +371,7 @@
       "duration": "09:00–11:00",
       "subPreference": "Notify my favorites",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T24",
@@ -410,7 +383,7 @@
       "duration": "12:00–16:00",
       "subPreference": "Assign a specific sub",
       "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T25",
@@ -422,7 +395,7 @@
       "duration": "08:00–10:00",
       "subPreference": "No sub required",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T26",
@@ -434,58 +407,162 @@
       "duration": "13:00–17:00",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     }
   ],
   "playwrightVerification": {
-    "status": "skipped",
+    "status": "verified",
     "mode": "list",
-    "ticket": "ISE-1558",
-    "spec": "tests/ISE-1558.spec.ts",
-    "command": null,
-    "discoveredTests": [],
-    "matchedTestCases": [],
-    "missingTestCases": [
-      "T1",
-      "T2",
-      "T3",
-      "T4",
-      "T5",
-      "T6",
-      "T7",
-      "T8",
-      "T9",
-      "T10",
-      "T11",
-      "T12",
-      "T13",
-      "T14",
-      "T15",
-      "T16",
-      "T17",
-      "T18",
-      "T19",
-      "T20",
-      "T21",
-      "T22",
-      "T23",
-      "T24",
-      "T25",
-      "T26"
+    "ticket": "ISE-1559",
+    "spec": "tests/ISE-1559.spec.ts",
+    "command": "npx playwright test tests/ISE-1559.spec.ts --project=chromium --workers=1 --list",
+    "discoveredTests": [
+      "auth.setup.ts:17:1 › authenticate",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T1: Sick absence with Full Day and Notify all subs",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T2: Personal absence with Full Day and Notify 1 Sub",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T3: Vacation absence with Full Day and Notify my favorites",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T23: Educational Leave absence with 09:00-11:00 and Notify my favorites",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required",
+      "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs"
     ],
-    "exitCode": null,
-    "notes": [
-      "No existing spec found at tests/ISE-1558.spec.ts; generated strategy context for downstream codegen."
+    "matchedTestCases": [
+      {
+        "id": "T1",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T1: Sick absence with Full Day and Notify all subs"
+      },
+      {
+        "id": "T2",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T2: Personal absence with Full Day and Notify 1 Sub"
+      },
+      {
+        "id": "T3",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T3: Vacation absence with Full Day and Notify my favorites"
+      },
+      {
+        "id": "T4",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub"
+      },
+      {
+        "id": "T5",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required"
+      },
+      {
+        "id": "T6",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs"
+      },
+      {
+        "id": "T7",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub"
+      },
+      {
+        "id": "T8",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites"
+      },
+      {
+        "id": "T9",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub"
+      },
+      {
+        "id": "T10",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required"
+      },
+      {
+        "id": "T11",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs"
+      },
+      {
+        "id": "T12",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub"
+      },
+      {
+        "id": "T13",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites"
+      },
+      {
+        "id": "T14",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub"
+      },
+      {
+        "id": "T15",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required"
+      },
+      {
+        "id": "T16",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs"
+      },
+      {
+        "id": "T17",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub"
+      },
+      {
+        "id": "T18",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites"
+      },
+      {
+        "id": "T19",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub"
+      },
+      {
+        "id": "T20",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required"
+      },
+      {
+        "id": "T21",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs"
+      },
+      {
+        "id": "T22",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub"
+      },
+      {
+        "id": "T23",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T23: Educational Leave absence with 09:00-11:00 and Notify my favorites"
+      },
+      {
+        "id": "T24",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub"
+      },
+      {
+        "id": "T25",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required"
+      },
+      {
+        "id": "T26",
+        "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs"
+      }
     ],
-    "verifiedAt": "2026-06-17T13:16:35.629Z"
+    "missingTestCases": [],
+    "exitCode": 0,
+    "notes": [],
+    "verifiedAt": "2026-06-18T09:16:07.283Z"
   },
   "explorerContext": {
     "layer": "Explorer",
     "status": "skipped",
     "mode": "planned",
     "url": "https://instasublogin.tcpsoftware.com/",
-    "ticket": "ISE-1558",
-    "generatedAt": "2026-06-17T13:16:35.630Z",
+    "ticket": "ISE-1559",
+    "generatedAt": "2026-06-18T09:16:08.397Z",
     "mcp": {
       "protocol": "MCP",
       "server": "mcp://playwright",
@@ -494,37 +571,10 @@
     "why": "Generates authoritative selectors and flow docs for downstream Layer 3 context retrieval and Layer 4 codegen.",
     "coverage": {
       "plannedCases": 26,
-      "coveredCases": 0,
-      "missingCases": [
-        "T1",
-        "T2",
-        "T3",
-        "T4",
-        "T5",
-        "T6",
-        "T7",
-        "T8",
-        "T9",
-        "T10",
-        "T11",
-        "T12",
-        "T13",
-        "T14",
-        "T15",
-        "T16",
-        "T17",
-        "T18",
-        "T19",
-        "T20",
-        "T21",
-        "T22",
-        "T23",
-        "T24",
-        "T25",
-        "T26"
-      ],
+      "coveredCases": 26,
+      "missingCases": [],
       "coveredByOtherLayer": {
-        "layer2PlaywrightVerification": 0,
+        "layer2PlaywrightVerification": 26,
         "layer5Execution": "covered when agent-layer5-execution.js runs the generated/current spec"
       }
     },
@@ -538,37 +588,115 @@
     },
     "flowVerification": {
       "mode": "mapped-from-current-spec",
-      "command": null,
-      "status": "skipped",
-      "matchedTestCases": [],
-      "missingTestCases": [
-        "T1",
-        "T2",
-        "T3",
-        "T4",
-        "T5",
-        "T6",
-        "T7",
-        "T8",
-        "T9",
-        "T10",
-        "T11",
-        "T12",
-        "T13",
-        "T14",
-        "T15",
-        "T16",
-        "T17",
-        "T18",
-        "T19",
-        "T20",
-        "T21",
-        "T22",
-        "T23",
-        "T24",
-        "T25",
-        "T26"
-      ]
+      "command": "npx playwright test tests/ISE-1559.spec.ts --project=chromium --workers=1 --list",
+      "status": "verified",
+      "matchedTestCases": [
+        {
+          "id": "T1",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T1: Sick absence with Full Day and Notify all subs"
+        },
+        {
+          "id": "T2",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T2: Personal absence with Full Day and Notify 1 Sub"
+        },
+        {
+          "id": "T3",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T3: Vacation absence with Full Day and Notify my favorites"
+        },
+        {
+          "id": "T4",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub"
+        },
+        {
+          "id": "T5",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required"
+        },
+        {
+          "id": "T6",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs"
+        },
+        {
+          "id": "T7",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub"
+        },
+        {
+          "id": "T8",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites"
+        },
+        {
+          "id": "T9",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub"
+        },
+        {
+          "id": "T10",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required"
+        },
+        {
+          "id": "T11",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs"
+        },
+        {
+          "id": "T12",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub"
+        },
+        {
+          "id": "T13",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites"
+        },
+        {
+          "id": "T14",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub"
+        },
+        {
+          "id": "T15",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required"
+        },
+        {
+          "id": "T16",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs"
+        },
+        {
+          "id": "T17",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub"
+        },
+        {
+          "id": "T18",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites"
+        },
+        {
+          "id": "T19",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub"
+        },
+        {
+          "id": "T20",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required"
+        },
+        {
+          "id": "T21",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs"
+        },
+        {
+          "id": "T22",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub"
+        },
+        {
+          "id": "T23",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T23: Educational Leave absence with 09:00-11:00 and Notify my favorites"
+        },
+        {
+          "id": "T24",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub"
+        },
+        {
+          "id": "T25",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required"
+        },
+        {
+          "id": "T26",
+          "title": "ISE-1559.spec.ts:214:9 › ISE-1559: Employee absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs"
+        }
+      ],
+      "missingTestCases": []
     },
     "notes": [
       "Explorer browser launch skipped. Run Layer 2 with --explore to capture live UI selectors."

@@ -82,17 +82,20 @@ node agents/agent-layer2-strategy.js ISE-1556 --explore
 
 ---
 
-### Agent 3: Context Retrieval (`agent-layer3-context.js`)
+### Agent 3: Context Retrieval + Manual MCP (`agent-layer3-context.js`)
 
-**Purpose:** Query vector DB for reusable code patterns
+**Purpose:** Query vector DB for reusable code patterns and optionally capture manual Playwright MCP context for Layer 4
 
-**Input:** Requirements or search queries
-**Output:** List of matching POMs and utilities
+**Input:** Requirements, search queries, Layer 2 test plan, or manual Playwright MCP execution
+**Output:** Reusable POM/utilities plus saved MCP context for codegen
 
 **Features:**
 - Semantic search with TF-IDF
 - Keyword extraction from requirements
 - Reads `context/layer2-strategy-context.json` retrieval queries when present
+- Manually runs Playwright MCP list/run commands when requested
+- Captures browser selectors and accessibility context with `--explore`
+- Writes `context/mcp-playwright-context.json` for codegen
 - Reads `context/explorer-context.json` selectors and flow docs when present
 - Writes `context/layer3-retrieval-context.json` for codegen
 - Code similarity matching
@@ -105,6 +108,15 @@ node agents/agent-layer3-context.js
 
 # Manual search
 node agents/agent-layer3-context.js absence confirmation teacher
+
+# Manual MCP context capture for Layer 4 without executing tests
+node agents/agent-layer3-context.js ISE-1556 --manual-mcp
+
+# Manual MCP context capture and real Playwright execution
+node agents/agent-layer3-context.js ISE-1556 --manual-mcp --run-playwright
+
+# Manual MCP browser selector capture for Layer 4
+node agents/agent-layer3-context.js ISE-1556 --manual-mcp --explore
 ```
 
 ---
