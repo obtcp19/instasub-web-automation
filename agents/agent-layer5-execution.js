@@ -180,6 +180,8 @@ class Layer5Agent {
       grep = '',
       list = false,
       ticket = DEFAULT_TICKET,
+      authUsernameVar = '',
+      authPasswordVar = '',
       updateJira = true,
       jiraStatusFlow = DEFAULT_JIRA_STATUS_FLOW,
       jiraOnly = false,
@@ -196,6 +198,9 @@ class Layer5Agent {
     console.log(`   Ticket: ${ticket}`);
     console.log(`   Test Spec: ${spec || '(all)'}`);
     console.log(`   Jira Flow: ${updateJira ? jiraStatusFlow.join(' -> ') : 'Disabled'}`);
+    if (authUsernameVar || authPasswordVar) {
+      console.log(`   Auth Vars: ${authUsernameVar || 'PW_USERNAME'} / ${authPasswordVar || 'PW_PASSWORD'}`);
+    }
     if (jiraOnly) console.log(`   Jira only: true`);
     if (grep) console.log(`   Grep: ${grep}`);
     if (list) console.log(`   List only: true`);
@@ -219,7 +224,7 @@ class Layer5Agent {
       await this._updateJira(ticket, jiraStatusFlow.slice(0, 2));
     }
 
-    const results = this._runTests({ spec, browsers, parallel, headless, grep, list });
+    const results = this._runTests({ spec, browsers, parallel, headless, grep, list, ticket, authUsernameVar, authPasswordVar });
 
     if (updateJira && !list && results.exitCode === 0 && results.failed === 0) {
       await this._updateJira(ticket, jiraStatusFlow.slice(2));
@@ -268,7 +273,7 @@ class Layer5Agent {
     }
   }
 
-  _runTests({ spec, browsers, parallel, headless, grep, list }) {
+  _runTests({ spec, browsers, parallel, headless, grep, list, ticket, authUsernameVar, authPasswordVar }) {
     console.log(`📋 Running tests...\n`);
 
     const args = ['playwright', 'test'];
@@ -293,12 +298,13 @@ class Layer5Agent {
 
     const startTime = Date.now();
     const printableCommand = ['npx', ...args].map(part => /\s/.test(part) ? JSON.stringify(part) : part).join(' ');
+    const childEnv = this._buildPlaywrightEnv(ticket, { authUsernameVar, authPasswordVar });
 
     console.log(`Executing: ${printableCommand}\n`);
     const completed = spawnSync('npx', args, {
       cwd: this.projectRoot,
       stdio: 'inherit',
-      env: process.env,
+      env: childEnv,
     });
 
     const duration = Date.now() - startTime;
@@ -316,6 +322,43 @@ class Layer5Agent {
 
     this._printSummary(results);
     return results;
+  }
+
+  _buildPlaywrightEnv(ticket, auth = {}) {
+    const normalizedTicket = String(ticket || '').toUpperCase();
+    const authRole = this._authRoleForTicket(normalizedTicket);
+    const authUsernameVar = auth.authUsernameVar || process.env.AUTH_USERNAME_VAR || '';
+    const authPasswordVar = auth.authPasswordVar || process.env.AUTH_PASSWORD_VAR || '';
+    const env = {
+      ...process.env,
+      TEST_TICKET: normalizedTicket,
+      TICKET_NAME: normalizedTicket || process.env.TICKET_NAME,
+    };
+
+    if (authUsernameVar) env.AUTH_USERNAME_VAR = authUsernameVar;
+    if (authPasswordVar) env.AUTH_PASSWORD_VAR = authPasswordVar;
+
+    if (authRole) env.AUTH_ROLE = authRole;
+
+    if (authRole || authUsernameVar || authPasswordVar) {
+      const authStateKey = (authUsernameVar || authRole || 'user').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      env.STORAGE_STATE = process.env.STORAGE_STATE ||
+        process.env[`${normalizedTicket.replace(/-/g, '')}_STORAGE_STATE`] ||
+        `playwright/.auth/${normalizedTicket.toLowerCase()}-${authStateKey}.json`;
+    }
+
+    return env;
+  }
+
+  _authRoleForTicket(ticket) {
+    if (process.env.AUTH_ROLE) return process.env.AUTH_ROLE;
+    if (process.env.TICKET_AUTH_ROLE) return process.env.TICKET_AUTH_ROLE;
+
+    const roleMap = {
+      'ISE-1559': 'Teacher',
+    };
+
+    return roleMap[ticket] || '';
   }
 
   _parseResults(duration, browsers) {
@@ -388,6 +431,8 @@ async function main() {
   const explicitSpec = valueForArg(args, '--spec');
   const explicitGrep = valueForArg(args, '--grep');
   const explicitBrowser = valueForArg(args, '--browser');
+  const authUsernameVar = valueForAnyArg(args, ['--auth-username-var', '--username-var', '--username']);
+  const authPasswordVar = valueForAnyArg(args, ['--auth-password-var', '--password-var', '--password']);
   const ticketArg = args.find(a => /^ISE-\d+$/i.test(a));
   const ticket = (ticketArg || DEFAULT_TICKET).toUpperCase();
   const ticketSpec = ticketArg ? `tests/${ticketArg.toUpperCase()}.spec.ts` : null;
@@ -412,6 +457,8 @@ async function main() {
     grep: explicitGrep || '',
     list: args.includes('--list'),
     ticket,
+    authUsernameVar,
+    authPasswordVar,
     updateJira: !args.includes('--skip-jira') || jiraOnly,
     jiraOnly,
   };
@@ -444,6 +491,15 @@ function valueForArg(args, name) {
   const index = args.indexOf(name);
   if (index !== -1 && args[index + 1] && !args[index + 1].startsWith('--')) {
     return args[index + 1];
+  }
+
+  return '';
+}
+
+function valueForAnyArg(args, names) {
+  for (const name of names) {
+    const value = valueForArg(args, name);
+    if (value) return value;
   }
 
   return '';

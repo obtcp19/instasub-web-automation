@@ -14,15 +14,64 @@ const { test: setup, expect } = require('@playwright/test');
  */
 const authFile = process.env.STORAGE_STATE || 'playwright/.auth/user.json';
 
+function currentTicket() {
+  const explicitTicket = process.env.TICKET_NAME || process.env.TEST_TICKET || '';
+  if (explicitTicket) return explicitTicket.toUpperCase();
+
+  const argvTicket = process.argv.find((arg) => /ISE-\d+/i.test(arg));
+  return argvTicket ? argvTicket.match(/ISE-\d+/i)[0].toUpperCase() : '';
+}
+
+function roleForTicket(ticket) {
+  if (process.env.AUTH_ROLE) return process.env.AUTH_ROLE;
+  if (process.env.TICKET_AUTH_ROLE) return process.env.TICKET_AUTH_ROLE;
+  if (ticket === 'ISE-1559') return 'Teacher';
+
+  return '';
+}
+
+function resolveCredentials() {
+  if (process.env.AUTH_USERNAME_VAR || process.env.AUTH_PASSWORD_VAR) {
+    const usernameKey = process.env.AUTH_USERNAME_VAR || 'PW_USERNAME';
+    const passwordKey = process.env.AUTH_PASSWORD_VAR || 'PW_PASSWORD';
+
+    return {
+      username: process.env[usernameKey],
+      password: process.env[passwordKey],
+      source: `${usernameKey}/${passwordKey}`,
+    };
+  }
+
+  const role = roleForTicket(currentTicket());
+
+  if (role) {
+    const usernameKey = `${role}_USERNAME`;
+    const passwordKey = `${role}_PASSWORD`;
+
+    return {
+      username: process.env[usernameKey],
+      password: process.env[passwordKey],
+      source: `${usernameKey}/${passwordKey}`,
+    };
+  }
+
+  return {
+    username: process.env.PW_USERNAME,
+    password: process.env.PW_PASSWORD,
+    source: 'PW_USERNAME/PW_PASSWORD',
+  };
+}
+
 setup('authenticate', async ({ page }) => {
-  const username = process.env.PW_USERNAME;
-  const password = process.env.PW_PASSWORD;
+  const { username, password, source } = resolveCredentials();
 
   if (!username || !password) {
     throw new Error(
-      'PW_USERNAME and PW_PASSWORD must be set in the environment for auth setup.'
+      `${source} must be set in the environment for auth setup.`
     );
   }
+
+  console.log(`Auth setup using ${source}: ${username}`);
 
   const userField = page.locator('input[formcontrolname="userName"]');
   const passField = page.locator('input[formcontrolname="password"]');
