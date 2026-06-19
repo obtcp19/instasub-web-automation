@@ -25,6 +25,8 @@ function currentTicket() {
 function roleForTicket(ticket) {
   if (process.env.AUTH_ROLE) return process.env.AUTH_ROLE;
   if (process.env.TICKET_AUTH_ROLE) return process.env.TICKET_AUTH_ROLE;
+  if (process.env.School_Teacher_USERNAME && process.env.School_Teacher_PASSWORD) return 'School_Teacher';
+  if (ticket === 'ISE-1562') return 'School_Teacher';
   if (ticket === 'ISE-1559') return 'Teacher';
 
   return '';
