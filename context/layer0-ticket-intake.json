@@ -1,0 +1,4412 @@
+{
+  "timestamp": "2026-06-23T11:44:44.945Z",
+  "ticketKey": "ISE-1563",
+  "summary": "Completed 26 pairwise regression tests for the Self absence creation flow using the school administrator account (schooladmin@mailinator.com). All 26 tests passed.",
+  "description": {
+    "type": "doc",
+    "version": 1,
+    "content": [
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Description",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "1aacca792c07"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Pairwise regression coverage for the Self absence creation flow, validating that an administrator can create absences for themselves across every reason, duration type, and substitute preference. The run confirms the form, leave balance deductions, and sub picker all behave correctly in Self mode."
+          }
+        ],
+        "attrs": {
+          "localId": "875f010a41a4"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Test Scope",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "e1f9509ee06a"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Environment: InstaSub Staging — InstaSub Account:  (School Administrator role) Flow: Self absence creation (/absence/createAbsence, Self radio selected) Sub selected (Notify 1 Sub / Assign a specific sub): Sub 1"
+          }
+        ],
+        "attrs": {
+          "localId": "a474f084035e"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Pairwise Matrix",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "dd9d43ad4b50"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Coverage dimensions"
+          }
+        ],
+        "attrs": {
+          "localId": "1c0ffa1d590f"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development 5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (10:00–15:00), Add Class 5 sub preferences: Notify all subs, Notify 1 Sub, Notify my favorites, Assign a specific sub, No sub required"
+          }
+        ],
+        "attrs": {
+          "localId": "3540b0d1c6dd"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Part A — Duration Tests (T1–T20)",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "cbcbee8831ec"
+        }
+      },
+      {
+        "type": "table",
+        "attrs": {
+          "isNumberColumnEnabled": false,
+          "layout": "center",
+          "localId": "b72c3c84-c0e4-4b02-a184-07d60f34bc7b"
+        },
+        "content": [
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "42405e4d9595"
+            },
+            "content": [
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "6baad9877385"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "#"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f633f9b9ab68"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "ccd0064558fe"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Date"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "eaa692dc1d35"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "24c6076ee32e"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Reason"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "25c118abb75d"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "83b67e9862a1"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Duration"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "021794255d0f"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "5f7660815be2"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub Preference"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "7861a4ae4391"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "1cfce2b5bfc1"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub Selected"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "416f1f4a7916"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "4960d48928f9"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Result"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "9ad7aa2c430e"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "6361de6db534"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "abeac150c091"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T1"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "aeb4085924ec"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "a54af062aca5"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 1, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "410d1e148b01"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "fbe0b50a858d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sick"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "93e01829390f"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "ac69dc03f993"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Full Day"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "2f3781478daf"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "c7c64c623ce0"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify all subs"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "d8ccf08f956e"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "aaad7876f65f"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "df677f6b8353"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "f183bdfd2760"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "73e9d9d4d06b"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "4c64ab9dc702"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "bbe69eaaeb34"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T2"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "820067c75625"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "09d4e080998b"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 2, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e47af0483741"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "26d61c41b20c"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Personal"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "4f39164495b9"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "2490bd265cd3"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Full Day"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "6a66e5eb416a"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "272488fedef8"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify 1 Sub"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e98c1377f6ce"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "4bf1ad361696"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub 2"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "c86a01ecc631"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "161f7bfd2c4d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3ccca871b423"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "d41b8d0d03d9"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "7884b90ff306"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T3"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "91233cf2c1fb"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "21ce6b128e36"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 3, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "7fff0cdddab8"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "acbbe395f8e4"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Vacation"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "311f4f1876fa"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e9a3b15c1ab6"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Full Day"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3a5437378910"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "42fa42dd28c9"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify my favorites"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "37b42313807a"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "d8a7ae7611e1"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "28a7f2dc238a"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "0dd04ac03cf4"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "a2ece4a72c2f"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "c8fb7a7ec55d"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9d58150016bf"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T4"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f5ce7286be6b"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "1853439ffcba"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 4, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "51a6c98f10f3"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "65222f7e491b"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Illness-Family Member"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3b93e9cb1a65"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "889b624dd241"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Full Day"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "a0b766d15b9b"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "6003e5828633"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Assign a specific sub"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "9afd6e81b148"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "5007174fcecb"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub 2"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "d0aff46cf78d"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "98a090ef6c08"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "98a66cb51f3f"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "d69228c32120"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "5f769a04aa79"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T5"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "8d30f5add325"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "d66215b27db5"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 5, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "99bbebea5593"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "6fc5f393c543"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Educational Leave"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "5417cefbfd68"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "be02a8aa59bd"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Full Day"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "a4186e2b9f3e"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "865fd730e316"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "No sub required"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3e0b5cc23771"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "06cd8b2a9f20"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "90c7adc355b4"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "6d5637648783"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "509f61b67b24"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "a123986eb9e1"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "44dfaf9a0bdf"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T6"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "7fc0afaa9e92"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "8c536c3e6e34"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 6, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "8dbc75d4e8e7"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "5cf7fb755335"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Professional Development"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "ad708199d785"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "189bc2432781"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Half Day AM"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3c9a845a320b"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "45c95c9920cc"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify all subs"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "a9e2015fc3bc"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "14b24f622634"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "c4028c01c694"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "914ea3cd31b2"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "cc439efc2aa8"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "14339aa09e14"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "233eba496ed3"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T7"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "eb2d7ead62a0"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "bd7842b7a615"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 7, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "9540f2079637"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "3eaa806118e7"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sick"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "a56048b1da6c"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "49c5430b8342"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Half Day AM"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3c526cf11f29"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "4352c9b6bdaf"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify 1 Sub"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "88c16be643c4"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "91604721af67"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub 2"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "c38cd8ba2f10"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "455133164259"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "00e95fdf7209"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "9e7ed03b2c17"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "aeeb5bb725ea"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T8"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "107d6d9e0a63"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "5af01daa5539"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 8, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "82b9bc0c3154"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "3c0e8456c861"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Personal"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "7662710042c6"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "8b2c0faf50d0"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Half Day AM"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "5d28856fdef4"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "944fc7a4dc91"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify my favorites"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "2e753fd7b5b9"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "a57dd032a1dc"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "5e1069f88460"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "97ad2e7c9282"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "8ed1c1143c5e"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "8dd4a16b1fd7"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "82c71715df79"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T9"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "56d5d1297a9c"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "34948742b2de"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 9, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "c8a7b1d3f768"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "7a51aeeceb19"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Vacation"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "c786e4a081b2"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "f3514907e07c"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Half Day AM"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "233c390093e7"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "06a1b0ede63a"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Assign a specific sub"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "505887b542f0"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "7adbcfca4f98"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub 2"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "50eb3ceba307"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "d0f14d97a30e"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "51281f3ab063"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "313f477b8c0f"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "fdcac628b15b"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T10"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "55a1041d5cfd"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9ff69d7c6b23"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 10, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f2f78dcdfcac"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "69ca5381f237"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Illness-Family Member"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "66adda5dadf6"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "84dadf53afe7"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Half Day AM"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "b08537cdabf4"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e6670cf33c40"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "No sub required"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "c8212cb9ca25"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "f2fde2830b8d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "71e37916906a"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9429b2ee2ed3"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "dbb81e5222fd"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "474795dd092e"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "bf4551fcbb36"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T11"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "6d927247a95e"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "cd072e4d9439"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 11, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "c49b09abad25"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "3621891fc8ed"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Educational Leave"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "142f38e26686"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "d01ef8a838a1"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Half Day PM"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "c51c9c0c62b2"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "6fbe9467f6c8"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify all subs"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "21d5ed2fbbbd"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "5585a20cdac7"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3580b4040670"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9e50031872f1"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e1b42b9d2a42"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "9257dcdd5458"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9cc33e4e8d51"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T12"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "2aa9e2534366"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "5e48ae947c41"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 12, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "fe2a27ab52cd"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "964d047764f5"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Professional Development"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "6af823240d92"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "bb9dbb99b247"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Half Day PM"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "ef1656fcdc66"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "d2d60aba0f7b"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify 1 Sub"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "575cb6a3f14b"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "b2f079324df0"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub 2"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e1af021ae070"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "2337afab01b6"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "fe205b916df1"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "a274f847f216"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "4a386cf47d18"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T13"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3f83d8fa387a"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "cec947c87dcf"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 13, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "a67c80b952c9"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9f8df09f40ae"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sick"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "1f54b1d21253"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "50c4eb84cfb3"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Half Day PM"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "46dbd994e452"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "f00f6285ab5c"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify my favorites"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3900a1e597f7"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "c3cee4b5e96f"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "779d32133201"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "0b1939f7c588"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "9330cdf3decb"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "2431803018b4"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "febce407f307"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T14"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f446cb11f925"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "cfff5d106648"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 14, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "0a319f353489"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9a29e45a2786"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Personal"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "4d606deabd05"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "f8d8a80c3c0c"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Half Day PM"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "489894e9c8a8"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "922c67d38d8d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Assign a specific sub"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "4619290b7d13"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e2c7ec89f673"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub 2"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "6a4f11c41792"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9c29fa4c6814"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "75f19a602f6c"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "3f4074975bea"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e85faa6b5a72"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T15"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "7bf4607e76c1"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "f750a4da34dc"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 15, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "b81326b43d7c"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "b33302dd0f6a"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Vacation"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "5dae7dc14cc2"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "44552e78c298"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Half Day PM"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "4063e72cfb4b"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e7bf52e9a536"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "No sub required"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "2fdf82d2f3cd"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "99031108a0f8"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "67e9cb754242"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "d8fdb43cd629"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3fbf13f2f8f1"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "7173a417c025"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "07db03f94913"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T16"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "445e89d3b55f"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "c87a59f075f7"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 18, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3402c0be4dab"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "d1decb9ab442"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Illness-Family Member"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3c8c7dfa0fa2"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "c402aca988b0"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Enter Time Manually (10:00–15:00)"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f6b2cf48e72d"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "ccbf6771fafb"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify all subs"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "540468ab7bdc"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "ba8531063daf"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "0c603ad64ec4"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "d27ebad8ac69"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "9153289548f8"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "926c25a5438b"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "251b38935b0d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T17"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e2ec7ff1a81a"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "f2707d2b2674"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 19, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "eece00f368ee"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "b73f4a483a9d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Educational Leave"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "352c4375e0b1"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "8468beb9823c"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Enter Time Manually (10:00–15:00)"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "be229a2beca9"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "5ec4b4638e76"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify 1 Sub"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f3df0099612b"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e798cbbaf626"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub 2"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "74bc6a79da50"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "3ca665f90cfe"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "49286e63f92b"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "8060a336b6fa"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "8898f1e5a14d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T18"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "5197fad2348d"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "fe6977cf1f91"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 20, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "6cbe2686343f"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9865f9120a58"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Professional Development"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "fb527816a58c"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "19ac86d0728c"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Enter Time Manually (10:00–15:00)"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3f7fbac27df6"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e52779fb52a8"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify my favorites"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "507baaf74aea"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "564d6725625d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "50de1469fb0a"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "d6682605ddc8"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "a625925b1997"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "d8482a232858"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "4cc50c167b9d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T19"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "81341c0deddd"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "bbe59f1e8ddc"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 21, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "9cb2942da1e0"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "a8e762655984"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sick"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "dd0ceac40b12"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "2bf64469957b"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Enter Time Manually (10:00–15:00)"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "7d0ecafbb951"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "89009c52e1e0"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Assign a specific sub"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "2d2209f0cb66"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "62a39d26e19a"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub 2"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "eb05a9879c45"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "0101f5c60227"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3572de6341b9"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "fee3c7049da2"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "b7c03e583462"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T20"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "381f84c579c0"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "ddbf9cd74d61"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 22, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "17727874ac0c"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "0a5c369f1e60"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Personal"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "713ee82ac12f"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "f47c48b04ba2"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Enter Time Manually (10:00–15:00)"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "d88db4b1edc3"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "f4793354eeca"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "No sub required"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "bd54522144b6"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "f5f736d2bed1"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "043d44881cd3"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9175efa614fc"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "618b70e4cbc5"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Part B — Add Class Tests (T21–T26)",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "b097f2382544"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Add Class replaces the Duration dropdown. The class time inputs define the absence window."
+          }
+        ],
+        "attrs": {
+          "localId": "ff00f9cf4cdf"
+        }
+      },
+      {
+        "type": "table",
+        "attrs": {
+          "isNumberColumnEnabled": false,
+          "layout": "center",
+          "localId": "71bffb2a-bd4a-4a97-a62d-628e78a461d5"
+        },
+        "content": [
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "42b450bf55f0"
+            },
+            "content": [
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "66678cfd81ff"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "#"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "0710c3883971"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "4be56dcfdc34"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Date"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "7debee8ae590"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "81e58304ae18"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Reason"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "d4d20fc17922"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "0a1058bb66f7"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Class Time"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "d8fd349cedd1"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "4dc2c2aa1c6b"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub Preference"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "2ea6a1d3e8b7"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "99775ca1d5cb"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub Selected"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e54691340091"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "1d324555ba7b"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Result"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "83ca3f584568"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "09917f3badd5"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9375f302fbf1"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T21"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "cf7822933ba6"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "d3475f0dcad6"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 25, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "76ad7a1cafbd"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "13acae906f9c"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Vacation"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "6d237ee3e0ad"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "bb6909c81fa5"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "08:00–12:00"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "05758a458739"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e5be0b5e77d4"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify all subs"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "bd11a28709f8"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "ab6719798df3"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "dc3eb7b1ec7b"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e41773202aec"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "202b4c991fe5"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "614805aa18a7"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "10a32335edf3"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T22"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "ba25d03b5053"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "194b94cb4360"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 26, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "136e8507130d"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "638303f6d68f"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Illness-Family Member"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f0b9281af5bc"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "a1441f2ca640"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "10:00–14:00"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e74f3241351b"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "f3d1494e4378"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify 1 Sub"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "cebd34e46d97"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "3afe5e52b18b"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub 2"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "dccb4c39cb20"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "07fd4964a0cc"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "2abb0312af29"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "69158418c53b"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "3b9fb3c8da01"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T23"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "acf60447012b"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "aa400ced084f"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Jan 27, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "08f267fcee71"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9bbd3079a375"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Educational Leave"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "49cd11c662ab"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "fef50b2da5ab"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "09:00–11:00"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "fad0303a3737"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "b725f9e2d4eb"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify my favorites"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e0f34458a0c3"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "d0a598dcd414"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "0ea61e65882c"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "90cac7fe4ca5"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "1917976b3ee4"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "295c5bd02bfc"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "3b02bea8cc3e"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T24"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "02131294d16e"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "4b5375b8a989"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Feb 8, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "889b0313718a"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "6acb8fb53747"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Professional Development"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "6d8c67d89806"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "132e50879db2"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "12:00–16:00"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "7f91a4254ce2"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "8b851de0e2d7"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Assign a specific sub"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "4da059ac484f"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "c4cbdac65176"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sub 2"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "298459857a60"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "79ca6475c87c"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "cbf9522e2eb8"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "4e8b6e059d0e"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "bb6ec2a4bae3"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T25"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f20b4ff3bf88"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "c1787a18315b"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Feb 9, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "fb5f346dca2d"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "60b6fbb43f7a"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Sick"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "71d853098a74"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "b8d2c8de5b2d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "08:00–10:00"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "1c8486e19450"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "040bb0125252"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "No sub required"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "2125a74beddc"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "c18336aa1bec"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "0a535dec4c31"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "ea142b9ebd45"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "298cb8d276c0"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "d7c615925254"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "7d60f192555f"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "T26"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "89d23105f1da"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "96bb3170e069"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Feb 10, 2027"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "bd7ae4528922"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "202e3ba348eb"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Personal"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "87f543472bc1"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "580ff491d48a"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "13:00–17:00"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "caeb1a27e278"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "20c66ca70fae"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Notify all subs"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "608c01782eae"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "7949d44cd176"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "—"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "c35c90a9a461"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "b9f2a0ee883e"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "✅ PASS"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "cbc0aa630b4c"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Result",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "904a69e3eeb4"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "26/26 tests passed. All 6 reasons, all 5 duration types (including Add Class), and all 5 sub preferences exercised. Sub 2 was successfully selected for all Notify 1 Sub and assigned a specific sub case."
+          }
+        ],
+        "attrs": {
+          "localId": "ac748cd42c1a"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Notes and Observations",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "91162bd9cc51"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Sub picker behaviour: In the Self flow, the sub picker is available once a start and end date are set. Sub selection worked as expected for all applicable tests."
+          }
+        ],
+        "attrs": {
+          "localId": "3fe38054b396"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Acceptance Criteria",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "005d4a6426bd"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "All 6 absence reasons selectable via the Self flow All 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Self mode Add Class flow works for all 6 reasons in Self mode All 5 sub preference options available and functional in Self mode Sub 2 selectable via Notify 1 Sub and Assign a specific sub Leave balance deducted correctly after each absence creation No blocking errors or UI failures across the 26-test run"
+          }
+        ],
+        "attrs": {
+          "localId": "7600a65868f7"
+        }
+      }
+    ]
+  },
+  "status": "Open",
+  "assignee": "omerbakhtiar",
+  "priority": "Medium",
+  "labels": [],
+  "pr": null
+}

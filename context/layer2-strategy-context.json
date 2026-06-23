@@ -1,7 +1,7 @@
 {
   "layer": 2,
   "ticket": "ISE-1563",
-  "generatedAt": "2026-06-23T10:46:51.054Z",
+  "generatedAt": "2026-06-23T11:46:31.582Z",
   "sourceRequirements": {
     "path": "context/layer1-requirements.json",
     "found": true,
@@ -477,7 +477,7 @@
     "notes": [
       "No existing spec found at tests/ISE-1563.spec.ts; generated strategy context for downstream codegen."
     ],
-    "verifiedAt": "2026-06-23T10:46:51.053Z"
+    "verifiedAt": "2026-06-23T11:46:31.580Z"
   },
   "explorerContext": {
     "layer": "Explorer",
@@ -485,7 +485,7 @@
     "mode": "planned",
     "url": "https://instasublogin.tcpsoftware.com/",
     "ticket": "ISE-1563",
-    "generatedAt": "2026-06-23T10:46:51.054Z",
+    "generatedAt": "2026-06-23T11:46:31.581Z",
     "mcp": {
       "protocol": "MCP",
       "server": "mcp://playwright",
