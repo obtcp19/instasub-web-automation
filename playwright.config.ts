@@ -42,17 +42,17 @@ module.exports = defineConfig({
 
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'], storageState: AUTH_FILE },
+      use: { ...devices['Desktop Chrome'], storageState: AUTH_FILE, args: ['--start-maximized'], viewport: { width: 1920, height: 1080 } },
       dependencies: ['setup'],
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'], storageState: AUTH_FILE },
+      use: { ...devices['Desktop Firefox'], storageState: AUTH_FILE, args: ['--start-maximized'], viewport: { width: 1920, height: 1080 } },
       dependencies: ['setup'],
     },
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'], storageState: AUTH_FILE },
+      use: { ...devices['Desktop Safari'], storageState: AUTH_FILE, args: ['--start-maximized'], viewport: { width: 1920, height: 1080 } },
       dependencies: ['setup'],
     },
   ],
