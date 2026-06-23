@@ -1,13 +1,13 @@
 {
   "layer": 2,
-  "ticket": "ISE-1562",
-  "generatedAt": "2026-06-18T15:44:01.631Z",
+  "ticket": "ISE-1563",
+  "generatedAt": "2026-06-23T10:46:51.054Z",
   "sourceRequirements": {
     "path": "context/layer1-requirements.json",
     "found": true,
-    "title": "26/26 pairwise regression tests passed for the Employee absence creation flow on the live InstaSub instance, using the school-level teacher account (schoolteacher890@mailinator.com) across all 6 reasons, 5 duration types, and 5 sub preferences.",
+    "title": "Completed 26 pairwise regression tests for the Self absence creation flow using the school administrator account (schooladmin@mailinator.com). All 26 tests passed.",
     "priority": "Medium",
-    "acceptanceCriteriaCount": 9,
+    "acceptanceCriteriaCount": 4,
     "testableItemsCount": 26
   },
   "artifacts": {
@@ -40,7 +40,7 @@
     }
   },
   "retrievalQueries": [
-    "26/26 pairwise regression tests passed for the Employee absence creation flow on the live InstaSub instance, using the school-level teacher account (schoolteacher890@mailinator.com) across all 6 reasons, 5 duration types, and 5 sub preferences.",
+    "Completed 26 pairwise regression tests for the Self absence creation flow using the school administrator account (schooladmin@mailinator.com). All 26 tests passed.",
     "playwright page object model selectors",
     "explorer accessibility snapshot buttons inputs tables",
     "login username password button selectors",
@@ -72,7 +72,7 @@
     "Professional Development absence with 12:00–16:00 and Assign a specific sub"
   ],
   "codegenHints": {
-    "targetSpec": "tests/ISE-1562.spec.ts",
+    "targetSpec": "tests/ISE-1563.spec.ts",
     "preferExistingPom": true,
     "requiredAssertions": [
       "Review step shows selected reason and date before submit",
@@ -113,7 +113,7 @@
       ]
     }
   },
-  "gherkinPreview": "Feature: 26/26 pairwise regression tests passed for the Employee absence creation flow on the live InstaSub instance, using the school-level teacher account (schoolteacher890@mailinator.com) across all 6 reasons, 5 duration types, and 5 sub preferences.\n  Ticket: ISE-1562\n  Priority: Medium\n\n  Background:\n    Given the administrator is on the Employee absence creation flow\n    And the target employee is selected\n\n  Scenario: T1 - Employee absence Sick / Full Day / Notify all subs\n    Given the absence date is \"Jan 1, 2027\"\n    And the absence reason is \"Sick\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify all subs\"\n    When the employee absence is submitted\n    Then the test result should be \"(/) PASS\"\n\n  Scenario: T2 - Employee absence Personal / Full Day / Notify 1 Sub\n    Given the absence date is \"Jan 2, 2027\"\n    And the absence reason is \"Personal\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify 1 Sub\"\n    And the substitute selected is \"Sub 4\"\n    When the employee absence is submitted\n    Then the test result should be \"(/) PASS\"\n\n  Scenario: T3 - Employee absence Vacation / Full Day / Notify my favorites\n    Given the absence date is \"Jan 3, 2027\"\n    And the absence reason is \"Vacation\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify my favorites\"\n    When the employee absence is submitted\n    Then the test result should be \"(/) PASS\"\n\n  Scenario: T4 - Employee absence Illness-Family Member / Full Day / Assign a specific sub\n    Given the absence date is \"Jan 4, 2027\"\n    And the absence reason is \"Illness-Family Member\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Assign a specific sub\"\n    And the substitute selected is \"Sub 4\"\n    When the employee absence is submitted",
+  "gherkinPreview": "Feature: Completed 26 pairwise regression tests for the Self absence creation flow using the school administrator account (schooladmin@mailinator.com). All 26 tests passed.\n  Ticket: ISE-1563\n  Priority: Medium\n\n  Background:\n    Given the administrator is on the Employee absence creation flow\n    And the target employee is selected\n\n  Scenario: T1 - Employee absence Sick / Full Day / Notify all subs\n    Given the absence date is \"Jan 1, 2027\"\n    And the absence reason is \"Sick\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify all subs\"\n    When the employee absence is submitted\n    Then the test result should be \"✅ PASS\"\n\n  Scenario: T2 - Employee absence Personal / Full Day / Notify 1 Sub\n    Given the absence date is \"Jan 2, 2027\"\n    And the absence reason is \"Personal\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify 1 Sub\"\n    And the substitute selected is \"Sub 2\"\n    When the employee absence is submitted\n    Then the test result should be \"✅ PASS\"\n\n  Scenario: T3 - Employee absence Vacation / Full Day / Notify my favorites\n    Given the absence date is \"Jan 3, 2027\"\n    And the absence reason is \"Vacation\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify my favorites\"\n    When the employee absence is submitted\n    Then the test result should be \"✅ PASS\"\n\n  Scenario: T4 - Employee absence Illness-Family Member / Full Day / Assign a specific sub\n    Given the absence date is \"Jan 4, 2027\"\n    And the absence reason is \"Illness-Family Member\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Assign a specific sub\"\n    And the substitute selected is \"Sub 2\"\n    When the employee absence is submitted",
   "riskMatrix": [
     {
       "risk": "Async/Promise timeout on confirmation generation",
@@ -134,7 +134,7 @@
       "duration": "Full Day",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T2",
@@ -145,8 +145,8 @@
       "reason": "Personal",
       "duration": "Full Day",
       "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 4",
-      "expectedResult": "(/) PASS"
+      "subSelected": "Sub 2",
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T3",
@@ -158,7 +158,7 @@
       "duration": "Full Day",
       "subPreference": "Notify my favorites",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T4",
@@ -169,8 +169,8 @@
       "reason": "Illness-Family Member",
       "duration": "Full Day",
       "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 4",
-      "expectedResult": "(/) PASS"
+      "subSelected": "Sub 2",
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T5",
@@ -182,7 +182,7 @@
       "duration": "Full Day",
       "subPreference": "No sub required",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T6",
@@ -194,7 +194,7 @@
       "duration": "Half Day AM",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T7",
@@ -205,8 +205,8 @@
       "reason": "Sick",
       "duration": "Half Day AM",
       "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 4",
-      "expectedResult": "(/) PASS"
+      "subSelected": "Sub 2",
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T8",
@@ -218,7 +218,7 @@
       "duration": "Half Day AM",
       "subPreference": "Notify my favorites",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T9",
@@ -229,8 +229,8 @@
       "reason": "Vacation",
       "duration": "Half Day AM",
       "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 4",
-      "expectedResult": "(/) PASS"
+      "subSelected": "Sub 2",
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T10",
@@ -242,7 +242,7 @@
       "duration": "Half Day AM",
       "subPreference": "No sub required",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T11",
@@ -254,7 +254,7 @@
       "duration": "Half Day PM",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T12",
@@ -265,8 +265,8 @@
       "reason": "Professional Development",
       "duration": "Half Day PM",
       "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 4",
-      "expectedResult": "(/) PASS"
+      "subSelected": "Sub 2",
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T13",
@@ -278,7 +278,7 @@
       "duration": "Half Day PM",
       "subPreference": "Notify my favorites",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T14",
@@ -289,8 +289,8 @@
       "reason": "Personal",
       "duration": "Half Day PM",
       "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 4",
-      "expectedResult": "(/) PASS"
+      "subSelected": "Sub 2",
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T15",
@@ -302,7 +302,7 @@
       "duration": "Half Day PM",
       "subPreference": "No sub required",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T16",
@@ -314,7 +314,7 @@
       "duration": "Enter Time Manually (10:00–15:00)",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T17",
@@ -325,8 +325,8 @@
       "reason": "Educational Leave",
       "duration": "Enter Time Manually (10:00–15:00)",
       "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 4",
-      "expectedResult": "(/) PASS"
+      "subSelected": "Sub 2",
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T18",
@@ -338,7 +338,7 @@
       "duration": "Enter Time Manually (10:00–15:00)",
       "subPreference": "Notify my favorites",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T19",
@@ -349,8 +349,8 @@
       "reason": "Sick",
       "duration": "Enter Time Manually (10:00–15:00)",
       "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 4",
-      "expectedResult": "(/) PASS"
+      "subSelected": "Sub 2",
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T20",
@@ -362,7 +362,7 @@
       "duration": "Enter Time Manually (10:00–15:00)",
       "subPreference": "No sub required",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T21",
@@ -374,7 +374,7 @@
       "duration": "08:00–12:00",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T22",
@@ -385,8 +385,8 @@
       "reason": "Illness-Family Member",
       "duration": "10:00–14:00",
       "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 4",
-      "expectedResult": "(/) PASS"
+      "subSelected": "Sub 2",
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T23",
@@ -398,7 +398,7 @@
       "duration": "09:00–11:00",
       "subPreference": "Notify my favorites",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T24",
@@ -409,8 +409,8 @@
       "reason": "Professional Development",
       "duration": "12:00–16:00",
       "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 4",
-      "expectedResult": "(/) PASS"
+      "subSelected": "Sub 2",
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T25",
@@ -422,7 +422,7 @@
       "duration": "08:00–10:00",
       "subPreference": "No sub required",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     },
     {
       "id": "T26",
@@ -434,14 +434,14 @@
       "duration": "13:00–17:00",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "(/) PASS"
+      "expectedResult": "✅ PASS"
     }
   ],
   "playwrightVerification": {
     "status": "skipped",
     "mode": "list",
-    "ticket": "ISE-1562",
-    "spec": "tests/ISE-1562.spec.ts",
+    "ticket": "ISE-1563",
+    "spec": "tests/ISE-1563.spec.ts",
     "command": null,
     "discoveredTests": [],
     "matchedTestCases": [],
@@ -475,17 +475,17 @@
     ],
     "exitCode": null,
     "notes": [
-      "No existing spec found at tests/ISE-1562.spec.ts; generated strategy context for downstream codegen."
+      "No existing spec found at tests/ISE-1563.spec.ts; generated strategy context for downstream codegen."
     ],
-    "verifiedAt": "2026-06-18T15:44:01.629Z"
+    "verifiedAt": "2026-06-23T10:46:51.053Z"
   },
   "explorerContext": {
     "layer": "Explorer",
     "status": "skipped",
     "mode": "planned",
     "url": "https://instasublogin.tcpsoftware.com/",
-    "ticket": "ISE-1562",
-    "generatedAt": "2026-06-18T15:44:01.630Z",
+    "ticket": "ISE-1563",
+    "generatedAt": "2026-06-23T10:46:51.054Z",
     "mcp": {
       "protocol": "MCP",
       "server": "mcp://playwright",

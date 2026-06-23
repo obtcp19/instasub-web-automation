@@ -1,8 +1,8 @@
 {
   "status": "skipped",
   "mode": "list",
-  "ticket": "ISE-1562",
-  "spec": "tests/ISE-1562.spec.ts",
+  "ticket": "ISE-1563",
+  "spec": "tests/ISE-1563.spec.ts",
   "command": null,
   "discoveredTests": [],
   "matchedTestCases": [],
@@ -36,7 +36,7 @@
   ],
   "exitCode": null,
   "notes": [
-    "No existing spec found at tests/ISE-1562.spec.ts; generated strategy context for downstream codegen."
+    "No existing spec found at tests/ISE-1563.spec.ts; generated strategy context for downstream codegen."
   ],
-  "verifiedAt": "2026-06-18T15:44:01.629Z"
+  "verifiedAt": "2026-06-23T10:46:51.053Z"
 }

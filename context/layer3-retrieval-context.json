@@ -1,13 +1,13 @@
 {
   "layer": 3,
-  "generatedAt": "2026-06-18T16:12:19.874Z",
+  "generatedAt": "2026-06-23T10:51:26.524Z",
   "source": "context/layer2-strategy-context.json",
   "explorerCovered": true,
   "explorerContext": "context/explorer-context.json",
   "manualMcpContext": "context/mcp-playwright-context.json",
   "indexed": 3,
   "queries": [
-    "26/26 pairwise regression tests passed for the Employee absence creation flow on the live InstaSub instance, using the school-level teacher account (schoolteacher890@mailinator.com) across all 6 reasons, 5 duration types, and 5 sub preferences.",
+    "Completed 26 pairwise regression tests for the Self absence creation flow using the school administrator account (schooladmin@mailinator.com). All 26 tests passed.",
     "playwright page object model selectors",
     "explorer accessibility snapshot buttons inputs tables",
     "login username password button selectors",
@@ -40,32 +40,7 @@
     "Review step shows selected reason and date before submit",
     "Successful submit is detected by response or accepted UI state",
     "Leave balance is captured before suite execution and is lower after all successful submissions",
-    "serial when tests mutate a shared employee leave balance",
-    "button  button",
-    "button menu button:nth-of-type(1)",
-    "button settings button:nth-of-type(2)",
-    "button notification_important button:nth-of-type(3)",
-    "button Who's Available button",
-    "button Open calendar button",
-    "button add_circle_outline Add Class button",
-    "button NEXT button",
-    "button  button:nth-of-type(1)",
-    "button  button:nth-of-type(2)",
-    "input Start Date #mat-input-0",
-    "input End Date #mat-input-1",
-    "input Reason #mat-select-0",
-    "input Duration #mat-select-3",
-    "input Start Time #mat-input-4",
-    "input End Time #mat-input-5",
-    "input Select Substitute Preference #mat-select-1",
-    "input Select School #mat-select-4",
-    "input Contact Substitutes #mat-select-2",
-    "input on #mat-slide-toggle-1-input",
-    "input Payroll Notes #mat-input-2",
-    "input Notes to substitute #mat-input-3",
-    "input  #UploadButton",
-    "Sick absence with 08:00–10:00 and No sub required",
-    "Personal absence with 13:00–17:00 and Notify all subs"
+    "serial when tests mutate a shared employee leave balance"
   ],
   "testScenarios": 26,
   "assets": [
@@ -73,19 +48,19 @@
       "path": "tests/ISE-452-absence-creation.spec.ts",
       "fileName": "ISE-452-absence-creation.spec.ts",
       "type": "Spec",
-      "similarity": 0.11583548784255981
+      "similarity": 0.2246760129928589
     },
     {
       "path": "utilities/DatabaseHelper.ts",
       "fileName": "DatabaseHelper.ts",
       "type": "Utility",
-      "similarity": 0.12467348575592041
+      "similarity": 0.1349053978919983
     },
     {
       "path": "pom/AbsenceCreationPage.ts",
       "fileName": "AbsenceCreationPage.ts",
       "type": "POM",
-      "similarity": 0.08584839105606079
+      "similarity": 0.10517913103103638
     }
   ]
 }
