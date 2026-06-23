@@ -4,8 +4,9 @@ const fs = require('fs');
 const path = require('path');
 
 class SelfHealingAnalyzer {
-  constructor(projectRoot) {
+  constructor(projectRoot, options = {}) {
     this.projectRoot = projectRoot;
+    this.ticket = (options.ticket || process.env.TICKET_NAME || process.env.TEST_TICKET || 'ISE-1556').toUpperCase();
     this.resultsDir = path.join(projectRoot, 'test-results');
     this.resultsJson = path.join(this.resultsDir, 'results.json');
     this.failedTestTitles = new Set();
@@ -426,7 +427,7 @@ class SelfHealingAnalyzer {
 
     const template = {
       title: `🔧 Auto-heal test failures: ${failureCount} issue(s) detected`,
-      branch: `self-heal/ise-452-${Date.now()}`,
+      branch: `self-heal/${this.ticket.toLowerCase()}-${Date.now()}`,
       body: `## Self-Healing Test Fixes
 
 Layer 6 detected and auto-fixed test failures.
@@ -462,7 +463,7 @@ ${this.analysis.timeoutIssues
         },
         {
           message: 'fix: Increase test timeouts for flaky waits',
-          files: ['tests/ISE-452-absence-creation.spec.ts'],
+          files: [`tests/${this.ticket}.spec.ts`],
         },
       ],
     };
@@ -472,7 +473,7 @@ ${this.analysis.timeoutIssues
 
   generateJiraReport() {
     const report = {
-      ticket: 'ISE-452',
+      ticket: this.ticket,
       executionStatus:
         this.analysis.failedTests === 0 ? 'PASSED' : 'FAILED',
       testSummary: {
@@ -495,7 +496,7 @@ ${this.analysis.timeoutIssues
       timestamp: this.analysis.timestamp,
       nextSteps:
         this.analysis.failedTests === 0
-          ? 'All tests passed. Mark ISE-452 as RESOLVED in Jira.'
+          ? `All tests passed. Mark ${this.ticket} as RESOLVED in Jira.`
           : 'Review PR and merge fixes.',
     };
 
@@ -504,48 +505,15 @@ ${this.analysis.timeoutIssues
 
   generateXrayReport() {
     const report = {
-      testExecutionName: `ISE-452 Absence Creation - ${new Date().toLocaleDateString()}`,
-      testPlan: 'ISE-452-ABSENCE-FLOW',
-      results: [
-        {
-          testKey: 'ISE-452-TC-01',
-          testName: 'Teacher creates valid absence and receives confirmation',
-          status: this.analysis.passedTests > 0 ? 'PASSED' : 'FAILED',
-          duration: 3200,
-          evidenceLink: 'test-results/playwright-report/index.html',
-        },
-        {
-          testKey: 'ISE-452-TC-02',
-          testName: 'Multiple consecutive creations generate unique confirmations',
-          status: this.analysis.passedTests > 1 ? 'PASSED' : 'FAILED',
-          duration: 9800,
-          evidenceLink: 'test-results/playwright-report/index.html',
-        },
-        {
-          testKey: 'ISE-452-TC-03',
-          testName: 'Missing leave reason shows validation error',
-          status: this.analysis.passedTests > 2 ? 'PASSED' : 'FAILED',
-          duration: 1400,
-        },
-        {
-          testKey: 'ISE-452-TC-04',
-          testName: 'Past date submission is rejected',
-          status: this.analysis.passedTests > 3 ? 'PASSED' : 'FAILED',
-          duration: 1100,
-        },
-        {
-          testKey: 'ISE-452-TC-05',
-          testName: 'Absence persists after page refresh',
-          status: this.analysis.passedTests > 4 ? 'PASSED' : 'FAILED',
-          duration: 2800,
-        },
-        {
-          testKey: 'ISE-452-TC-06',
-          testName: 'Confirmation number generation reliability test',
-          status: this.analysis.passedTests > 5 ? 'PASSED' : 'FAILED',
-          duration: 15300,
-        },
-      ],
+      testExecutionName: `${this.ticket} Playwright Execution - ${new Date().toLocaleDateString()}`,
+      testPlan: `${this.ticket}-PLAYWRIGHT-FLOW`,
+      results: Array.from({ length: this.analysis.totalTests || 1 }, (_, index) => ({
+        testKey: `${this.ticket}-TC-${String(index + 1).padStart(2, '0')}`,
+        testName: `${this.ticket} automated test ${index + 1}`,
+        status: index < this.analysis.passedTests ? 'PASSED' : 'FAILED',
+        duration: 0,
+        evidenceLink: 'playwright-report/index.html',
+      })),
       summary: {
         passPercentage:
           Math.round(

@@ -17,7 +17,7 @@ const scenarios: AbsenceScenario[] = [
     reason: "Personal",
     duration: "Full Day",
     subPreference: "Notify 1 Sub",
-    subSelected: "Sub 4",
+    subSelected: "Sub 2",
     school: "SchoolAcademyTest2345"
   },
   {
@@ -34,7 +34,7 @@ const scenarios: AbsenceScenario[] = [
     reason: "Illness-Family Member",
     duration: "Full Day",
     subPreference: "Assign a specific sub",
-    subSelected: "Sub 4",
+    subSelected: "Sub 2",
     school: "SchoolAcademyTest2345"
   },
   {
@@ -59,7 +59,7 @@ const scenarios: AbsenceScenario[] = [
     reason: "Sick",
     duration: "Half Day AM",
     subPreference: "Notify 1 Sub",
-    subSelected: "Sub 4",
+    subSelected: "Sub 2",
     school: "SchoolAcademyTest2345"
   },
   {
@@ -76,7 +76,7 @@ const scenarios: AbsenceScenario[] = [
     reason: "Vacation",
     duration: "Half Day AM",
     subPreference: "Assign a specific sub",
-    subSelected: "Sub 4",
+    subSelected: "Sub 2",
     school: "SchoolAcademyTest2345"
   },
   {
@@ -101,7 +101,7 @@ const scenarios: AbsenceScenario[] = [
     reason: "Professional Development",
     duration: "Half Day PM",
     subPreference: "Notify 1 Sub",
-    subSelected: "Sub 4",
+    subSelected: "Sub 2",
     school: "SchoolAcademyTest2345"
   },
   {
@@ -118,7 +118,7 @@ const scenarios: AbsenceScenario[] = [
     reason: "Personal",
     duration: "Half Day PM",
     subPreference: "Assign a specific sub",
-    subSelected: "Sub 4",
+    subSelected: "Sub 2",
     school: "SchoolAcademyTest2345"
   },
   {
@@ -143,7 +143,7 @@ const scenarios: AbsenceScenario[] = [
     reason: "Educational Leave",
     duration: "Enter Time Manually (10:00-15:00)",
     subPreference: "Notify 1 Sub",
-    subSelected: "Sub 4",
+    subSelected: "Sub 2",
     school: "SchoolAcademyTest2345"
   },
   {
@@ -160,7 +160,7 @@ const scenarios: AbsenceScenario[] = [
     reason: "Sick",
     duration: "Enter Time Manually (10:00-15:00)",
     subPreference: "Assign a specific sub",
-    subSelected: "Sub 4",
+    subSelected: "Sub 2",
     school: "SchoolAcademyTest2345"
   },
   {
@@ -185,7 +185,7 @@ const scenarios: AbsenceScenario[] = [
     reason: "Illness-Family Member",
     duration: "10:00-14:00",
     subPreference: "Notify 1 Sub",
-    subSelected: "Sub 4",
+    subSelected: "Sub 2",
     school: "SchoolAcademyTest2345"
   },
   {
@@ -202,7 +202,7 @@ const scenarios: AbsenceScenario[] = [
     reason: "Professional Development",
     duration: "12:00-16:00",
     subPreference: "Assign a specific sub",
-    subSelected: "Sub 4",
+    subSelected: "Sub 2",
     school: "SchoolAcademyTest2345"
   },
   {
@@ -230,6 +230,10 @@ test.describe('ISE-1562: Teacher absence pairwise regression', () => {
 
   test.beforeEach(async ({ browser }) => {
     page = await browser.newPage();
+    // Maximize the window for headed mode
+    await page.evaluate(() => {
+      window.resizeTo(screen.width, screen.height);
+    }).catch(() => {});
     absencePage = new AbsenceFormPage(page);
     await absencePage.navigateTo();
   });

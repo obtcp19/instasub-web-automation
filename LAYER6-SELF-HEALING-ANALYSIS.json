@@ -1,0 +1,40 @@
+{
+  "ticket": "ISE-1562",
+  "spec": "tests/ISE-1562.spec.ts",
+  "analysis": {
+    "timestamp": "2026-06-19T12:02:20.890Z",
+    "totalTests": 2,
+    "passedTests": 2,
+    "failedTests": 0,
+    "flakyTests": [],
+    "authFailures": [],
+    "brokenSelectors": [],
+    "timeoutIssues": [],
+    "recommendedFixes": [],
+    "pullRequests": [],
+    "errorContexts": [],
+    "recommendations": [],
+    "patches": []
+  },
+  "recommendations": [],
+  "patches": [],
+  "mcp": {
+    "layer": 6,
+    "tool": "mcp://playwright/self-heal",
+    "ticket": "ISE-1562",
+    "spec": "tests/ISE-1562.spec.ts",
+    "generatedAt": "2026-06-19T12:02:20.890Z",
+    "sessions": [
+      {
+        "ticket": "ISE-1562",
+        "spec": "tests/ISE-1562.spec.ts",
+        "command": "npx playwright test tests/ISE-1562.spec.ts --project=chromium --workers=1 --headed --grep T2:",
+        "exitCode": 0,
+        "status": "passed"
+      }
+    ],
+    "fixes": [],
+    "reruns": []
+  },
+  "timestamp": "2026-06-19T12:02:43.506Z"
+}

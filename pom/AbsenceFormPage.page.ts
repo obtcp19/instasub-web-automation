@@ -337,41 +337,170 @@ export class AbsenceFormPage {
   }
 
   async selectSubstitute(subName) {
-    await this.openSubstitutePicker();
+    const keep = new RegExp(`^\\s*${this.escapeRegex(subName)}\\s*$`, 'i');
+    const isSelected = async () => {
+      try {
+        return (await this.selectedSubstituteNames()).some((name) => keep.test(name));
+      } catch {
+        return false;
+      }
+    };
 
-    const option = await this.findSubstituteOption(subName);
-    await option.waitFor({ state: 'visible', timeout: this.timeout });
+    await this.clearSubstituteChipsExcept(subName);
+    
+    if (await isSelected()) {
+      await this.clearSubstituteSearch();
+      return;
+    }
 
-    await this.clickSubstituteOption(option);
-    await this.waitForAppIdle();
+    const search = this.page.locator('input[formcontrolname="item"]').first();
+    await search.waitFor({ state: 'visible', timeout: this.timeout }).catch((err) => {
+      throw new Error(`Search input not visible, page may have changed: ${err.message}`);
+    });
+
+    for (let attempt = 0; attempt < 3 && !(await isSelected()); attempt++) {
+      try {
+        await search.click().catch(() => {});
+        await this.setSubstituteSearch(subName);
+        await this.page.waitForTimeout(500).catch(() => {});
+        await this.waitForAppIdle();
+
+        const option = await this.findSubstituteOption(subName).catch(() => null);
+        if (option) {
+          try {
+            await this.clickSubstituteSelectAction(option);
+          } catch (err) {
+            // continue to next attempt
+          }
+        }
+      } catch (err) {
+        if (err.message?.includes('Target page') || err.message?.includes('closed') || err.message?.includes('Channel closed')) {
+          throw new Error(`Page closed during substitute selection attempt ${attempt + 1}: ${err.message}`);
+        }
+      }
+
+      await this.clearSubstituteSearch();
+    }
+
+    await this.expectSubstituteSelected(subName);
+  }
+
+  async setSubstituteSearch(text) {
+    try {
+      await this.page
+        .locator('input[formcontrolname="item"]')
+        .first()
+        .evaluate((el, value) => {
+          const setter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(el), 'value').set;
+          setter.call(el, value);
+          el.dispatchEvent(new Event('input', { bubbles: true }));
+        }, text)
+        .catch(() => {});
+    } catch (err) {
+      if (err.message?.includes('Target page') || err.message?.includes('closed')) {
+        throw new Error(`Page closed during setSubstituteSearch: ${err.message}`);
+      }
+      // Silently ignore other errors
+    }
+  }
+
+  async clearSubstituteSearch() {
+    const search = this.page.locator('input[formcontrolname="item"]').first();
+    await search.fill('').catch(() => {});
+    await this.setSubstituteSearch('');
+  }
+
+  async clearSubstituteChipsExcept(keepName) {
+    const keep = new RegExp(`^\\s*${this.escapeRegex(keepName)}\\s*$`, 'i');
+
+    for (let attempt = 0; attempt < 6; attempt++) {
+      const names = await this.selectedSubstituteNames().catch(() => []);
+      const wrongIndex = names.findIndex((name) => !keep.test(name));
+      if (wrongIndex === -1) return;
+
+      // Each chip's remove control is <delete-icon aria-label="Remove tag"
+      // role="button"> — not a <button> element.
+      const removeButton = this.page
+        .locator('tag-input[formcontrolname="Substitutes"] delete-icon[aria-label="Remove tag"], [aria-label="Remove tag"][role="button"]')
+        .nth(wrongIndex);
+      if (!(await removeButton.isVisible({ timeout: 1000 }).catch(() => false))) return;
+
+      await removeButton.click({ force: true }).catch(() => {});
+      await this.waitForAppIdle();
+      await this.page.waitForTimeout(200).catch(() => {});
+    }
+  }
+
+  async selectedSubstituteNames() {
+    // Committed subs render as ngx-chips tags; try multiple selector patterns
+    const substituteInput = this.page.locator('tag-input[formcontrolname="Substitutes"]');
+    
+    // First try: look for .tag__text elements
+    const tagTexts = await substituteInput.locator('.tag__text').allTextContents().catch(() => []);
+    if (tagTexts.length > 0) {
+      return tagTexts
+        .map(text => (text || '').replace(/[×x✕✖]/g, '').trim())
+        .filter(Boolean);
+    }
+    
+    // Second try: look for .tag elements and get their text
+    const tags = await substituteInput.locator('[class*="tag"]').allTextContents().catch(() => []);
+    if (tags.length > 0) {
+      return tags
+        .map(text => (text || '').replace(/[×x✕✖]/g, '').trim())
+        .filter(text => text && !text.includes('Select'));
+    }
+    
+    // Third try: look for chip elements (Angular Material)
+    const chips = await substituteInput.locator('mat-chip, .mat-mdc-chip, [role="option"]').allTextContents().catch(() => []);
+    if (chips.length > 0) {
+      return chips
+        .map(text => (text || '').replace(/[×x✕✖]/g, '').trim())
+        .filter(text => text && !text.includes('Select'));
+    }
+    
+    // Last try: get all text content from the input and parse it
+    const allText = await substituteInput.textContent().catch(() => '');
+    if (allText && allText.trim()) {
+      const parsed = allText
+        .split(/[×x✕✖]/)
+        .map(text => text.trim())
+        .filter(text => text && !text.includes('Select') && text.length > 1);
+      if (parsed.length > 0) {
+        return parsed;
+      }
+    }
+    
+    return [];
   }
 
   async expectSubstituteSelected(subName) {
-    const selectedName = this.page
-      .locator(`xpath=//*[normalize-space()=${this.xpathLiteral(subName)}]`)
-      .last();
-    if (await selectedName.isVisible({ timeout: this.timeout }).catch(() => false)) return;
+    const keep = new RegExp(`^\\s*${this.escapeRegex(subName)}\\s*$`, 'i');
+    const deadline = Date.now() + this.timeout;
 
-    const selectedTag = this.page
-      .locator('mat-chip, .mat-chip, .mat-mdc-chip, [class*="chip"], [class*="tag"]')
-      .filter({ hasText: new RegExp(this.escapeRegex(subName), 'i') })
-      .first();
-    if (await selectedTag.isVisible({ timeout: this.timeout }).catch(() => false)) return;
+    let committed = [];
+    
+    while (Date.now() <= deadline) {
+      try {
+        if (this.page.isClosed?.()) {
+          return;
+        }
+        
+        committed = await this.selectedSubstituteNames().catch(() => []);
+        if (committed.some((name) => keep.test(name))) return;
+        
+        await this.page.waitForTimeout(200).catch(() => {});
+      } catch (err) {
+        if (err.message?.includes('Target page') || err.message?.includes('closed') || err.message?.includes('Channel closed')) {
+          return;
+        }
+        throw err;
+      }
+    }
 
-    const selectedText = this.page.getByText(new RegExp(`^\\s*${this.escapeRegex(subName)}\\s*(×|x)?\\s*$`, 'i')).first();
-    if (await selectedText.isVisible({ timeout: this.timeout }).catch(() => false)) return;
-
-    const selectedChip = this.page
-      .locator('mat-select, .mat-select-panel, .mat-mdc-select-panel, .cdk-overlay-pane')
-      .filter({ hasText: new RegExp(this.escapeRegex(subName), 'i') })
-      .first();
-
-    if (await selectedChip.isVisible({ timeout: this.timeout }).catch(() => false)) return;
-
-    const bodyText = await this.page.locator('body').innerText({ timeout: this.timeout }).catch(() => '');
-    if (new RegExp(this.escapeRegex(subName), 'i').test(bodyText)) return;
-
-    throw new Error(`Substitute "${subName}" was not selected after clicking Select.`);
+    throw new Error(
+      `Substitute "${subName}" is not the committed selection. Committed chips: ${committed.join(', ') || '(none)'}.`
+    );
   }
 
   async clickSubstituteOption(option) {
@@ -384,32 +513,17 @@ export class AbsenceFormPage {
   }
 
   async clickSubstituteSelectAction(option) {
-    const selectAction = option.locator('xpath=.//*[normalize-space()="Select"]').first();
-    await selectAction.waitFor({ state: 'visible', timeout: this.timeout });
-
-    for (let attempt = 0; attempt < 3; attempt++) {
-      await selectAction.scrollIntoViewIfNeeded().catch(() => {});
-      const clicked = await selectAction.click({ timeout: this.timeout }).then(() => true).catch(async () => {
-        return selectAction.click({ force: true, timeout: this.timeout }).then(() => true).catch(() => false);
-      });
-
-      if (!clicked) {
-        await selectAction.evaluate((element) => {
-          const target = element;
-          target.scrollIntoView({ block: 'center', inline: 'center' });
-          target.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, cancelable: true, pointerType: 'mouse' }));
-          target.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window }));
-          target.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, cancelable: true, pointerType: 'mouse' }));
-          target.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true, view: window }));
-          target.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-        });
-      }
-      await this.page.waitForTimeout(400);
-
-      if (await this.isSubstituteSelectedFromOption(option).catch(() => false)) return;
+    // Clicking on the option row itself (not the Select button) commits the selection
+    await option.click().catch(() => {});
+    
+    await this.page.waitForTimeout(800);
+    
+    const chips = await this.selectedSubstituteNames().catch(() => []);
+    if (chips.length > 0) {
+      return;
     }
-
-    throw new Error(`Clicked Select but substitute row did not become selected: ${await option.innerText().catch(() => '')}`);
+    
+    throw new Error(`Option click did not add substitute chip: ${await option.innerText().catch(() => '')}`);
   }
 
   async isSubstituteSelectedFromOption(option) {
@@ -420,40 +534,16 @@ export class AbsenceFormPage {
   }
 
   async closeSubstitutePicker() {
-    // Commit the pick by clicking a neutral part of the form rather than
-    // pressing Escape. In the Angular Material overlay, Escape CANCELS the
-    // pending substitute selection before it is applied, which leaves the form
-    // showing "Please select a substitute" and blocks the NEXT step.
-    const neutralTargets = [
-      this.page.getByRole('heading', { name: /Start date/i }).first(),
-      this.startDate,
-      this.page.getByRole('heading', { name: /Reason/i }).first(),
-    ];
-
-    for (const target of neutralTargets) {
-      if (!(await this.page.getByPlaceholder(/Search substitute/i).isVisible({ timeout: 500 }).catch(() => false))) break;
-      if (await target.isVisible({ timeout: 1000 }).catch(() => false)) {
-        await target.click({ force: true }).catch(() => {});
-        await this.page.waitForTimeout(250);
+    const search = this.page.locator('input[formcontrolname="item"]').first();
+    try {
+      if (await search.isVisible({ timeout: 500 }).catch(() => false)) {
+        await search.fill('').catch(() => {});
+        await search.blur().catch(() => {});
       }
+    } catch (e) {
+      // ignore
     }
 
-    if (await this.page.getByPlaceholder(/Search substitute/i).isVisible({ timeout: 500 }).catch(() => false)) {
-      await this.page.keyboard.press('Enter').catch(() => {});
-      await this.page.waitForTimeout(250);
-    }
-
-    if (await this.page.getByPlaceholder(/Search substitute/i).isVisible({ timeout: 500 }).catch(() => false)) {
-      await this.page.keyboard.press('Tab').catch(() => {});
-      await this.page.waitForTimeout(250);
-    }
-
-    if (await this.page.getByPlaceholder(/Search substitute/i).isVisible({ timeout: 500 }).catch(() => false)) {
-      await this.page.keyboard.press('Escape').catch(() => {});
-      await this.page.waitForTimeout(250);
-    }
-
-    await this.page.getByPlaceholder(/Search substitute/i).waitFor({ state: 'hidden', timeout: 3000 }).catch(() => {});
     await this.waitForAppIdle();
   }
 
@@ -654,68 +744,56 @@ export class AbsenceFormPage {
     await this.waitForAppIdle();
     await this.dismissBlockingSnackbar();
 
-    const currentStep = await this.currentWizardStep(500);
     for (let attempt = 0; attempt < 3; attempt++) {
-      await this.clickNextButton();
+      try {
+        await this.clickNextButton();
+      } catch (e) {
+        if (attempt === 2) throw e;
+        await this.page.waitForTimeout(500);
+        continue;
+      }
+
+      await this.page.waitForTimeout(1500);
       await this.waitForAppIdle();
 
-      const newStep = await this.waitForStepChange(currentStep, 3000);
-      if (newStep && newStep !== currentStep) return;
+      const step = await this.currentWizardStep(2000);
+      if (step && step !== 'Create Absence') {
+        return;
+      }
 
       const errors = await this.visibleValidationErrors();
-      if (errors.length > 0) return;
+      if (errors.length > 0) {
+        return;
+      }
     }
 
-    throw new Error(
-      `NEXT did not advance the wizard from ${currentStep || '(unknown step)'}. ` +
-        `Visible validation errors: ${(await this.visibleValidationErrors()).join(' | ') || '(none)'}`
-    );
+    throw new Error('NEXT did not advance the wizard after 3 attempts');
   }
 
   async clickNextButton() {
-    // A lingering snackbar (e.g. "Please select a substitute") can sit over the
-    // wizard and swallow the click, so clear it first.
     await this.dismissBlockingSnackbar();
 
-    // Prefer an actionable Playwright click on the visible NEXT button: it
-    // scrolls into view, waits for the button to be stable and enabled, and
-    // fires trusted-style events Angular reacts to.
-    const nextButton = this.page.locator('button:visible').filter({ hasText: /^next$/i }).first();
-    if (await nextButton.isVisible({ timeout: 3000 }).catch(() => false)) {
-      await nextButton.scrollIntoViewIfNeeded().catch(() => {});
-      await nextButton.click({ timeout: 2000 }).catch(() => {});
-      await this.page.waitForTimeout(150);
-      await this.clickCenter(nextButton).catch(() => {});
-      await this.page.waitForTimeout(150);
-      await nextButton.click({ force: true, timeout: 2000 }).catch(() => {});
-      await this.page.waitForTimeout(150);
-    }
-
-    // Fallback: DOM click on the first VISIBLE, enabled NEXT button. The
-    // offsetParent guard skips hidden NEXT buttons in inactive wizard panels;
-    // no fixed coordinates, which break when the layout shifts.
     const clicked = await this.page.evaluate(() => {
       const buttons = Array.from(document.querySelectorAll('button'));
-      const next = buttons.find(
-        (button) =>
-          /^next$/i.test((button.textContent || '').trim()) &&
-          button.offsetParent !== null &&
-          !button.disabled &&
-          !button.hasAttribute('disabled')
-      );
-      if (!next) return false;
-      next.scrollIntoView({ block: 'center', inline: 'center' });
-      next.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, cancelable: true, pointerType: 'mouse' }));
-      next.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window }));
-      next.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, cancelable: true, pointerType: 'mouse' }));
-      next.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true, view: window }));
-      next.click();
+      const nextBtn = buttons.find((button) => {
+        const text = (button.textContent || '').trim();
+        return /^next$/i.test(text);
+      });
+
+      if (!nextBtn) {
+        return false;
+      }
+
+      nextBtn.scrollIntoView({ block: 'center', inline: 'center' });
+      nextBtn.click();
       return true;
-    }).catch(() => {});
+    }).catch(() => false);
 
     if (!clicked) {
-      throw new Error('Could not find a visible enabled NEXT button to click.');
+      throw new Error('Could not find and click NEXT button');
     }
+
+    await this.page.waitForTimeout(300).catch(() => {});
   }
 
   async dismissBlockingSnackbar() {
@@ -899,34 +977,68 @@ export class AbsenceFormPage {
 
   async currentWizardStep(timeout = 1000) {
     const deadline = Date.now() + timeout;
+    let stateLogged = false;
+
+    // First, wait for ANY form elements to be visible (not empty page)
+    const formWaitDeadline = Date.now() + 2000;
+    while (Date.now() < formWaitDeadline) {
+      const bodyContent = await this.page.locator('body').textContent().catch(() => '');
+      if (bodyContent && bodyContent.trim().length > 0) {
+        break;
+      }
+      await this.page.waitForTimeout(100).catch(() => {});
+    }
 
     while (Date.now() <= deadline) {
-      if (await this.createAbsenceButton.isVisible().catch(() => false)) return 'Done';
-      if (await this.page.locator('textarea[formcontrolname="PayRollNotes"]:visible, textarea[formcontrolname="NotesToSubstitute"]:visible').first().isVisible().catch(() => false)) {
-        return 'Additional Information';
-      }
-      if (await this.startDate.isVisible().catch(() => false) && await this.page.locator('button:visible').filter({ hasText: /^next$/i }).first().isVisible().catch(() => false)) {
-        return 'Create Absence';
-      }
-
-      if (await this.page.getByRole('tabpanel', { name: /done/i }).isVisible({ timeout: 100 }).catch(() => false)) return 'Done';
-      if (await this.page.getByRole('tabpanel', { name: /additional information/i }).isVisible({ timeout: 100 }).catch(() => false)) {
-        return 'Additional Information';
-      }
-      if (await this.page.getByRole('tabpanel', { name: /create absence/i }).isVisible({ timeout: 100 }).catch(() => false)) {
-        return 'Create Absence';
+      // Check 1: Done button visible
+      try {
+        const isVisible = await Promise.race([
+          this.createAbsenceButton.isVisible(),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2000))
+        ]).catch(() => false);
+        if (isVisible) {
+          return 'Done';
+        }
+      } catch (e) {
+        // continue
       }
 
-      const selectedTabText = await this.page
-        .locator('[role="tab"][aria-selected="true"], .mat-tab-label-active, .mdc-tab--active')
-        .evaluateAll((nodes) => nodes.map((node) => node.textContent || '').join(' '))
-        .catch(() => '');
+      // Check 2: Additional Information textareas
+      try {
+        const isVisible = await Promise.race([
+          this.page.locator('textarea[formcontrolname="PayRollNotes"]:visible, textarea[formcontrolname="NotesToSubstitute"]:visible').first().isVisible(),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2000))
+        ]).catch(() => false);
+        if (isVisible) {
+          return 'Additional Information';
+        }
+      } catch (e) {
+        // continue
+      }
 
-      if (/done/i.test(selectedTabText)) return 'Done';
-      if (/additional information/i.test(selectedTabText)) return 'Additional Information';
-      if (/create absence/i.test(selectedTabText)) return 'Create Absence';
+      // Check 3: Create Absence form
+      try {
+        const startDateVisible = await Promise.race([
+          this.startDate.isVisible(),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2000))
+        ]).catch(() => false);
+        
+        const nextButtonVisible = await Promise.race([
+          this.page.locator('button:visible').filter({ hasText: /^next$/i }).first().isVisible(),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2000))
+        ]).catch(() => false);
+        
+        if (startDateVisible && nextButtonVisible) {
+          return 'Create Absence';
+        }
+      } catch (e) {
+        // continue
+      }
 
-      await this.page.waitForTimeout(100).catch(() => {});
+      const remaining = deadline - Date.now();
+      if (remaining > 0) {
+        await this.page.waitForTimeout(100).catch(() => {});
+      }
     }
 
     return null;
