@@ -166,8 +166,9 @@ class Layer3Agent {
 
     const testPlan = options.testPlan || this.loadTestPlan();
     const ticket = this.ticketFrom(options.layer1Data, options.layer2Context, options.ticket);
+    const specs = options.spec ? [options.spec] : this.specsForVerification(ticket);
     const spec = options.spec || this.specForTicket(ticket);
-    const verification = this.verifyWithPlaywrightMCP(testPlan, { ...options, ticket, spec });
+    const verification = this.verifyWithPlaywrightMCP(testPlan, { ...options, ticket, spec, specs });
     const explorerContext = await this.captureExplorerContext(testPlan, verification, { ...options, ticket });
 
     const payload = {
@@ -193,6 +194,7 @@ class Layer3Agent {
         preferExplorerSelectors: explorerContext.status === 'captured',
         preferExecutedSpecTitles: verification.status === 'verified' && verification.mode === 'run',
         targetSpec: spec,
+        comparedSpecs: verification.specs,
       },
     };
 
@@ -254,13 +256,16 @@ class Layer3Agent {
 
   verifyWithPlaywrightMCP(testPlan, options = {}) {
     const { runPlaywright = false, headed = false, ticket = '', spec = '' } = options;
-    const specPath = spec ? path.join(this.projectRoot, spec) : '';
+    const specs = Array.isArray(options.specs) && options.specs.length > 0
+      ? options.specs
+      : (spec ? [spec] : []);
     const runMode = runPlaywright ? 'run' : 'list';
     const verification = {
       status: 'skipped',
       mode: runMode,
       ticket,
       spec,
+      specs,
       command: null,
       discoveredTests: [],
       matchedTestCases: [],
@@ -276,39 +281,74 @@ class Layer3Agent {
       return verification;
     }
 
-    if (!spec || !fs.existsSync(specPath)) {
-      verification.notes.push(`No existing spec found at ${spec || '(not resolved)'}. Layer 4 can use captured context to generate it.`);
+    const existingSpecs = specs.filter((candidate) => fs.existsSync(path.join(this.projectRoot, candidate)));
+    const missingSpecs = specs.filter((candidate) => !fs.existsSync(path.join(this.projectRoot, candidate)));
+    if (missingSpecs.length > 0) {
+      verification.notes.push(`Skipped missing spec(s): ${missingSpecs.join(', ')}`);
+    }
+
+    if (existingSpecs.length === 0) {
+      verification.notes.push(`No existing spec found at ${spec || specs.join(', ') || '(not resolved)'}. Layer 4 can use captured context to generate it.`);
       return verification;
     }
 
-    const args = ['playwright', 'test', spec, '--project=chromium', '--workers=1'];
-    if (!runPlaywright) args.push('--list');
-    if (headed && runPlaywright) args.push('--headed');
-
-    verification.command = ['npx', ...args].join(' ');
-    console.log(`📡 Playwright MCP ${runMode}: ${verification.command}\n`);
+    verification.specs = existingSpecs;
 
     const childEnv = this.buildPlaywrightEnv(ticket, options);
-    const completed = spawnSync('npx', args, {
-      cwd: this.projectRoot,
-      encoding: 'utf-8',
-      stdio: ['ignore', 'pipe', 'pipe'],
-      env: childEnv,
-      maxBuffer: 10 * 1024 * 1024,
-    });
 
-    const output = `${completed.stdout || ''}\n${completed.stderr || ''}`.trim();
-    verification.exitCode = completed.status ?? 1;
-    verification.status = verification.exitCode === 0 ? 'verified' : 'failed';
-    verification.discoveredTests = this.parsePlaywrightOutput(output, runMode);
+    const commands = !runPlaywright && existingSpecs.length > 1
+      ? existingSpecs.map((candidate) => ['playwright', 'test', candidate, '--project=chromium', '--workers=1', '--list'])
+      : [['playwright', 'test', ...existingSpecs, '--project=chromium', '--workers=1']];
+
+    if (runPlaywright && headed) commands[0].push('--headed');
+
+    verification.command = commands.map((args) => ['npx', ...args].join(' ')).join(' && ');
+    console.log(`📡 Playwright MCP ${runMode}: ${verification.command}\n`);
+
+    const outputs = [];
+    let exitCode = 0;
+    const discoveredTests = [];
+
+    for (const args of commands) {
+      const completed = spawnSync('npx', args, {
+        cwd: this.projectRoot,
+        encoding: 'utf-8',
+        stdio: ['ignore', 'pipe', 'pipe'],
+        env: childEnv,
+        maxBuffer: 10 * 1024 * 1024,
+      });
+
+      const output = `${completed.stdout || ''}\n${completed.stderr || ''}`.trim();
+      outputs.push(output);
+      const currentExitCode = completed.status ?? 1;
+      if (currentExitCode !== 0) {
+        exitCode = currentExitCode;
+        verification.notes.push(`${args[2]} failed to ${runMode}: ${output.slice(0, 1200)}`);
+      }
+      if (completed.error) verification.notes.push(completed.error.message);
+      const parsedTests = this.parsePlaywrightOutput(output, runMode);
+      if (parsedTests.length > 0) {
+        discoveredTests.push(...parsedTests);
+      } else if (!runPlaywright) {
+        const sourceTests = this.extractTestsFromSpecSource(args[2]);
+        if (sourceTests.length > 0) {
+          discoveredTests.push(...sourceTests);
+          verification.notes.push(`${args[2]} listed from source because Playwright could not load the spec.`);
+        }
+      }
+    }
+
+    const output = outputs.filter(Boolean).join('\n\n');
+    verification.exitCode = exitCode;
+    verification.discoveredTests = Array.from(new Set(discoveredTests));
     verification.matchedTestCases = this.matchPlanToDiscoveredTests(testPlan, verification.discoveredTests);
     verification.missingTestCases = testPlan
       .map((testCase) => testCase.id)
       .filter((id) => !verification.matchedTestCases.some((match) => match.id === id));
+    verification.status = verification.discoveredTests.length > 0
+      ? (verification.exitCode === 0 ? 'verified' : 'partial')
+      : 'failed';
     verification.outputTail = output.slice(-4000);
-
-    if (completed.error) verification.notes.push(completed.error.message);
-    if (verification.exitCode !== 0 && output) verification.notes.push(output.slice(0, 2000));
 
     console.log(`✅ Playwright MCP status: ${verification.status}`);
     console.log(`✅ Discovered tests: ${verification.discoveredTests.length}\n`);
@@ -980,6 +1020,24 @@ class Layer3Agent {
     return direct;
   }
 
+  specsForVerification(ticket = '') {
+    const testsDir = path.join(this.projectRoot, 'tests');
+    const allSpecs = fs.existsSync(testsDir)
+      ? fs.readdirSync(testsDir)
+        .filter((fileName) => /\.spec\.ts$/i.test(fileName))
+        .sort()
+        .map((fileName) => `tests/${fileName}`)
+      : [];
+
+    const ticketSpec = this.specForTicket(ticket);
+    if (!ticketSpec) return allSpecs;
+
+    return Array.from(new Set([
+      ticketSpec,
+      ...allSpecs,
+    ]));
+  }
+
   parsePlaywrightOutput(output, mode = 'list') {
     const progressLine = /^\[\d+\/\d+\]\s+/;
     const listLine = /^\[[^\]]+\]\s*›\s*/;
@@ -994,6 +1052,55 @@ class Layer3Agent {
       .map((line) => line.replace(progressLine, '').replace(listLine, '').trim());
 
     return Array.from(new Set(tests));
+  }
+
+  extractTestsFromSpecSource(spec) {
+    const specPath = path.join(this.projectRoot, spec);
+    if (!fs.existsSync(specPath)) return [];
+
+    const content = fs.readFileSync(specPath, 'utf-8');
+    const describeTitle = content.match(/test\.describe\(\s*(['"`])([^'"`]+)\1/)?.[2] || path.basename(spec);
+    const titles = [];
+    const literalTestPattern = /(?<!\.)\btest\(\s*(['"`])([^'"`$]+)\1\s*,/g;
+    let literalMatch;
+
+    while ((literalMatch = literalTestPattern.exec(content)) !== null) {
+      titles.push(`${spec}: ${describeTitle} › ${literalMatch[2]}`);
+    }
+
+    const scenariosBlock = content.match(/const\s+scenarios(?:\s*:\s*[^=]+)?\s*=\s*\[([\s\S]*?)\];/);
+    if (scenariosBlock) {
+      const scenarioPattern = /\{([\s\S]*?)\}/g;
+      let scenarioMatch;
+      while ((scenarioMatch = scenarioPattern.exec(scenariosBlock[1])) !== null) {
+        const scenario = this.extractScenarioFields(scenarioMatch[1]);
+        if (!scenario.id) continue;
+
+        const details = [
+          scenario.reason ? `${scenario.reason} absence` : 'absence',
+          scenario.duration ? `with ${scenario.duration}` : '',
+          scenario.subPreference ? `and ${scenario.subPreference}` : '',
+        ].filter(Boolean).join(' ');
+
+        titles.push(`${spec}: ${describeTitle} › ${scenario.id}: ${details}`);
+      }
+    }
+
+    return Array.from(new Set(titles));
+  }
+
+  extractScenarioFields(block) {
+    const field = (name) => {
+      const match = block.match(new RegExp(`${name}\\s*:\\s*(['"\`])([^'"\`]+)\\1`));
+      return match?.[2] || '';
+    };
+
+    return {
+      id: field('id'),
+      reason: field('reason'),
+      duration: field('duration'),
+      subPreference: field('subPreference'),
+    };
   }
 
   matchPlanToDiscoveredTests(testPlan, discoveredTests) {
@@ -1055,7 +1162,7 @@ async function main() {
       layer1Data = JSON.parse(fs.readFileSync(requirementsPath, 'utf-8'));
     }
 
-    if (args.includes('--manual-mcp') || args.includes('--mcp')) {
+    if (args.includes('--manual-mcp') || args.includes('--mcp') || args.includes('--explore')) {
       await agent.runManualMCP({
         ticket: ticketArg,
         spec: specArg,
