@@ -222,6 +222,7 @@ class Layer4Agent {
     const pomFile = path.join(this.pomDir, 'AbsenceFormPage.page.ts');
     const specFile = path.join(this.testsDir, `${this.ticketId}.spec.ts`);
     const requestType = this._requestTypeForPairwisePlan(testPlan);
+    const school = this._schoolForPairwisePlan(testPlan);
 
     if (!fs.existsSync(pomFile)) {
       throw new Error('Pairwise absence generation requires pom/AbsenceFormPage.page.ts to exist.');
@@ -234,6 +235,7 @@ class Layer4Agent {
       duration: String(tc.duration).replace(/–/g, '-'),
       subPreference: tc.subPreference,
       subSelected: tc.subSelected && tc.subSelected !== '—' ? tc.subSelected : undefined,
+      school: tc.school || school || undefined,
     }));
 
     fs.writeFileSync(specFile, this._renderEmployeePairwiseSpec(scenarios, requestType));
@@ -247,6 +249,7 @@ class Layer4Agent {
       console.log('   • Self flow skips Employee radio/search selection');
     }
     console.log('   • Angular Material dropdowns use CDK overlay selectors');
+    if (school) console.log(`   • School dropdown uses "${school}" from Layer 3 explorer context`);
     console.log('   • Actual submit uses AbsenceFormPage.submitAbsence()');
 
     return { files: [specFile] };
@@ -269,9 +272,24 @@ class Layer4Agent {
       .filter(Boolean)
       .join(' ');
 
-    if (this.ticketId === 'ISE-1559') return 'Teacher';
+    if (this.ticketId === 'ISE-1559' || this.ticketId === 'ISE-1562') return 'Teacher';
     if (/\bself\b/i.test(searchable) || this.ticketId === 'ISE-1558') return 'Self';
     return 'Employee';
+  }
+
+  _schoolForPairwisePlan(testPlan) {
+    const explicitSchool = process.env.ABSENCE_SCHOOL || process.env.SCHOOL_NAME || process.env.EXPLORER_SCHOOL;
+    if (explicitSchool) return explicitSchool;
+
+    const plannedSchool = (testPlan || []).map((tc) => tc.school).find(Boolean);
+    if (plannedSchool) return plannedSchool;
+
+    const explorerContext = this.loadJson(path.join(this.contextDir, 'explorer-context.json'), {});
+    return (
+      explorerContext?.flowDocs?.wizardExploration?.scenario?.school ||
+      explorerContext?.explorerActions?.find((action) => /Selected school/i.test(action))?.match(/"([^"]+)"/)?.[1] ||
+      ''
+    );
   }
 
   _normalizeDateForUi(value) {

@@ -1,9 +1,9 @@
 {
   "layer": 3,
-  "generatedAt": "2026-06-18T10:20:53.536Z",
+  "generatedAt": "2026-06-18T16:12:19.176Z",
   "status": "captured",
   "purpose": "Manual Playwright MCP context handoff for Layer 4 code generation.",
-  "ticket": "ISE-1559",
+  "ticket": "ISE-1562",
   "mcp": {
     "protocol": "MCP",
     "server": "mcp://playwright",
@@ -31,151 +31,47 @@
     "cases": 26
   },
   "verification": {
-    "status": "verified",
+    "status": "skipped",
     "mode": "list",
-    "ticket": "ISE-1559",
-    "spec": "tests/ISE-1559.spec.ts",
-    "command": "npx playwright test tests/ISE-1559.spec.ts --project=chromium --workers=1 --list",
-    "discoveredTests": [
-      "auth.setup.ts:39:1 › authenticate",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T1: Sick absence with Full Day and Notify all subs",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T2: Personal absence with Full Day and Notify 1 Sub",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T3: Vacation absence with Full Day and Notify my favorites",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T23: Educational Leave absence with 09:00-11:00 and Notify my favorites",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required",
-      "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs"
+    "ticket": "ISE-1562",
+    "spec": "tests/ISE-1562.spec.ts",
+    "command": null,
+    "discoveredTests": [],
+    "matchedTestCases": [],
+    "missingTestCases": [
+      "T1",
+      "T2",
+      "T3",
+      "T4",
+      "T5",
+      "T6",
+      "T7",
+      "T8",
+      "T9",
+      "T10",
+      "T11",
+      "T12",
+      "T13",
+      "T14",
+      "T15",
+      "T16",
+      "T17",
+      "T18",
+      "T19",
+      "T20",
+      "T21",
+      "T22",
+      "T23",
+      "T24",
+      "T25",
+      "T26"
     ],
-    "matchedTestCases": [
-      {
-        "id": "T1",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T1: Sick absence with Full Day and Notify all subs"
-      },
-      {
-        "id": "T2",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T2: Personal absence with Full Day and Notify 1 Sub"
-      },
-      {
-        "id": "T3",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T3: Vacation absence with Full Day and Notify my favorites"
-      },
-      {
-        "id": "T4",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub"
-      },
-      {
-        "id": "T5",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required"
-      },
-      {
-        "id": "T6",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs"
-      },
-      {
-        "id": "T7",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub"
-      },
-      {
-        "id": "T8",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites"
-      },
-      {
-        "id": "T9",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub"
-      },
-      {
-        "id": "T10",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required"
-      },
-      {
-        "id": "T11",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs"
-      },
-      {
-        "id": "T12",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub"
-      },
-      {
-        "id": "T13",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites"
-      },
-      {
-        "id": "T14",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub"
-      },
-      {
-        "id": "T15",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required"
-      },
-      {
-        "id": "T16",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs"
-      },
-      {
-        "id": "T17",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub"
-      },
-      {
-        "id": "T18",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites"
-      },
-      {
-        "id": "T19",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub"
-      },
-      {
-        "id": "T20",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required"
-      },
-      {
-        "id": "T21",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs"
-      },
-      {
-        "id": "T22",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub"
-      },
-      {
-        "id": "T23",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T23: Educational Leave absence with 09:00-11:00 and Notify my favorites"
-      },
-      {
-        "id": "T24",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub"
-      },
-      {
-        "id": "T25",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required"
-      },
-      {
-        "id": "T26",
-        "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs"
-      }
+    "exitCode": null,
+    "outputTail": "",
+    "notes": [
+      "No existing spec found at tests/ISE-1562.spec.ts. Layer 4 can use captured context to generate it."
     ],
-    "missingTestCases": [],
-    "exitCode": 0,
-    "outputTail": "ify all subs\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T2: Personal absence with Full Day and Notify 1 Sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T3: Vacation absence with Full Day and Notify my favorites\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T23: Educational Leave absence with 09:00-11:00 and Notify my favorites\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required\n  [chromium] › ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs\nTotal: 27 tests in 2 files",
-    "notes": [],
-    "verifiedAt": "2026-06-18T10:20:28.602Z"
+    "verifiedAt": "2026-06-18T16:11:56.533Z"
   },
   "explorerContext": {
     "layer": 3,
@@ -183,8 +79,8 @@
     "status": "captured",
     "mode": "browser",
     "url": "https://instasublogin.tcpsoftware.com/",
-    "ticket": "ISE-1559",
-    "generatedAt": "2026-06-18T10:20:29.572Z",
+    "ticket": "ISE-1562",
+    "generatedAt": "2026-06-18T16:11:56.534Z",
     "mcp": {
       "protocol": "MCP",
       "server": "mcp://playwright",
@@ -193,10 +89,37 @@
     "why": "Layer 3 captures authoritative selectors and flow docs for downstream Layer 4 codegen.",
     "coverage": {
       "plannedCases": 26,
-      "coveredCases": 26,
-      "missingCases": [],
+      "coveredCases": 0,
+      "missingCases": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8",
+        "T9",
+        "T10",
+        "T11",
+        "T12",
+        "T13",
+        "T14",
+        "T15",
+        "T16",
+        "T17",
+        "T18",
+        "T19",
+        "T20",
+        "T21",
+        "T22",
+        "T23",
+        "T24",
+        "T25",
+        "T26"
+      ],
       "coveredByOtherLayer": {
-        "layer3PlaywrightMcp": 26,
+        "layer3PlaywrightMcp": 0,
         "layer5Execution": "covered when agent-layer5-execution.js runs the generated/current spec"
       }
     },
@@ -204,7 +127,7 @@
       "accessibility": {
         "role": "document",
         "name": "InstaSub",
-        "textPreview": "Loading...\nmenu\n\n \nsettings\nHelp arrow_drop_down\nnotification_important\nLeave Balance\nAs of 06/18/2026\nAbsences\nWho's Available\nNew\nUpcoming ()\nPast ()\nDenied ()\n1\nCreate Absence\n2\nAdditional Information\n3\nDone\nStart date\nEnd date\nReason\nReason\t\nDuration\nFull Day\t\nStart time\nEnd time\nSelect Substitute Preference\nSelect Substitute Preference\t\nadd_circle_outline  Add Class\nNEXT\nPayroll Notes\nMax 50 characters\n0/50\nNotes to Substitutes\nMax 50 characters\n0/50\nAttachment\nfile_uploadUpload attachment\nBack\nNext\nBack\nCreate Absence"
+        "textPreview": "menu\n\n \nsettings\nHelp arrow_drop_down\nnotification_important\nSchedule Absence\nInternal Coverage\nFeedback\nreport\nReport Issues\nLeave Balance\nAs of 06/18/2026\nSick\n10 days\nPersonal\n10 days\nVacation\n10 days\nleaveallowance\n30 days\nAbsences\nWho's Available\nNew\nUpcoming ()\nPast ()\nDenied ()\n1\nCreate Absence\n2\nAdditional Information\n3\nDone\nStart date\nEnd date\nReason\nReason\t\nDuration\nFull Day\t\nStart time\nEnd time\nSelect Substitute Preference\nNotify all subs\t\nSelect School\nSelect School\t\nadd_circle_outline  Add Class\nNEXT"
       },
       "elements": {
         "buttons": [
@@ -272,38 +195,38 @@
             "disabled": false
           },
           {
-            "text": "file_uploadUpload attachment",
+            "text": "",
             "role": "button",
             "selector": "button",
-            "recommendedLocator": "getByRole('button', { name: \"file_uploadUpload attachment\" })",
+            "recommendedLocator": "button",
             "disabled": false
           },
           {
-            "text": "Back",
+            "text": "",
             "role": "button",
             "selector": "button:nth-of-type(1)",
-            "recommendedLocator": "getByRole('button', { name: \"Back\" })",
+            "recommendedLocator": "button:nth-of-type(1)",
             "disabled": false
           },
           {
-            "text": "Next",
+            "text": "",
             "role": "button",
             "selector": "button:nth-of-type(2)",
-            "recommendedLocator": "getByRole('button', { name: \"Next\" })",
+            "recommendedLocator": "button:nth-of-type(2)",
             "disabled": false
           },
           {
-            "text": "Back",
+            "text": "",
             "role": "button",
             "selector": "button:nth-of-type(1)",
-            "recommendedLocator": "getByRole('button', { name: \"Back\" })",
+            "recommendedLocator": "button:nth-of-type(1)",
             "disabled": false
           },
           {
-            "text": "Create Absence",
+            "text": "",
             "role": "button",
             "selector": "button:nth-of-type(2)",
-            "recommendedLocator": "getByRole('button', { name: \"Create Absence\" })",
+            "recommendedLocator": "button:nth-of-type(2)",
             "disabled": false
           }
         ],
@@ -362,6 +285,14 @@
             "selector": "#mat-select-1",
             "recommendedLocator": "#mat-select-1",
             "formControlName": "AbsenceType",
+            "required": false
+          },
+          {
+            "label": "Select School",
+            "type": "listbox",
+            "selector": "#mat-select-4",
+            "recommendedLocator": "#mat-select-4",
+            "formControlName": "employeeSchool",
             "required": false
           },
           {
@@ -479,38 +410,38 @@
                 "disabled": false
               },
               {
-                "text": "file_uploadUpload attachment",
+                "text": "",
                 "role": "button",
                 "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"file_uploadUpload attachment\" })",
+                "recommendedLocator": "button",
                 "disabled": false
               },
               {
-                "text": "Back",
+                "text": "",
                 "role": "button",
                 "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "getByRole('button', { name: \"Back\" })",
+                "recommendedLocator": "button:nth-of-type(1)",
                 "disabled": false
               },
               {
-                "text": "Next",
+                "text": "",
                 "role": "button",
                 "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "getByRole('button', { name: \"Next\" })",
+                "recommendedLocator": "button:nth-of-type(2)",
                 "disabled": false
               },
               {
-                "text": "Back",
+                "text": "",
                 "role": "button",
                 "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "getByRole('button', { name: \"Back\" })",
+                "recommendedLocator": "button:nth-of-type(1)",
                 "disabled": false
               },
               {
-                "text": "Create Absence",
+                "text": "",
                 "role": "button",
                 "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "getByRole('button', { name: \"Create Absence\" })",
+                "recommendedLocator": "button:nth-of-type(2)",
                 "disabled": false
               }
             ],
@@ -569,6 +500,14 @@
                 "selector": "#mat-select-1",
                 "recommendedLocator": "#mat-select-1",
                 "formControlName": "AbsenceType",
+                "required": false
+              },
+              {
+                "label": "Select School",
+                "type": "listbox",
+                "selector": "#mat-select-4",
+                "recommendedLocator": "#mat-select-4",
+                "formControlName": "employeeSchool",
                 "required": false
               },
               {
@@ -779,6 +718,14 @@
                 "required": false
               },
               {
+                "label": "Select School",
+                "type": "listbox",
+                "selector": "#mat-select-4",
+                "recommendedLocator": "#mat-select-4",
+                "formControlName": "employeeSchool",
+                "required": false
+              },
+              {
                 "label": "Contact Substitutes",
                 "type": "listbox",
                 "selector": "#mat-select-2",
@@ -983,6 +930,14 @@
                 "selector": "#mat-select-1",
                 "recommendedLocator": "#mat-select-1",
                 "formControlName": "AbsenceType",
+                "required": false
+              },
+              {
+                "label": "Select School",
+                "type": "listbox",
+                "selector": "#mat-select-4",
+                "recommendedLocator": "#mat-select-4",
+                "formControlName": "employeeSchool",
                 "required": false
               },
               {
@@ -1193,6 +1148,14 @@
                 "required": false
               },
               {
+                "label": "Select School",
+                "type": "listbox",
+                "selector": "#mat-select-4",
+                "recommendedLocator": "#mat-select-4",
+                "formControlName": "employeeSchool",
+                "required": false
+              },
+              {
                 "label": "Contact Substitutes",
                 "type": "listbox",
                 "selector": "#mat-select-2",
@@ -1397,6 +1360,14 @@
                 "selector": "#mat-select-1",
                 "recommendedLocator": "#mat-select-1",
                 "formControlName": "AbsenceType",
+                "required": false
+              },
+              {
+                "label": "Select School",
+                "type": "listbox",
+                "selector": "#mat-select-4",
+                "recommendedLocator": "#mat-select-4",
+                "formControlName": "employeeSchool",
                 "required": false
               },
               {
@@ -1607,6 +1578,14 @@
                 "required": false
               },
               {
+                "label": "Select School",
+                "type": "listbox",
+                "selector": "#mat-select-4",
+                "recommendedLocator": "#mat-select-4",
+                "formControlName": "employeeSchool",
+                "required": false
+              },
+              {
                 "label": "Contact Substitutes",
                 "type": "listbox",
                 "selector": "#mat-select-2",
@@ -1814,6 +1793,14 @@
                 "required": false
               },
               {
+                "label": "Select School",
+                "type": "listbox",
+                "selector": "#mat-select-4",
+                "recommendedLocator": "#mat-select-4",
+                "formControlName": "employeeSchool",
+                "required": false
+              },
+              {
                 "label": "Contact Substitutes",
                 "type": "listbox",
                 "selector": "#mat-select-2",
@@ -1861,115 +1848,37 @@
     },
     "flowVerification": {
       "mode": "mapped-from-current-spec",
-      "command": "npx playwright test tests/ISE-1559.spec.ts --project=chromium --workers=1 --list",
-      "status": "verified",
-      "matchedTestCases": [
-        {
-          "id": "T1",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T1: Sick absence with Full Day and Notify all subs"
-        },
-        {
-          "id": "T2",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T2: Personal absence with Full Day and Notify 1 Sub"
-        },
-        {
-          "id": "T3",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T3: Vacation absence with Full Day and Notify my favorites"
-        },
-        {
-          "id": "T4",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub"
-        },
-        {
-          "id": "T5",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required"
-        },
-        {
-          "id": "T6",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs"
-        },
-        {
-          "id": "T7",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub"
-        },
-        {
-          "id": "T8",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites"
-        },
-        {
-          "id": "T9",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub"
-        },
-        {
-          "id": "T10",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required"
-        },
-        {
-          "id": "T11",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs"
-        },
-        {
-          "id": "T12",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub"
-        },
-        {
-          "id": "T13",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites"
-        },
-        {
-          "id": "T14",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub"
-        },
-        {
-          "id": "T15",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required"
-        },
-        {
-          "id": "T16",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs"
-        },
-        {
-          "id": "T17",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub"
-        },
-        {
-          "id": "T18",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites"
-        },
-        {
-          "id": "T19",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub"
-        },
-        {
-          "id": "T20",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required"
-        },
-        {
-          "id": "T21",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs"
-        },
-        {
-          "id": "T22",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub"
-        },
-        {
-          "id": "T23",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T23: Educational Leave absence with 09:00-11:00 and Notify my favorites"
-        },
-        {
-          "id": "T24",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub"
-        },
-        {
-          "id": "T25",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required"
-        },
-        {
-          "id": "T26",
-          "title": "ISE-1559.spec.ts:225:9 › ISE-1559: Employee absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs"
-        }
-      ],
-      "missingTestCases": []
+      "command": null,
+      "status": "skipped",
+      "matchedTestCases": [],
+      "missingTestCases": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8",
+        "T9",
+        "T10",
+        "T11",
+        "T12",
+        "T13",
+        "T14",
+        "T15",
+        "T16",
+        "T17",
+        "T18",
+        "T19",
+        "T20",
+        "T21",
+        "T22",
+        "T23",
+        "T24",
+        "T25",
+        "T26"
+      ]
     },
     "notes": [],
     "finalUrl": "https://instasublogin.tcpsoftware.com/absence/createAbsence?announcement=true",
@@ -1997,6 +1906,7 @@
           "reason": "Sick",
           "duration": "Full Day",
           "subPreference": "Notify all subs",
+          "school": "SchoolAcademyTest2345",
           "notes": "Layer 3 MCP selector exploration only"
         },
         "actions": [
@@ -2005,6 +1915,7 @@
           "Selected reason \"Sick\" via mat-select[formcontrolname=\"Reason\"]",
           "Selected duration \"Full Day\" via mat-select[formcontrolname=\"Duration\"]",
           "Selected substitute preference \"Notify all subs\" via mat-select[formcontrolname=\"AbsenceType\"]",
+          "Selected school \"SchoolAcademyTest2345\" via mat-select[formcontrolname=\"employeeSchool\"]",
           "Clicked NEXT from Create Absence to Additional Information",
           "Filled 2 additional information textarea(s)",
           "Clicked NEXT from Additional Information to Done"
@@ -2015,7 +1926,7 @@
             "activeStep": "Create Absence",
             "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
             "buttons": 14,
-            "inputs": 12,
+            "inputs": 13,
             "tables": 0
           },
           {
@@ -2023,7 +1934,7 @@
             "activeStep": "Create Absence",
             "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
             "buttons": 14,
-            "inputs": 12,
+            "inputs": 13,
             "tables": 0
           },
           {
@@ -2031,7 +1942,7 @@
             "activeStep": "Additional Information",
             "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
             "buttons": 14,
-            "inputs": 12,
+            "inputs": 13,
             "tables": 0
           },
           {
@@ -2039,7 +1950,7 @@
             "activeStep": "Additional Information",
             "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
             "buttons": 14,
-            "inputs": 12,
+            "inputs": 13,
             "tables": 0
           },
           {
@@ -2047,7 +1958,7 @@
             "activeStep": "Done",
             "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
             "buttons": 14,
-            "inputs": 12,
+            "inputs": 13,
             "tables": 0
           },
           {
@@ -2055,7 +1966,7 @@
             "activeStep": "Done",
             "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
             "buttons": 14,
-            "inputs": 12,
+            "inputs": 13,
             "tables": 0
           }
         ]
@@ -2199,6 +2110,7 @@
       "Selected reason \"Sick\" via mat-select[formcontrolname=\"Reason\"]",
       "Selected duration \"Full Day\" via mat-select[formcontrolname=\"Duration\"]",
       "Selected substitute preference \"Notify all subs\" via mat-select[formcontrolname=\"AbsenceType\"]",
+      "Selected school \"SchoolAcademyTest2345\" via mat-select[formcontrolname=\"employeeSchool\"]",
       "Clicked NEXT from Create Absence to Additional Information",
       "Filled 2 additional information textarea(s)",
       "Clicked NEXT from Additional Information to Done"
@@ -2208,6 +2120,6 @@
     "consumeInLayer4": true,
     "preferExplorerSelectors": true,
     "preferExecutedSpecTitles": false,
-    "targetSpec": "tests/ISE-1559.spec.ts"
+    "targetSpec": "tests/ISE-1562.spec.ts"
   }
 }

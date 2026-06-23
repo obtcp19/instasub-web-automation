@@ -1,0 +1,26 @@
+{
+  "testExecutionName": "ISE-1562 Playwright Execution - 6/19/2026",
+  "testPlan": "ISE-1562-PLAYWRIGHT-FLOW",
+  "results": [
+    {
+      "testKey": "ISE-1562-TC-01",
+      "testName": "ISE-1562 automated test 1",
+      "status": "PASSED",
+      "duration": 0,
+      "evidenceLink": "playwright-report/index.html"
+    },
+    {
+      "testKey": "ISE-1562-TC-02",
+      "testName": "ISE-1562 automated test 2",
+      "status": "PASSED",
+      "duration": 0,
+      "evidenceLink": "playwright-report/index.html"
+    }
+  ],
+  "summary": {
+    "passPercentage": 100,
+    "totalTime": 37700,
+    "environment": "Docker / Playwright / Chromium, Firefox, WebKit",
+    "automatedBy": "Claude AI / Layer 6: Self-Healing Engineer"
+  }
+}

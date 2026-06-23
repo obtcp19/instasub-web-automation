@@ -1,0 +1,21 @@
+{
+  "ticket": "ISE-1562",
+  "executionStatus": "PASSED",
+  "testSummary": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "flaky": 0
+  },
+  "issues": {
+    "brokenSelectors": 0,
+    "timeouts": 0,
+    "flakyTests": 0
+  },
+  "actions": {
+    "autoHealed": 0,
+    "manualReview": 0
+  },
+  "timestamp": "2026-06-19T12:02:20.890Z",
+  "nextSteps": "All tests passed. Mark ISE-1562 as RESOLVED in Jira."
+}

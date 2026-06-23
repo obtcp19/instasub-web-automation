@@ -8,16 +8,21 @@
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
+require('dotenv/config');
 const SelfHealingAnalyzer = require('../layer6/self-healing-analyzer.js');
 
 class Layer6Agent {
-  constructor() {
+  constructor(ticket = '') {
     this.projectRoot = path.join(__dirname, '..');
     this.contextDir = path.join(this.projectRoot, 'context');
-    this.analyzer = new SelfHealingAnalyzer(this.projectRoot);
+    this.ticket = (ticket || process.env.LAYER6_TICKET || process.env.TICKET_NAME || process.env.TEST_TICKET || 'ISE-1556').toUpperCase();
+    this.spec = this.specForTicket(this.ticket);
+    this.analyzer = new SelfHealingAnalyzer(this.projectRoot, { ticket: this.ticket });
     this.mcpPayload = {
       layer: 6,
       tool: 'mcp://playwright/self-heal',
+      ticket: this.ticket,
+      spec: this.spec,
       generatedAt: new Date().toISOString(),
       sessions: [],
       fixes: [],
@@ -25,8 +30,79 @@ class Layer6Agent {
     };
   }
 
+  specForTicket(ticket) {
+    if (!ticket) return '';
+
+    const direct = `tests/${ticket}.spec.ts`;
+    if (fs.existsSync(path.join(this.projectRoot, direct))) return direct;
+
+    const legacy = `tests/${ticket}-absence-creation.spec.ts`;
+    if (fs.existsSync(path.join(this.projectRoot, legacy))) return legacy;
+
+    return direct;
+  }
+
+  runTicketSpec(options = {}) {
+    if (!this.spec || !fs.existsSync(path.join(this.projectRoot, this.spec))) {
+      throw new Error(`Could not find Playwright spec for ${this.ticket}: ${this.spec}`);
+    }
+
+    console.log(`🧪 Playwright MCP run: ${this.ticket}`);
+    console.log(`   Spec: ${this.spec}`);
+
+    const args = ['playwright', 'test', this.spec, '--project=chromium', '--workers=1'];
+    if (options.headed) args.push('--headed');
+    if (options.grep) args.push('--grep', options.grep);
+
+    const command = ['npx', ...args].join(' ');
+    console.log(`   ▶ ${command}\n`);
+
+    const completed = spawnSync('npx', args, {
+      cwd: this.projectRoot,
+      encoding: 'utf-8',
+      stdio: 'inherit',
+      env: this.buildPlaywrightEnv(),
+      maxBuffer: 10 * 1024 * 1024,
+    });
+
+    const run = {
+      ticket: this.ticket,
+      spec: this.spec,
+      command,
+      exitCode: completed.status ?? 1,
+      status: completed.status === 0 ? 'passed' : 'failed',
+      error: completed.error?.message,
+    };
+
+    this.mcpPayload.sessions.push(run);
+    console.log(`\n   ${run.status === 'passed' ? '✅' : '❌'} Playwright run ${run.status}\n`);
+    return run;
+  }
+
+  buildPlaywrightEnv() {
+    const env = {
+      ...process.env,
+      TICKET_NAME: this.ticket,
+      TEST_TICKET: this.ticket,
+      STORAGE_STATE: process.env.STORAGE_STATE || `playwright/.auth/${this.ticket.toLowerCase()}-user.json`,
+    };
+
+    const roleMap = {
+      'ISE-1559': 'Teacher',
+      'ISE-1562': 'School_Teacher',
+    };
+    const role = process.env.AUTH_ROLE || roleMap[this.ticket] || '';
+    if (role) {
+      env.AUTH_ROLE = role;
+      env.STORAGE_STATE = process.env.STORAGE_STATE || `playwright/.auth/${this.ticket.toLowerCase()}-${role.toLowerCase()}.json`;
+    }
+
+    return env;
+  }
+
   analyze() {
     console.log(`\n🔧 LAYER 6 AGENT: Self-Healing Engineer with Playwright MCP`);
+    console.log(`🎫 Ticket: ${this.ticket}`);
     console.log(`🔍 Analyzing test results...\n`);
 
     const analysis = this.analyzer.analyzeResults();
@@ -62,13 +138,54 @@ class Layer6Agent {
 
     const jiraReport = this.analyzer.generateJiraReport();
     const xrayReport = this.analyzer.generateXrayReport();
+    const prTemplate = this.analyzer.generatePullRequestTemplate();
+    const analysisJson = {
+      ticket: this.ticket,
+      spec: this.spec,
+      analysis: this.analyzer.analysis,
+      recommendations: this.analyzer.analysis.recommendations || [],
+      patches: this.analyzer.analysis.patches || [],
+      mcp: this.mcpPayload,
+      timestamp: new Date().toISOString(),
+    };
 
-    console.log(`   ✅ Jira report generated`);
-    console.log(`   ✅ Xray report generated`);
-    console.log(`   ✅ Analysis JSON generated`);
-    console.log(`   ✅ PR template generated\n`);
+    const files = {
+      analysis: path.join(this.projectRoot, 'LAYER6-SELF-HEALING-ANALYSIS.json'),
+      jira: path.join(this.projectRoot, 'LAYER6-JIRA-REPORT.json'),
+      xray: path.join(this.projectRoot, 'LAYER6-XRAY-REPORT.json'),
+      pr: path.join(this.projectRoot, 'LAYER6-PULL-REQUEST-TEMPLATE.md'),
+    };
 
-    return { jiraReport, xrayReport };
+    fs.writeFileSync(files.analysis, JSON.stringify(analysisJson, null, 2));
+    fs.writeFileSync(files.jira, JSON.stringify(jiraReport, null, 2));
+    fs.writeFileSync(files.xray, JSON.stringify(xrayReport, null, 2));
+
+    if (prTemplate) {
+      const prMarkdown = `# ${prTemplate.title}
+
+## Description
+
+${prTemplate.body}
+
+### Branch
+\`\`\`
+${prTemplate.branch}
+\`\`\`
+
+### Commits
+${prTemplate.commits.map(c => `- \`${c.message}\`\n  Files: ${c.files.join(', ')}`).join('\n')}
+`;
+      fs.writeFileSync(files.pr, prMarkdown);
+    } else if (fs.existsSync(files.pr)) {
+      fs.unlinkSync(files.pr);
+    }
+
+    console.log(`   ✅ Jira report generated: ${path.basename(files.jira)}`);
+    console.log(`   ✅ Xray report generated: ${path.basename(files.xray)}`);
+    console.log(`   ✅ Analysis JSON generated: ${path.basename(files.analysis)}`);
+    console.log(`   ${prTemplate ? '✅' : '⚪'} PR template ${prTemplate ? 'generated' : 'not needed'}${prTemplate ? `: ${path.basename(files.pr)}` : ''}\n`);
+
+    return { jiraReport, xrayReport, prTemplate };
   }
 
   async applyAutoFixes() {
@@ -155,7 +272,7 @@ class Layer6Agent {
         cwd: this.projectRoot,
         encoding: 'utf-8',
         stdio: ['ignore', 'pipe', 'pipe'],
-        env: process.env,
+        env: this.buildPlaywrightEnv(),
         maxBuffer: 10 * 1024 * 1024,
       });
 
@@ -201,7 +318,16 @@ class Layer6Agent {
 async function main() {
   try {
     const args = process.argv.slice(2);
-    const agent = new Layer6Agent();
+    const ticketArg = args.find(arg => /^[A-Z]+-\d+$/i.test(arg));
+    const agent = new Layer6Agent(ticketArg);
+    const grep = valueForArg(args, '--grep');
+
+    if (!args.includes('--no-run')) {
+      agent.runTicketSpec({
+        headed: args.includes('--headed'),
+        grep,
+      });
+    }
 
     const { analysis, recommendations } = agent.analyze();
 
@@ -246,6 +372,18 @@ async function main() {
     console.error('Error:', error.message);
     process.exit(1);
   }
+}
+
+function valueForArg(args, name) {
+  const equalsValue = args.find(arg => arg.startsWith(`${name}=`));
+  if (equalsValue) return equalsValue.slice(name.length + 1);
+
+  const index = args.indexOf(name);
+  if (index !== -1 && args[index + 1] && !args[index + 1].startsWith('--')) {
+    return args[index + 1];
+  }
+
+  return '';
 }
 
 main();
