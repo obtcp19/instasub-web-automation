@@ -1,0 +1,121 @@
+
+> instasub-web-automation@1.0.0 agent:layer5
+> node agents/agent-layer5-execution.js --headed ISE-1562 --username=School_Teacher_USERNAME --password=School_Teacher_PASSWORD --grep=Assign a specific sub --skip-jira
+
+
+🚀 LAYER 5 AGENT: Test Execution Runner (Local)
+⚙️  Executing Playwright tests locally...
+
+🔍 Checking local execution prerequisites...
+
+   ✅ Node.js: v20.19.3
+   ✅ npm: 10.8.2
+   ✅ Playwright: Version 1.61.0
+
+🔧 Configuration:
+   Mode: Local (no Docker)
+   Headless: false
+   Parallelization: Disabled
+   Browsers: chromium
+   Ticket: ISE-1562
+   Test Spec: tests/ISE-1562.spec.ts
+   Jira Flow: Disabled
+   Auth Vars: School_Teacher_USERNAME / School_Teacher_PASSWORD
+   Grep: Assign a specific sub
+
+📋 Running tests...
+
+Executing: npx playwright test tests/ISE-1562.spec.ts --project=chromium --workers=1 --headed --grep "Assign a specific sub"
+
+
+Running 6 tests using 1 worker
+
+[1/6] [setup] › tests/auth.setup.ts:67:1 › authenticate
+[setup] › tests/auth.setup.ts:67:1 › authenticate
+Auth setup using School_Teacher_USERNAME/School_Teacher_PASSWORD: schoolteacher890@mailinator.com
+
+[2/6] [chromium] › tests/ISE-1562.spec.ts:246:9 › ISE-1562: Teacher absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub
+  1) [chromium] › tests/ISE-1562.spec.ts:246:9 › ISE-1562: Teacher absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: Page closed while verifying substitute selection. Last seen chips: (none).
+
+       at ../pom/AbsenceFormPage.page.ts:517
+
+      515 |       } catch (err) {
+      516 |         if (err.message?.includes('Target page') || err.message?.includes('closed')) {
+    > 517 |           throw new Error(`Page closed while verifying substitute selection. Last seen chips: ${committed.join(', ') || '(none)'}.`);
+          |                 ^
+      518 |         }
+      519 |         throw err;
+      520 |       }
+        at AbsenceFormPage.expectSubstituteSelected (/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/AbsenceFormPage.page.ts:517:17)
+        at AbsenceFormPage.selectSubstitute (/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/AbsenceFormPage.page.ts:401:5)
+        at AbsenceFormPage.completeScenario (/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/AbsenceFormPage.page.ts:60:7)
+        at /Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-1562.spec.ts:249:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ISE-1562-ISE-1562-Teacher--db128-y-and-Assign-a-specific-sub-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ISE-1562-ISE-1562-Teacher--db128-y-and-Assign-a-specific-sub-chromium/error-context.md
+
+
+[3/6] [chromium] › tests/ISE-1562.spec.ts:246:9 › ISE-1562: Teacher absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub
+  2) [chromium] › tests/ISE-1562.spec.ts:246:9 › ISE-1562: Teacher absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: Page closed while verifying substitute selection. Last seen chips: (none).
+
+       at ../pom/AbsenceFormPage.page.ts:517
+
+      515 |       } catch (err) {
+      516 |         if (err.message?.includes('Target page') || err.message?.includes('closed')) {
+    > 517 |           throw new Error(`Page closed while verifying substitute selection. Last seen chips: ${committed.join(', ') || '(none)'}.`);
+          |                 ^
+      518 |         }
+      519 |         throw err;
+      520 |       }
+        at AbsenceFormPage.expectSubstituteSelected (/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/AbsenceFormPage.page.ts:517:17)
+        at AbsenceFormPage.selectSubstitute (/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/AbsenceFormPage.page.ts:401:5)
+        at AbsenceFormPage.completeScenario (/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/AbsenceFormPage.page.ts:60:7)
+        at /Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-1562.spec.ts:249:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ISE-1562-ISE-1562-Teacher--67d3d-M-and-Assign-a-specific-sub-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ISE-1562-ISE-1562-Teacher--67d3d-M-and-Assign-a-specific-sub-chromium/error-context.md
+
+
+[4/6] [chromium] › tests/ISE-1562.spec.ts:246:9 › ISE-1562: Teacher absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub
+  3) [chromium] › tests/ISE-1562.spec.ts:246:9 › ISE-1562: Teacher absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: Page closed while verifying substitute selection. Last seen chips: (none).
+
+       at ../pom/AbsenceFormPage.page.ts:517
+
+      515 |       } catch (err) {
+      516 |         if (err.message?.includes('Target page') || err.message?.includes('closed')) {
+    > 517 |           throw new Error(`Page closed while verifying substitute selection. Last seen chips: ${committed.join(', ') || '(none)'}.`);
+          |                 ^
+      518 |         }
+      519 |         throw err;
+      520 |       }
+        at AbsenceFormPage.expectSubstituteSelected (/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/AbsenceFormPage.page.ts:517:17)
+        at AbsenceFormPage.selectSubstitute (/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/AbsenceFormPage.page.ts:401:5)
+        at AbsenceFormPage.completeScenario (/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/AbsenceFormPage.page.ts:60:7)
+        at /Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-1562.spec.ts:249:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ISE-1562-ISE-1562-Teacher--8c416-M-and-Assign-a-specific-sub-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ISE-1562-ISE-1562-Teacher--8c416-M-and-Assign-a-specific-sub-chromium/error-context.md
+
+
+[5/6] [chromium] › tests/ISE-1562.spec.ts:246:9 › ISE-1562: Teacher absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub

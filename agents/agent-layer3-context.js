@@ -288,7 +288,7 @@ class Layer3Agent {
     verification.command = ['npx', ...args].join(' ');
     console.log(`📡 Playwright MCP ${runMode}: ${verification.command}\n`);
 
-    const childEnv = this.buildPlaywrightEnv(ticket);
+    const childEnv = this.buildPlaywrightEnv(ticket, options);
     const completed = spawnSync('npx', args, {
       cwd: this.projectRoot,
       encoding: 'utf-8',
@@ -316,7 +316,7 @@ class Layer3Agent {
     return verification;
   }
 
-  buildPlaywrightEnv(ticket) {
+  buildPlaywrightEnv(ticket, credentials = {}) {
     const env = {
       ...process.env,
       TEST_TICKET: ticket,
@@ -332,6 +332,24 @@ class Layer3Agent {
       env.ABSENCE_EMPLOYEE_SEARCH = teacherUsername;
       env.ABSENCE_EMPLOYEE_LABEL = teacherUsername;
       env.STORAGE_STATE = process.env.ISE1559_STORAGE_STATE || 'playwright/.auth/ise-1559-teacher.json';
+    }
+
+    // CLI-provided credentials override per-ticket defaults and the .env file,
+    // so any account can be driven straight from the command line. The employee
+    // to create absences for defaults to the login username (self-absence flow).
+    const username = credentials.username;
+    const password = credentials.password;
+    const employee = credentials.employee || username;
+
+    if (username) {
+      env.PW_USERNAME = username;
+      env.ABSENCE_EMPLOYEE_SEARCH = employee;
+      env.ABSENCE_EMPLOYEE_LABEL = employee;
+    }
+    if (password) env.PW_PASSWORD = password;
+    if (credentials.school) {
+      env.EXPLORER_SCHOOL = credentials.school;
+      env.SCHOOL_NAME = credentials.school;
     }
 
     return env;
@@ -379,14 +397,29 @@ class Layer3Agent {
     let browser;
     try {
       browser = await chromium.launch({ headless: !options.explorerHeaded && !options.headed });
-      const childEnv = this.buildPlaywrightEnv(options.ticket || '');
-      const storageStatePath = path.join(this.projectRoot, childEnv.STORAGE_STATE || '');
-      const contextOptions = fs.existsSync(storageStatePath) ? { storageState: storageStatePath } : {};
+      const childEnv = this.buildPlaywrightEnv(options.ticket || '', options);
+
+      // Handle storage state: only use if STORAGE_STATE env var is set AND file exists
+      let contextOptions = {};
+      if (childEnv.STORAGE_STATE) {
+        const storageStatePath = path.join(this.projectRoot, childEnv.STORAGE_STATE);
+        try {
+          const stat = fs.statSync(storageStatePath);
+          if (stat.isFile()) {
+            contextOptions = { storageState: storageStatePath };
+            console.log(`   📦 Using saved storage state: ${childEnv.STORAGE_STATE}`);
+          }
+        } catch (err) {
+          console.log(`   ⚠️  Storage state not found: ${childEnv.STORAGE_STATE}`);
+        }
+      }
+
       const context = await browser.newContext(contextOptions);
       const page = await context.newPage();
       await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
       await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
       await this.ensureExplorerAuthenticated(page, childEnv);
+      await this.ensureExplorerSchoolSelected(page, childEnv);
 
       baseContext.status = 'captured';
       baseContext.finalUrl = page.url();
@@ -395,7 +428,7 @@ class Layer3Agent {
       baseContext.snapshots.elements = await this.indexUiElements(page);
       baseContext.snapshots.pages.push(await this.capturePageSnapshot(page, 'landing'));
 
-      const wizardResult = await this.exploreAbsenceWizard(page, testPlan[0]);
+      const wizardResult = await this.exploreAbsenceWizard(page, testPlan[0], childEnv);
       baseContext.snapshots.pages.push(...wizardResult.pages);
       baseContext.flowDocs = this.buildExplorerFlowDocs(testPlan, baseContext.snapshots.elements, wizardResult);
       baseContext.explorerActions = wizardResult.actions;
@@ -440,6 +473,97 @@ class Layer3Agent {
     await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
   }
 
+  async ensureExplorerSchoolSelected(page, env) {
+    const schoolName = env.EXPLORER_SCHOOL || env.SCHOOL_NAME || env.SCHOOL || '';
+    const schoolPrompt = page.getByText(/select school|choose school|school selection|select a school/i).first();
+    const hasPrompt = await schoolPrompt.isVisible({ timeout: 5000 }).catch(() => false);
+    const hasSchoolSelect = await page.locator('select, mat-select, .mat-mdc-select, .ng-select').first().isVisible({ timeout: 1000 }).catch(() => false);
+
+    if (!hasPrompt && !hasSchoolSelect) return;
+
+    console.log(`🏫 Explorer school selection${schoolName ? ` using ${schoolName}` : ' using first available school'}\n`);
+
+    const selected = await this.selectExplorerSchool(page, schoolName);
+    if (!selected) {
+      throw new Error(`Explorer reached school selection page but could not select ${schoolName || 'a school'}.`);
+    }
+
+    const continueButton = page.getByRole('button', { name: /continue|next|submit|select|go|ok/i }).first();
+    if (await continueButton.isVisible({ timeout: 2000 }).catch(() => false)) {
+      await continueButton.click();
+    }
+
+    await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
+    await page.waitForTimeout(750);
+  }
+
+  async selectExplorerSchool(page, schoolName = '') {
+    const nativeSelect = page.locator('select').first();
+    if (await nativeSelect.isVisible({ timeout: 1000 }).catch(() => false)) {
+      const options = await nativeSelect.locator('option').evaluateAll((items) =>
+        items
+          .map((option) => ({ value: option.value, label: option.textContent?.trim() || '' }))
+          .filter((option) => option.value || option.label)
+      );
+      const match = this.matchSchoolOption(options, schoolName);
+      if (match) {
+        await nativeSelect.selectOption(match.value ? { value: match.value } : { label: match.label });
+        return true;
+      }
+    }
+
+    const materialSelect = page.locator('mat-select, .mat-mdc-select, .mat-select, .ng-select').first();
+    if (await materialSelect.isVisible({ timeout: 1000 }).catch(() => false)) {
+      if (schoolName) {
+        if (await this.chooseOptionByText(page, materialSelect, schoolName).catch(() => false)) return true;
+      } else {
+        if (await this.chooseFirstDropdownOption(page, materialSelect).catch(() => '')) return true;
+      }
+
+      await materialSelect.click();
+      const option = page.getByRole('option').first();
+      if (await option.isVisible({ timeout: 2000 }).catch(() => false)) {
+        await option.click({ force: true });
+        return true;
+      }
+    }
+
+    if (schoolName) {
+      const schoolText = page.getByText(new RegExp(this.escapeRegex(schoolName), 'i')).first();
+      if (await schoolText.isVisible({ timeout: 2000 }).catch(() => false)) {
+        await schoolText.click();
+        return true;
+      }
+    }
+
+    const schoolCard = page.locator(
+      '[data-testid*="school" i], [class*="school" i], [role="option"], li, mat-card'
+    ).filter({ hasText: /\S/ }).first();
+    if (await schoolCard.isVisible({ timeout: 2000 }).catch(() => false)) {
+      await schoolCard.click();
+      return true;
+    }
+
+    return false;
+  }
+
+  matchSchoolOption(options, schoolName = '') {
+    const realOptions = options.filter((option) =>
+      option.value &&
+      !/select|choose/i.test(option.label)
+    );
+
+    if (schoolName) {
+      const match = realOptions.find((option) =>
+        option.label.toLowerCase().includes(schoolName.toLowerCase()) ||
+        option.value.toLowerCase().includes(schoolName.toLowerCase())
+      );
+      if (match) return match;
+    }
+
+    return realOptions[0] || null;
+  }
+
   async capturePageSnapshot(page, label) {
     return {
       label,
@@ -450,11 +574,11 @@ class Layer3Agent {
     };
   }
 
-  async exploreAbsenceWizard(page, plannedCase = {}) {
+  async exploreAbsenceWizard(page, plannedCase = {}, env = {}) {
     const pages = [];
     const actions = [];
     const notes = [];
-    const scenario = this.explorerScenario(plannedCase);
+    const scenario = this.explorerScenario(plannedCase, env);
 
     try {
       const createUrl = new URL('/absence/createAbsence', page.url()).toString();
@@ -506,13 +630,14 @@ class Layer3Agent {
     await page.waitForTimeout(750);
   }
 
-  explorerScenario(plannedCase = {}) {
+  explorerScenario(plannedCase = {}, env = {}) {
     return {
       id: plannedCase.id || 'L3-EXPLORE',
       date: AbsenceDate.next(),
       reason: plannedCase.reason || 'Sick',
       duration: plannedCase.duration || 'Full Day',
       subPreference: plannedCase.subPreference || 'No sub required',
+      school: env.EXPLORER_SCHOOL || env.SCHOOL_NAME || env.SCHOOL || plannedCase.school || '',
       notes: 'Layer 3 MCP selector exploration only',
     };
   }
@@ -545,6 +670,36 @@ class Layer3Agent {
       '[role="listbox"][aria-label*="Substitute Preference" i]',
       '[role="listbox"][aria-label*="Select Substitute Preference" i]',
     ], [scenario.subPreference, 'No sub required', 'Notify all subs'], actions, 'substitute preference');
+
+    await this.chooseSchoolInAbsenceForm(page, scenario, actions);
+  }
+
+  async chooseSchoolInAbsenceForm(page, scenario, actions) {
+    const selectors = [
+      'mat-select[formcontrolname="employeeSchool"]',
+      '[role="listbox"][aria-label*="Select School" i]',
+      '[role="listbox"][aria-label*="School" i]',
+      'mat-select:has-text("Select School")',
+    ];
+
+    for (const selector of selectors) {
+      const select = page.locator(selector).first();
+      if (!(await select.isVisible({ timeout: 1500 }).catch(() => false))) continue;
+
+      if (scenario.school && await this.chooseOptionByText(page, select, scenario.school).catch(() => false)) {
+        actions.push(`Selected school "${scenario.school}" via ${selector}`);
+        return scenario.school;
+      }
+
+      const fallback = await this.chooseFirstDropdownOption(page, select).catch(() => '');
+      if (fallback) {
+        actions.push(`Selected school "${fallback}" via ${selector}`);
+        return fallback;
+      }
+    }
+
+    actions.push(`Skipped school; no visible school selector found`);
+    return null;
   }
 
   async fillAdditionalInformation(page, scenario, actions) {
@@ -591,10 +746,7 @@ class Layer3Agent {
   async chooseOptionByText(page, select, optionLabel) {
     await page.keyboard.press('Escape').catch(() => {});
     await select.click({ force: true });
-    const option = page
-      .locator('.cdk-overlay-container mat-option, .cdk-overlay-container [role="option"], .cdk-overlay-container .mat-mdc-option')
-      .filter({ hasText: new RegExp(`^\\s*${this.escapeRegex(optionLabel)}\\s*$`, 'i') })
-      .first();
+    const option = await this.findDropdownOption(page, optionLabel);
 
     if (!(await option.isVisible({ timeout: 2500 }).catch(() => false))) {
       await page.keyboard.press('Escape').catch(() => {});
@@ -604,6 +756,59 @@ class Layer3Agent {
     await option.click({ force: true });
     await page.waitForTimeout(500);
     return true;
+  }
+
+  async findDropdownOption(page, optionLabel) {
+    const optionScope = page.locator([
+      '.cdk-overlay-container mat-option',
+      '.cdk-overlay-container [role="option"]',
+      '.cdk-overlay-container .mat-mdc-option',
+      '.cdk-overlay-container .ng-option',
+      '.cdk-overlay-container li',
+    ].join(', '));
+    const exact = optionScope
+      .filter({ hasText: new RegExp(`^\\s*${this.escapeRegex(optionLabel)}\\s*$`, 'i') })
+      .first();
+
+    if (await exact.isVisible({ timeout: 1200 }).catch(() => false)) return exact;
+
+    const partial = optionScope
+      .filter({ hasText: new RegExp(this.escapeRegex(optionLabel), 'i') })
+      .first();
+
+    if (await partial.isVisible({ timeout: 1200 }).catch(() => false)) return partial;
+
+    const text = page.getByText(new RegExp(this.escapeRegex(optionLabel), 'i')).first();
+    if (await text.isVisible({ timeout: 1200 }).catch(() => false)) return text;
+
+    return exact;
+  }
+
+  async chooseFirstDropdownOption(page, select) {
+    await page.keyboard.press('Escape').catch(() => {});
+    await select.click({ force: true });
+
+    const options = page.locator([
+      '.cdk-overlay-container mat-option',
+      '.cdk-overlay-container [role="option"]',
+      '.cdk-overlay-container .mat-mdc-option',
+      '.cdk-overlay-container .ng-option',
+      '.cdk-overlay-container li',
+    ].join(', ')).filter({ hasText: /\S/ });
+
+    const count = await options.count().catch(() => 0);
+    for (let index = 0; index < count; index++) {
+      const option = options.nth(index);
+      const text = (await option.innerText().catch(() => '')).trim();
+      if (!text || /select|choose/i.test(text)) continue;
+
+      await option.click({ force: true });
+      await page.waitForTimeout(500);
+      return text;
+    }
+
+    await page.keyboard.press('Escape').catch(() => {});
+    return '';
   }
 
   async clickWizardNext(page, actions) {
@@ -816,11 +1021,20 @@ async function main() {
   const specArg = args.find((arg) => arg.startsWith('--spec='))?.replace('--spec=', '');
   const explorerUrlArg = args.find((arg) => arg.startsWith('--url='))?.replace('--url=', '') ||
     args.find((arg) => arg.startsWith('--explorer-url='))?.replace('--explorer-url=', '');
+  const getFlagValue = (...prefixes) => {
+    for (const prefix of prefixes) {
+      const hit = args.find((arg) => arg.startsWith(prefix));
+      if (hit) return hit.slice(prefix.length);
+    }
+    return undefined;
+  };
+  const usernameArg = getFlagValue('--username=', '--user=');
+  const passwordArg = getFlagValue('--password=', '--pass=');
+  const employeeArg = getFlagValue('--employee=');
+  const schoolArg = getFlagValue('--school=', '--school-name=');
   const searchArgs = args.filter((arg) =>
     !flagArgs.has(arg) &&
-    !arg.startsWith('--spec=') &&
-    !arg.startsWith('--url=') &&
-    !arg.startsWith('--explorer-url=') &&
+    !arg.startsWith('--') &&
     !/^[A-Z]+-\d+$/i.test(arg)
   );
 
@@ -846,6 +1060,10 @@ async function main() {
         ticket: ticketArg,
         spec: specArg,
         explorerUrl: explorerUrlArg,
+        username: usernameArg,
+        password: passwordArg,
+        employee: employeeArg,
+        school: schoolArg,
         runPlaywright: args.includes('--run-playwright'),
         headed: args.includes('--headed'),
         explore: args.includes('--explore'),
