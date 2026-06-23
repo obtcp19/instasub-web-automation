@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-23T11:44:44.945Z",
+  "timestamp": "2026-06-23T12:30:31.932Z",
   "ticketKey": "ISE-1563",
   "summary": "Completed 26 pairwise regression tests for the Self absence creation flow using the school administrator account (schooladmin@mailinator.com). All 26 tests passed.",
   "description": {
@@ -4408,5 +4408,12 @@
   "assignee": "omerbakhtiar",
   "priority": "Medium",
   "labels": [],
-  "pr": null
+  "pr": {
+    "number": 4,
+    "url": "https://github.com/obtcp19/instasub-web-automation/pull/4",
+    "id": 4725327274,
+    "state": "closed",
+    "draft": false,
+    "existing": true
+  }
 }
