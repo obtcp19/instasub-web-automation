@@ -9,7 +9,7 @@
     "duration": "Full Day",
     "subPreference": "Notify all subs",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T2",
@@ -21,7 +21,7 @@
     "duration": "Full Day",
     "subPreference": "Notify 1 Sub",
     "subSelected": "Sub 2",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T3",
@@ -33,7 +33,7 @@
     "duration": "Full Day",
     "subPreference": "Notify my favorites",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T4",
@@ -45,7 +45,7 @@
     "duration": "Full Day",
     "subPreference": "Assign a specific sub",
     "subSelected": "Sub 2",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T5",
@@ -57,7 +57,7 @@
     "duration": "Full Day",
     "subPreference": "No sub required",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T6",
@@ -69,7 +69,7 @@
     "duration": "Half Day AM",
     "subPreference": "Notify all subs",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T7",
@@ -81,7 +81,7 @@
     "duration": "Half Day AM",
     "subPreference": "Notify 1 Sub",
     "subSelected": "Sub 2",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T8",
@@ -93,7 +93,7 @@
     "duration": "Half Day AM",
     "subPreference": "Notify my favorites",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T9",
@@ -105,7 +105,7 @@
     "duration": "Half Day AM",
     "subPreference": "Assign a specific sub",
     "subSelected": "Sub 2",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T10",
@@ -117,7 +117,7 @@
     "duration": "Half Day AM",
     "subPreference": "No sub required",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T11",
@@ -129,7 +129,7 @@
     "duration": "Half Day PM",
     "subPreference": "Notify all subs",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T12",
@@ -141,7 +141,7 @@
     "duration": "Half Day PM",
     "subPreference": "Notify 1 Sub",
     "subSelected": "Sub 2",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T13",
@@ -153,7 +153,7 @@
     "duration": "Half Day PM",
     "subPreference": "Notify my favorites",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T14",
@@ -165,7 +165,7 @@
     "duration": "Half Day PM",
     "subPreference": "Assign a specific sub",
     "subSelected": "Sub 2",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T15",
@@ -177,7 +177,7 @@
     "duration": "Half Day PM",
     "subPreference": "No sub required",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T16",
@@ -189,7 +189,7 @@
     "duration": "Enter Time Manually (10:00–15:00)",
     "subPreference": "Notify all subs",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T17",
@@ -201,7 +201,7 @@
     "duration": "Enter Time Manually (10:00–15:00)",
     "subPreference": "Notify 1 Sub",
     "subSelected": "Sub 2",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T18",
@@ -213,7 +213,7 @@
     "duration": "Enter Time Manually (10:00–15:00)",
     "subPreference": "Notify my favorites",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T19",
@@ -225,7 +225,7 @@
     "duration": "Enter Time Manually (10:00–15:00)",
     "subPreference": "Assign a specific sub",
     "subSelected": "Sub 2",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T20",
@@ -237,7 +237,7 @@
     "duration": "Enter Time Manually (10:00–15:00)",
     "subPreference": "No sub required",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T21",
@@ -249,7 +249,7 @@
     "duration": "08:00–12:00",
     "subPreference": "Notify all subs",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T22",
@@ -261,7 +261,7 @@
     "duration": "10:00–14:00",
     "subPreference": "Notify 1 Sub",
     "subSelected": "Sub 2",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T23",
@@ -273,7 +273,7 @@
     "duration": "09:00–11:00",
     "subPreference": "Notify my favorites",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T24",
@@ -285,7 +285,7 @@
     "duration": "12:00–16:00",
     "subPreference": "Assign a specific sub",
     "subSelected": "Sub 2",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T25",
@@ -297,7 +297,7 @@
     "duration": "08:00–10:00",
     "subPreference": "No sub required",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   },
   {
     "id": "T26",
@@ -309,6 +309,6 @@
     "duration": "13:00–17:00",
     "subPreference": "Notify all subs",
     "subSelected": "—",
-    "expectedResult": "(/) PASS"
+    "expectedResult": "✅ PASS"
   }
 ]
