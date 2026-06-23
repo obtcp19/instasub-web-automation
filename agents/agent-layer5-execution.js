@@ -434,7 +434,8 @@ async function main() {
   const authUsernameVar = valueForAnyArg(args, ['--auth-username-var', '--username-var', '--username']);
   const authPasswordVar = valueForAnyArg(args, ['--auth-password-var', '--password-var', '--password']);
   const ticketArg = args.find(a => /^ISE-\d+$/i.test(a));
-  const ticket = (ticketArg || DEFAULT_TICKET).toUpperCase();
+  const specTicket = ticketFromSpec(explicitSpec);
+  const ticket = (ticketArg || specTicket || DEFAULT_TICKET).toUpperCase();
   const ticketSpec = ticketArg ? `tests/${ticketArg.toUpperCase()}.spec.ts` : null;
   const runAll = args.includes('--all');
   const jiraOnly = args.includes('--jira-only');
@@ -503,6 +504,11 @@ function valueForAnyArg(args, names) {
   }
 
   return '';
+}
+
+function ticketFromSpec(spec = '') {
+  const match = String(spec).match(/(?:^|\/)(ISE-\d+)(?:-[^/]*)?\.spec\.ts$/i);
+  return match ? match[1].toUpperCase() : '';
 }
 
 main();
