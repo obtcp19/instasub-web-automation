@@ -1,4 +1,4 @@
-import { expect, Page } from '@playwright/test';
+import { expect, Locator, Page } from '@playwright/test';
 
 /**
  * Staff Seeding & Deletion Flow (UI-Based)
@@ -49,6 +49,16 @@ export class StaffManagementPage {
     const passwordInput = this.page.locator('input[type="password"], input[name*="password" i], input[placeholder*="password" i]').first();
     const loginButton = this.page.getByRole('button', { name: /login|submit|sign in/i }).first();
 
+    // The Playwright setup project normally supplies an authenticated
+    // storageState. Do not fail (or log in twice) when that session is active.
+    if (!await emailInput.isVisible({ timeout: 1500 }).catch(() => false)) {
+      const pathname = new URL(this.page.url()).pathname;
+      if (pathname !== '/' && !pathname.includes('/login')) {
+        console.log(`Already authenticated at ${pathname}; skipping duplicate login`);
+        return;
+      }
+    }
+
     await emailInput.waitFor({ state: 'visible', timeout: this.timeout });
     await emailInput.fill(username);
     await passwordInput.fill(password);
@@ -68,131 +78,192 @@ export class StaffManagementPage {
   }
 
   async navigateToStaffManagement() {
-    const staffLink = this.page.getByRole('link', { name: /manage.*employee|staff|employee.*manage/i }).first();
-    if (await staffLink.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await staffLink.click();
-    } else {
+    const currentPath = new URL(this.page.url()).pathname.replace(/\/+$/, '');
+
+    // `/manage/employees/addemployee` also contains `/manage/employees`, but it
+    // is the Add Staff form, not the staff table. Always navigate when the path
+    // is not the exact list route.
+    if (currentPath !== '/manage/employees') {
       await this.page.goto('/manage/employees');
     }
 
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForURL((url) => {
+      return url.pathname.replace(/\/+$/, '') === '/manage/employees';
+    }, { timeout: this.timeout });
+
+    await this.page.waitForLoadState('domcontentloaded');
     await this.expectStaffTableVisible();
   }
 
   async expectStaffTableVisible() {
-    const url = this.page.url();
-    if (!url.includes('/manage/employees')) {
-      throw new Error(`Expected to be on /manage/employees but was on ${url}`);
+    const currentUrl = new URL(this.page.url());
+    const pathname = currentUrl.pathname.replace(/\/+$/, '');
+    if (pathname !== '/manage/employees') {
+      throw new Error(`Expected exact staff-list route /manage/employees but was ${currentUrl.pathname}`);
     }
 
-    // Look for staff list/table in any form (table, list, or text content)
-    const staffElement = this.page.locator('table, [role="table"], [class*="staff"], [class*="employee"], mat-table').first();
-    const staffText = this.page.getByText(/Staff|Active/i).first();
+    // Require the actual staff table. Broad selectors such as
+    // `[class*="employee"]` also match the Add Staff form and caused the false
+    // positive that led to this failure.
+    const staffTable = this.page.locator('mat-table, table[role="table"], [role="table"]').first();
+    await expect(staffTable, 'Staff management table should be loaded').toBeVisible({
+      timeout: this.timeout,
+    });
 
-    const hasStaffElement = await staffElement.isVisible({ timeout: 1000 }).catch(() => false);
-    const hasStaffText = await staffText.isVisible({ timeout: 1000 }).catch(() => false);
-
-    if (!hasStaffElement && !hasStaffText) {
-      const pageContent = await this.page.locator('body').textContent();
-      throw new Error(
-        `Staff list not found on page. URL: ${url}. ` +
-        `Page content preview: ${pageContent?.substring(0, 200)}`
-      );
-    }
+    // The application keeps a hidden "Loading..." element mounted after data
+    // loads, so DOM count is not a valid readiness signal. Only wait for the
+    // active block-ui overlay that can intercept clicks.
+    const activeLoadingOverlay = this.page.locator(
+      '.block-ui-wrapper.active, .block-ui-spinner:visible'
+    ).first();
+    await expect(activeLoadingOverlay).toBeHidden({ timeout: this.timeout });
   }
 
   async isProtectedAdminVisible(protectedEmail: string) {
-    // Navigate to staff page first
     await this.navigateToStaffManagement();
-
-    // Look for the protected admin email on the page
-    const adminEmail = this.page.getByText(protectedEmail).first();
-    const isVisible = await adminEmail.isVisible({ timeout: 2000 }).catch(() => false);
+    const adminRow = await this.findStaffRowByEmail(protectedEmail);
+    const isVisible = adminRow !== null;
     console.log(`Protected admin ${protectedEmail} visible: ${isVisible}`);
     return isVisible;
   }
 
-  async deleteAllNonProtectedStaff(protectedEmail: string) {
-    console.log(`Starting staff deletion - looking for test users to delete`);
-
-    // Navigate to staff management
-    await this.navigateToStaffManagement();
-    await this.page.waitForLoadState('networkidle');
-    await this.page.waitForTimeout(1000);
-
-    // List of test emails to delete
-    const testEmails = [
+  async deleteAllNonProtectedStaff(
+    protectedEmail: string,
+    targetEmails: string[] = [
+      'regsadmin@mailinator.com',
+      'schooladmin@mailinator.com',
+      'thirdezce@mailinator.com',
+      'schoolruser670@mailinator.com',
+      'staffuser210@mailinator.com',
+      'schoolteacher890@mailinator.com',
+      // Cleanup from the earlier generated implementation, which incorrectly
+      // seeded placeholder users instead of the ISE-1565 dataset.
       'john.doe@mailinator.com',
       'jane.smith@mailinator.com',
       'bob.johnson@mailinator.com',
       'alice.williams@mailinator.com',
       'charlie.brown@mailinator.com',
-      'diana.davis@mailinator.com'
-    ];
+      'diana.davis@mailinator.com',
+    ]
+  ) {
+    const protectedAddress = protectedEmail.trim().toLowerCase();
+    const emailsToDelete = targetEmails.map((email) => email.trim().toLowerCase());
 
-    let totalDeleted = 0;
+    if (emailsToDelete.includes(protectedAddress)) {
+      throw new Error(`Refusing to delete protected staff account: ${protectedEmail}`);
+    }
 
-    // Try to delete each test email
-    for (const email of testEmails) {
-      console.log(`Looking for ${email} to delete...`);
+    console.log(`Deleting ${emailsToDelete.length} seeded staff account(s) via the UI`);
+    await this.navigateToStaffManagement();
 
-      // Find element with this email text (use partial match)
-      const emailLocator = this.page.getByText(email).first();
-      const exists = await emailLocator.isVisible({ timeout: 1000 }).catch(() => false);
+    let deleted = 0;
+    let alreadyAbsent = 0;
 
-      if (!exists) {
-        console.log(`  ${email} not found`);
+    // Re-locate every row immediately before acting. Angular refreshes the
+    // mat-table after each deletion, so retaining the original row collection
+    // produces detached/stale locators.
+    for (const email of emailsToDelete) {
+      const row = await this.findStaffRowByEmail(email);
+      if (!row) {
+        console.log(`  ↷ ${email} is already absent`);
+        alreadyAbsent++;
         continue;
       }
 
-      console.log(`  ✓ Found ${email}`);
+      await expect(row, `Staff row for ${email} should be visible`).toBeVisible();
 
-      // Find the closest row/container
-      const row = emailLocator.locator('xpath=ancestor::tr[1] | ancestor::mat-row[1] | ancestor::[role="row"][1]').first();
-
-      // Look for any action button - delete icon, menu button, or action button
-      let deleteBtn = null;
-
-      // Try to find button with delete semantics
-      const btns = await row.locator('button, [role="button"]').all();
-      for (const btn of btns) {
-        const ariaLabel = await btn.getAttribute('aria-label');
-        const title = await btn.getAttribute('title');
-        const text = await btn.textContent();
-
-        if ((ariaLabel && ariaLabel.toLowerCase().includes('delete')) ||
-            (title && title.toLowerCase().includes('delete')) ||
-            (text && text.toLowerCase().includes('delete'))) {
-          deleteBtn = btn;
-          break;
-        }
+      const rowText = (await row.textContent() || '').toLowerCase();
+      if (rowText.includes(protectedAddress)) {
+        throw new Error(`Safety check stopped deletion: row for ${email} contains protected account`);
       }
 
-      // If no delete button found, try any action button
-      if (!deleteBtn && btns.length > 0) {
-        deleteBtn = btns[btns.length - 1]; // Last button is often the action button
-      }
+      // The live page exposes the trash icon through the "Delete Employee"
+      // Angular Material tooltip. Semantic fallbacks support minor DOM changes.
+      const deleteAction = row.locator([
+        '[mattooltip*="Delete Employee" i]',
+        '[ng-reflect-message*="Delete Employee" i]',
+        '[aria-label*="Delete Employee" i]',
+        '[title*="Delete Employee" i]',
+        'button:has(mat-icon:text-is("delete"))',
+        'button:has(mat-icon:text-is("delete_outline"))',
+        'mat-icon:text-is("delete")',
+        'mat-icon:text-is("delete_outline")',
+        '.material-icons:text-is("delete")',
+        '.material-icons:text-is("delete_outline")',
+      ].join(', ')).first();
 
-      if (deleteBtn && await deleteBtn.isVisible({ timeout: 500 }).catch(() => false)) {
-        console.log(`  Clicking delete button`);
-        await deleteBtn.click({ force: true });
-        await this.page.waitForTimeout(600);
+      await expect(
+        deleteAction,
+        `Delete Employee icon was not found in the row for ${email}`
+      ).toBeVisible();
 
-        // Confirm deletion
-        const confirmBtn = this.page.getByRole('button', { name: /confirm|yes|delete|remove|ok/i }).first();
-        if (await confirmBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
-          console.log(`  Confirming...`);
-          await confirmBtn.click({ force: true });
-          await this.page.waitForLoadState('networkidle');
-          totalDeleted++;
-          console.log(`  ✓ ${email} deleted`);
-        }
-      } else {
-        console.log(`  No delete button found`);
-      }
+      console.log(`  🗑 Deleting ${email}`);
+      await deleteAction.click();
+
+      const dialog = this.page.locator(
+        'mat-dialog-container, [role="dialog"], .mat-dialog-container'
+      ).first();
+      await expect(dialog, `Delete confirmation dialog for ${email}`).toBeVisible();
+
+      const confirmButton = dialog.getByRole('button', {
+        name: /^(yes|confirm|delete|remove|ok)(\b.*)?$/i,
+      }).first();
+      await expect(confirmButton, `Delete confirmation button for ${email}`).toBeVisible();
+      await confirmButton.click();
+
+      await expect(
+        row,
+        `${email} should disappear after deletion`
+      ).toHaveCount(0, { timeout: this.timeout });
+
+      deleted++;
+      console.log(`  ✓ Deleted ${email}`);
     }
 
-    console.log(`Staff deletion complete. Total deleted: ${totalDeleted}`);
+    // This invariant is checked after every cleanup, including idempotent runs.
+    const protectedRow = await this.findStaffRowByEmail(protectedEmail);
+    if (!protectedRow) {
+      throw new Error(`Protected account ${protectedEmail} is missing from the staff table`);
+    }
+    await expect(protectedRow, `Protected account ${protectedEmail} must remain`).toBeVisible();
+
+    console.log(`Deletion complete: ${deleted} deleted, ${alreadyAbsent} already absent`);
+  }
+
+  private async findStaffRowByEmail(email: string): Promise<Locator | null> {
+    const firstPage = this.page.getByRole('button', { name: /first page/i }).first();
+    if (
+      await firstPage.isVisible({ timeout: 500 }).catch(() => false) &&
+      await firstPage.isEnabled().catch(() => false)
+    ) {
+      await firstPage.click();
+      await this.page.waitForTimeout(300);
+    }
+
+    // The screenshot shows 30 rows per page. The upper bound prevents a bad
+    // paginator state from creating an infinite loop.
+    for (let pageNumber = 1; pageNumber <= 100; pageNumber++) {
+      const emailCell = this.page.getByText(email, { exact: true }).first();
+      if (await emailCell.isVisible({ timeout: 700 }).catch(() => false)) {
+        return emailCell.locator(
+          'xpath=ancestor::mat-row[1] | ancestor::tr[1] | ancestor::*[@role="row"][1]'
+        ).first();
+      }
+
+      const nextPage = this.page.getByRole('button', { name: /next page/i }).first();
+      const canAdvance =
+        await nextPage.isVisible({ timeout: 300 }).catch(() => false) &&
+        await nextPage.isEnabled().catch(() => false);
+
+      if (!canAdvance) {
+        return null;
+      }
+
+      await nextPage.click();
+      await this.page.waitForTimeout(300);
+    }
+
+    throw new Error(`Stopped after 100 pages while searching for staff account ${email}`);
   }
 
   async addStaff(staffData: {
@@ -204,13 +275,11 @@ export class StaffManagementPage {
     role?: string;
     type?: string;
     certified?: string;
+    primarySchool?: string;
   }) {
-    // Navigate to staff page first to ensure we're in the right place
-    const currentUrl = this.page.url();
-    if (!currentUrl.includes('/manage/employees')) {
-      await this.page.goto('/manage/employees');
-      await this.page.waitForLoadState('networkidle');
-    }
+    // `/manage/employees/addemployee` contains the list route as a substring,
+    // so use the exact-route helper before opening a fresh form.
+    await this.navigateToStaffManagement();
 
     const addButton = this.page.getByRole('button', { name: /add.*staff|add.*employee|create.*staff/i }).first();
     if (!await addButton.isVisible({ timeout: 2000 }).catch(() => false)) {
@@ -247,32 +316,51 @@ export class StaffManagementPage {
     console.log(`Filling form: ${staffData.firstName} ${staffData.lastName}`);
     await this.fillFormField('first.*name|firstName', staffData.firstName);
     await this.fillFormField('last.*name|lastName', staffData.lastName);
-    await this.fillFormField('email', staffData.email);
+    await this.fillFormField('email|EmailId', staffData.email);
 
     // Mobile/Phone number
-    await this.fillFormField('mobile|phone|telephone|phoneNumber', '1234567890');
-
-    if (staffData.location) {
-      try {
-        await this.selectDropdownOption('location|school|WorkLocation', staffData.location);
-      } catch {
-        console.log(`Skipping location selection`);
-      }
-    }
+    const phoneNumber = this.normalizePhoneNumber(staffData.phone || '1234567890');
+    await this.fillFormField(
+      'mobile|phone|telephone|phoneNumber|PhoneNumber',
+      phoneNumber
+    );
 
     // Position dropdown (UserTypeId)
-    await this.selectDropdownOptionRobust('UserTypeId', 'Employee');
+    await this.selectDropdownOptionRobust('UserTypeId', staffData.type || 'Teacher');
+
+    // Teacher makes Grade and Subject mandatory in the live form. The ticket
+    // does not prescribe values, so choose the first enabled application value.
+    if ((staffData.type || '').toLowerCase() === 'teacher') {
+      await this.selectFirstAvailableOption(/grade/i);
+      await this.selectFirstAvailableOption(/subject/i);
+    }
+
+    if (staffData.location) {
+      await this.selectWorkLocation(staffData.location);
+    }
 
     // InstaSub Role dropdown
-    await this.selectDropdownOptionRobust('role', 'Employee');
+    await this.selectDropdownOptionRobust('role', staffData.role || 'Employee');
+
+    // Campus-level School Admin and Employee roles dynamically render a
+    // required Primary School control. Detect the control from the UI instead
+    // of assuming it belongs to one role.
+    const primarySchoolControl = this.page.getByRole('listbox', {
+      name: /^Primary School$/i,
+    }).first();
+    if (await primarySchoolControl.isVisible({ timeout: 2000 }).catch(() => false)) {
+      await this.selectLabeledOption(
+        /^Primary School$/i,
+        staffData.primarySchool || staffData.location || 'SchoolAcademyTest2345'
+      );
+    }
 
     // Try to find and click save button with multiple selectors
     let saveClicked = false;
     const saveSelectors = [
       { selector: this.page.getByRole('button', { name: /save/i }), name: 'role save' },
-      { selector: this.page.getByRole('button', { name: /submit|create|add/i }), name: 'role submit/create/add' },
+      { selector: this.page.getByRole('button', { name: /^Add Staff$/i }), name: 'Add Staff' },
       { selector: this.page.locator('button[type="submit"]'), name: 'submit button' },
-      { selector: this.page.locator('button:visible').last(), name: 'last visible button' },
     ];
 
     for (const {selector, name} of saveSelectors) {
@@ -290,13 +378,41 @@ export class StaffManagementPage {
     }
 
     if (!saveClicked) {
-      console.log('Warning: Save button not found');
+      throw new Error(`Save button not found while creating ${staffData.email}`);
     }
 
-    await this.page.waitForLoadState('networkidle');
-    await this.page.waitForTimeout(500);
+    try {
+      await this.page.waitForURL((url) => {
+        return url.pathname.replace(/\/+$/, '') === '/manage/employees';
+      }, { timeout: 30000, waitUntil: 'domcontentloaded' });
+    } catch {
+      const alerts = await this.page
+        .locator('[role="alert"]:visible, .mat-error:visible, mat-error:visible')
+        .allTextContents();
+      const invalidFields = await this.page
+        .locator('input[aria-invalid="true"]:visible, [role="listbox"][aria-invalid="true"]:visible')
+        .evaluateAll((elements) => elements.map((element) => {
+          return element.getAttribute('aria-label')
+            || element.getAttribute('placeholder')
+            || element.getAttribute('formcontrolname')
+            || element.textContent?.trim()
+            || element.tagName;
+        }));
 
-    console.log(`Staff ${staffData.email} submitted`);
+      throw new Error(
+        `Add Staff form rejected ${staffData.email}. ` +
+        `Validation messages: ${alerts.join(' | ') || 'none'}. ` +
+        `Invalid fields: ${invalidFields.join(', ') || 'unknown'}`
+      );
+    }
+    await this.expectStaffTableVisible();
+
+    const createdRow = await this.findStaffRowByEmail(staffData.email);
+    if (!createdRow) {
+      throw new Error(`Staff ${staffData.email} was submitted but is absent from the staff table`);
+    }
+
+    console.log(`Staff ${staffData.email} created`);
   }
 
   async expectReviewVisible(scenario: StaffSeedScenario) {
@@ -347,9 +463,10 @@ export class StaffManagementPage {
         break;
 
       case 'TC-SEED-07':
-        // Idempotency: delete and recreate again
-        await this.deleteAllNonProtectedStaff('adminzx@maillinator.com');
-        await this.recreateStaffMembers();
+        // Do not mutate the data a second time in the same suite run.
+        // Idempotency is proven by rerunning the whole spec: TC-SEED-03 deletes
+        // the existing seed users once and TC-SEED-05 recreates them once.
+        await this.verifyFinalStaffState();
         break;
     }
   }
@@ -426,6 +543,100 @@ export class StaffManagementPage {
     // Type the value character by character
     await input.type(value, { delay: 50 });
     await this.page.waitForTimeout(300);
+  }
+
+  private normalizePhoneNumber(phone: string): string {
+    let digits = phone.replace(/\D/g, '');
+
+    // The UI renders a separate +1 country prefix. Ticket values include that
+    // prefix, so remove it before filling the local-number input.
+    if (digits.length > 15 && digits.startsWith('1')) {
+      digits = digits.slice(1);
+    }
+
+    if (digits.length < 7 || digits.length > 15) {
+      throw new Error(`Phone number must contain 7-15 digits after normalization: ${phone}`);
+    }
+
+    return digits;
+  }
+
+  private async selectFirstAvailableOption(label: RegExp) {
+    const control = this.page.getByRole('listbox', { name: label }).first();
+    await expect(control, `${label} dropdown should be visible`).toBeVisible();
+    await control.click();
+
+    const option = this.page.locator(
+      '.cdk-overlay-container mat-option:not([aria-disabled="true"]), ' +
+      '.cdk-overlay-container [role="option"]:not([aria-disabled="true"])'
+    ).filter({ hasNotText: /^--$|^select\b/i }).first();
+
+    await expect(option, `An enabled ${label} option should be available`).toBeVisible();
+    const selectedText = (await option.textContent() || '').trim();
+    await option.click();
+    console.log(`Selected ${label}: ${selectedText}`);
+  }
+
+  private async selectLabeledOption(label: RegExp, value: string) {
+    const control = this.page.getByRole('listbox', { name: label }).first();
+    await expect(control, `${label} dropdown should be visible`).toBeVisible({
+      timeout: this.timeout,
+    });
+    await control.click();
+
+    const options = this.page.locator(
+      '.cdk-overlay-container mat-option, .cdk-overlay-container [role="option"]'
+    );
+    let option = options.filter({ hasText: new RegExp(`^\\s*${this.escapeRegExp(value)}\\s*$`, 'i') }).first();
+
+    if (!await option.isVisible({ timeout: 1500 }).catch(() => false)) {
+      option = options.filter({ hasText: value }).first();
+    }
+
+    // If environments use different school names, choose the first actual
+    // school instead of the "--" placeholder so the required field is valid.
+    if (!await option.isVisible({ timeout: 1500 }).catch(() => false)) {
+      option = options
+        .filter({ hasNotText: /^\s*--\s*$/ })
+        .first();
+    }
+
+    await expect(option, `${value} option should be available in ${label}`).toBeVisible();
+    const selectedValue = (await option.textContent() || value).trim();
+    await option.click();
+    console.log(`Selected ${label}: ${selectedValue}`);
+  }
+
+  private escapeRegExp(value: string): string {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  private async selectWorkLocation(location: string) {
+    const districtControl = this.page.getByRole('listbox', { name: /^District$/i }).first();
+    const currentDistrict = (await districtControl.textContent().catch(() => ''))?.trim();
+
+    if (currentDistrict?.toLowerCase().includes(location.toLowerCase())) {
+      console.log(`Work location already selected: ${location}`);
+      return;
+    }
+
+    const campusRadio = this.page.getByRole('radio', { name: /campus|building/i }).first();
+    if (await campusRadio.isVisible({ timeout: 1000 }).catch(() => false)) {
+      await campusRadio.check({ force: true });
+    }
+
+    const locationControl = this.page.getByRole('listbox', {
+      name: /campus|building|school|work location/i,
+    }).last();
+    await expect(locationControl, `Work location dropdown for ${location}`).toBeVisible();
+    await locationControl.click();
+
+    const option = this.page.locator(
+      '.cdk-overlay-container mat-option, .cdk-overlay-container [role="option"]'
+    ).filter({ hasText: location }).first();
+    await expect(option, `Work location option ${location}`).toBeVisible();
+    await option.click();
+    console.log(`Selected work location: ${location}`);
   }
 
   private async selectDropdownOptionRobust(fieldName: string, value: string) {
@@ -529,32 +740,188 @@ export class StaffManagementPage {
 
   private async recreateStaffMembers() {
     const staffData = [
-      { firstName: 'John', lastName: 'Doe', email: 'john.doe@mailinator.com', role: 'Employee', type: 'Teacher', certified: 'Yes' },
-      { firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@mailinator.com', role: 'Employee', type: 'Teacher', certified: 'Yes' },
-      { firstName: 'Bob', lastName: 'Johnson', email: 'bob.johnson@mailinator.com', role: 'School Admin', type: 'Teacher', certified: 'Yes' },
-      { firstName: 'Alice', lastName: 'Williams', email: 'alice.williams@mailinator.com', role: 'Employee', type: 'Teacher', certified: 'Yes' },
-      { firstName: 'Charlie', lastName: 'Brown', email: 'charlie.brown@mailinator.com', role: 'Employee', type: 'Teacher', certified: 'Yes' },
-      { firstName: 'Diana', lastName: 'Davis', email: 'diana.davis@mailinator.com', role: 'District Admin', type: 'Teacher', certified: 'Yes' },
+      { firstName: 'regs', lastName: 'admin', email: 'regsadmin@mailinator.com', phone: '+144516515651365', location: 'regscus', role: 'District Admin', type: 'Teacher', certified: 'Yes' },
+      { firstName: 'school', lastName: 'admin', email: 'schooladmin@mailinator.com', phone: '+16516532123', location: 'SchoolAcademyTest2345', role: 'School Admin', type: 'Teacher', certified: 'Yes', primarySchool: 'SchoolAcademyTest2345' },
+      { firstName: 'user', lastName: 'third', email: 'thirdezce@mailinator.com', phone: '+1564332151322215', location: 'regscus', role: 'Employee', type: 'Teacher', certified: 'Yes' },
+      { firstName: 'user', lastName: 'one', email: 'schoolruser670@mailinator.com', phone: '+119199899', location: 'SchoolAcademyTest2345', role: 'Employee', type: 'Teacher', certified: 'Yes' },
+      { firstName: 'user', lastName: 'automation', email: 'staffuser210@mailinator.com', phone: '+1415611515311353', location: 'SchoolAcademyTest2345', role: 'Employee', type: 'Teacher', certified: 'Yes' },
+      { firstName: 'user', lastName: 'two', email: 'schoolteacher890@mailinator.com', phone: '+1456645345456', location: 'SchoolAcademyTest2345', role: 'Employee', type: 'Teacher', certified: 'Yes' },
     ];
 
     for (const data of staffData) {
-      try {
-        console.log(`Creating staff: ${data.firstName} ${data.lastName}`);
-        await this.addStaff(data);
-      } catch (err) {
-        console.log(`Staff creation failed: ${err.message}`);
+      console.log(`Creating staff: ${data.firstName} ${data.lastName}`);
+      await this.addStaff(data);
+    }
+
+    await this.resetPasswordsForStaff(staffData.map((staff) => staff.email));
+    await this.verifyNewStaffAccounts(staffData.map((staff) => staff.email));
+  }
+
+  private async resetPasswordsForStaff(emails: string[]) {
+    const protectedEmail = 'adminzx@maillinator.com';
+    if (emails.some((email) => email.toLowerCase() === protectedEmail)) {
+      throw new Error(`Refusing to reset the protected account: ${protectedEmail}`);
+    }
+
+    console.log(`Resetting passwords for ${emails.length} newly seeded staff account(s)`);
+    await this.navigateToStaffManagement();
+
+    for (const email of emails) {
+      const row = await this.findStaffRowByEmail(email);
+      if (!row) {
+        throw new Error(`Cannot reset password because staff account is missing: ${email}`);
       }
+
+      const resetPasswordAction = row.locator([
+        '[mattooltip*="Reset Password" i]',
+        '[ng-reflect-message*="Reset Password" i]',
+        '[aria-label*="Reset Password" i]',
+        '[title*="Reset Password" i]',
+        'button:has(mat-icon:text-is("lock"))',
+        'button:has(mat-icon:text-is("lock_open"))',
+        'mat-icon:text-is("lock")',
+        'mat-icon:text-is("lock_open")',
+      ].join(', ')).first();
+
+      await expect(
+        resetPasswordAction,
+        `Reset Password action should be visible for ${email}`
+      ).toBeVisible();
+
+      console.log(`  🔑 Resetting password for ${email}`);
+      await resetPasswordAction.click();
+
+      const dialog = this.page.locator(
+        'mat-dialog-container:visible, [role="dialog"]:visible, .mat-dialog-container:visible'
+      ).first();
+
+      if (await dialog.isVisible({ timeout: 1500 }).catch(() => false)) {
+        const confirmButton = dialog.getByRole('button', {
+          name: /^(yes|confirm|reset|ok|continue)(\b.*)?$/i,
+        }).first();
+        await expect(
+          confirmButton,
+          `Reset Password confirmation button should be visible for ${email}`
+        ).toBeVisible();
+        await confirmButton.click();
+        await expect(dialog).toBeHidden({ timeout: this.timeout });
+      }
+
+      const activeLoadingOverlay = this.page.locator(
+        '.block-ui-wrapper.active, .block-ui-spinner:visible'
+      ).first();
+      await expect(activeLoadingOverlay).toBeHidden({ timeout: this.timeout });
+      console.log(`  ✓ Password reset requested for ${email}`);
+    }
+  }
+
+  private async verifyNewStaffAccounts(emails: string[]) {
+    const protectedEmail = 'adminzx@maillinator.com';
+    if (emails.some((email) => email.toLowerCase() === protectedEmail)) {
+      throw new Error(`Refusing to verify the protected account: ${protectedEmail}`);
+    }
+
+    console.log(`Verifying ${emails.length} newly seeded staff account(s)`);
+
+    for (const email of emails) {
+      await this.navigateToStaffManagement();
+      const row = await this.findStaffRowByEmail(email);
+      if (!row) {
+        throw new Error(`Cannot verify staff account because it is missing: ${email}`);
+      }
+
+      if (/\bverified\b/i.test(await row.innerText())) {
+        console.log(`  ↷ ${email} is already verified`);
+        continue;
+      }
+
+      const editAction = row.locator([
+        '[mattooltip="Edit Employee"]',
+        '[ng-reflect-message="Edit Employee"]',
+        '[aria-label="Edit Employee"]',
+        '[title="Edit Employee"]',
+        '.fa-pencil-square-o',
+      ].join(', ')).first();
+
+      await expect(editAction, `Edit Employee action should be visible for ${email}`).toBeVisible();
+      console.log(`  ✏️ Editing ${email}`);
+      await editAction.click();
+
+      await this.page.waitForURL((url) => {
+        return url.pathname.replace(/\/+$/, '') === '/manage/employees/addemployee'
+          && url.searchParams.has('Id');
+      }, { timeout: this.timeout, waitUntil: 'domcontentloaded' });
+
+      // Angular Material keeps the native radio input visually hidden. Click
+      // the rendered label/container so Angular receives the change event and
+      // updates its form model.
+      const verifyControl = this.page.locator('mat-radio-button').filter({
+        hasText: /^\s*Verify\s*$/,
+      }).first();
+      const unverifyControl = this.page.locator('mat-radio-button').filter({
+        hasText: /^\s*Unverify\s*$/,
+      }).first();
+      const verifyRadio = verifyControl.locator('input[type="radio"]');
+      const unverifyRadio = unverifyControl.locator('input[type="radio"]');
+
+      await expect(verifyControl, `Verify control should be visible for ${email}`).toBeVisible();
+      await expect(unverifyControl, `Unverify control should be visible for ${email}`).toBeVisible();
+
+      if (!await verifyRadio.isChecked()) {
+        await verifyControl.locator('label.mat-radio-label').click();
+      }
+
+      await expect(verifyControl, `${email} Verify control should be selected`)
+        .toHaveClass(/mat-radio-checked/, { timeout: this.timeout });
+      await expect(unverifyControl, `${email} Unverify control should be deselected`)
+        .not.toHaveClass(/mat-radio-checked/);
+      await expect(verifyRadio, `${email} Verify radio`).toBeChecked();
+      await expect(unverifyRadio, `${email} Unverify radio`).not.toBeChecked();
+
+      const updateButton = this.page.getByRole('button', {
+        name: 'Update',
+        exact: true,
+      });
+      await expect(updateButton, `Update button should be visible for ${email}`).toBeVisible();
+      console.log(`  ✅ Enabling Verify and updating ${email}`);
+      await updateButton.click();
+
+      await this.page.waitForURL((url) => {
+        return url.pathname.replace(/\/+$/, '') === '/manage/employees';
+      }, { timeout: 30000, waitUntil: 'domcontentloaded' });
+      await this.expectStaffTableVisible();
+
+      const verifiedRow = await this.findStaffRowByEmail(email);
+      if (!verifiedRow) {
+        throw new Error(`Verified staff account disappeared from the table: ${email}`);
+      }
+      await expect(
+        verifiedRow,
+        `${email} should display Verified after clicking Verify Employee`
+      ).toContainText(/Verified/i, { timeout: this.timeout });
+      console.log(`  ✓ ${email} is verified`);
     }
   }
 
   private async verifyFinalStaffState() {
-    await this.page.goto('/manage/employees');
-    await this.page.waitForLoadState('networkidle');
+    await this.navigateToStaffManagement();
 
-    const rows = this.page.locator('tr, [role="row"]');
-    const rowCount = await rows.count();
+    const expectedEmails = [
+      'adminzx@maillinator.com',
+      'regsadmin@mailinator.com',
+      'schooladmin@mailinator.com',
+      'thirdezce@mailinator.com',
+      'schoolruser670@mailinator.com',
+      'staffuser210@mailinator.com',
+      'schoolteacher890@mailinator.com',
+    ];
 
-    // Should have 7 staff (6 recreated + 1 protected admin)
-    expect(rowCount).toBeGreaterThanOrEqual(7);
+    for (const email of expectedEmails) {
+      const row = await this.findStaffRowByEmail(email);
+      if (!row) {
+        throw new Error(`Expected seeded staff account is missing: ${email}`);
+      }
+      await expect(row, `Seeded staff ${email} should be visible`).toBeVisible();
+    }
   }
 }

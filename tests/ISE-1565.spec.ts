@@ -48,7 +48,8 @@ test.describe.serial('ISE-1565: staff seeding and management', () => {
 
   for (const scenario of scenarios) {
     test(`${scenario.id}: staff seeding step`, async () => {
-      test.setTimeout(90000);
+      const runsFullSeedFlow = scenario.id === 'TC-SEED-05';
+      test.setTimeout(runsFullSeedFlow ? 300000 : 90000);
       await pageObject.completeScenario(scenario);
       await pageObject.expectReviewVisible(scenario);
     });
