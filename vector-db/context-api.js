@@ -59,6 +59,38 @@ function extractSelectors(content) {
   return Array.from(selectors);
 }
 
+function extractExports(content) {
+  if (!content) return [];
+  const exports = new Set();
+  const patterns = [
+    /export\s+(?:default\s+)?class\s+([A-Za-z_$][\w$]*)/g,
+    /export\s+(?:async\s+)?function\s+([A-Za-z_$][\w$]*)/g,
+    /export\s+(?:const|let|var|interface|type|enum)\s+([A-Za-z_$][\w$]*)/g,
+    /module\.exports\s*=\s*([A-Za-z_$][\w$]*)/g,
+  ];
+
+  for (const pattern of patterns) {
+    let match;
+    while ((match = pattern.exec(content)) !== null) exports.add(match[1]);
+  }
+
+  return Array.from(exports);
+}
+
+function extractMethods(content) {
+  if (!content) return [];
+  const methods = new Set();
+  const methodPattern = /^\s*(?:public\s+|private\s+|protected\s+|static\s+|readonly\s+|async\s+)*([A-Za-z_$][\w$]*)\s*\([^)]*\)\s*(?::[^{]+)?\{/gm;
+  const ignored = new Set(['if', 'for', 'while', 'switch', 'catch', 'constructor']);
+  let match;
+
+  while ((match = methodPattern.exec(content)) !== null) {
+    if (!ignored.has(match[1])) methods.add(match[1]);
+  }
+
+  return Array.from(methods);
+}
+
 /**
  * Run several queries, merge and dedupe by file path (keeping the highest
  * similarity), and rank the result. Returns a bundle the generator can act on.
@@ -81,6 +113,9 @@ async function retrieveContext(queries, topKPerQuery = 3) {
           type: hit.type,
           similarity: hit.similarity,
           selectors: extractSelectors(hit.content),
+          exports: extractExports(hit.content),
+          methods: extractMethods(hit.content),
+          contentPreview: String(hit.content || '').slice(0, 2000),
         });
       }
     }
@@ -110,4 +145,11 @@ function formatContext(bundle) {
   return lines.join('\n');
 }
 
-module.exports = { query, retrieveContext, extractSelectors, formatContext };
+module.exports = {
+  query,
+  retrieveContext,
+  extractSelectors,
+  extractExports,
+  extractMethods,
+  formatContext,
+};

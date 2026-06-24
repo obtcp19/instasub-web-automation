@@ -12,6 +12,8 @@ class SelfHealingAnalyzer {
     this.failedTestTitles = new Set();
     this.analysis = {
       timestamp: new Date().toISOString(),
+      resultsFound: false,
+      status: 'unknown',
       totalTests: 0,
       passedTests: 0,
       failedTests: 0,
@@ -22,24 +24,93 @@ class SelfHealingAnalyzer {
       recommendedFixes: [],
       pullRequests: [],
       errorContexts: [],
+      failedTargets: [],
     };
   }
 
   analyzeResults() {
     if (!fs.existsSync(this.resultsJson)) {
-      console.log('No test results found. Assuming all tests passed.');
+      console.log('No test results found. Analysis status is unknown; not assuming a pass.');
+      this._parseErrorContexts();
+      this._parseArtifactFailureTargets();
+      if (this.analysis.failedTargets.length > 0) {
+        this.analysis.status = 'recovered-failures';
+        this.analysis.failedTests = this.analysis.failedTargets.length;
+        this.analysis.totalTests = this.analysis.failedTargets.length;
+      }
       return this.analysis;
     }
 
     try {
       const results = JSON.parse(fs.readFileSync(this.resultsJson, 'utf-8'));
+      this.analysis.resultsFound = true;
+      this.analysis.status = 'analyzed';
       this._parseTestResults(results);
       this._parseErrorContexts();
     } catch (error) {
       console.error('Failed to parse results:', error.message);
+      this.analysis.status = 'invalid-results';
     }
 
     return this.analysis;
+  }
+
+  _parseArtifactFailureTargets() {
+    const reportDataDir = path.join(this.projectRoot, 'playwright-report', 'data');
+    const markdownFiles = this._findFilesByExtension(reportDataDir, '.md');
+
+    markdownFiles.forEach(file => {
+      const content = fs.readFileSync(file, 'utf-8');
+      if (!/Following Playwright test failed/i.test(content)) return;
+
+      const test = content.match(/- Name:\s*(.+)/)?.[1]?.trim();
+      const location = content.match(/- Location:\s*(.+)/)?.[1]?.trim();
+      const target = this._targetFromLocation(location);
+      if (!test || !target) return;
+
+      const error = this._extractErrorDetails(content);
+      this._addFailedTarget({
+        ...target,
+        test,
+        source: path.relative(this.projectRoot, file),
+        error,
+      });
+      this._detectFailurePattern({ title: test, status: 'failed', error }, 'Playwright HTML report');
+    });
+
+    if (!fs.existsSync(this.resultsDir)) return;
+    const spec = `tests/${this.ticket}.spec.ts`;
+    fs.readdirSync(this.resultsDir, { withFileTypes: true })
+      .filter(entry => entry.isDirectory())
+      .forEach(entry => {
+        const titleMatch = entry.name.match(/-(T\d+)-(.+?)(?:-[^-]+)?$/i);
+        if (!titleMatch) return;
+        const test = `${titleMatch[1].toUpperCase()}: ${titleMatch[2].replace(/-/g, ' ')}`;
+        this._addFailedTarget({
+          test,
+          target: spec,
+          lineTarget: spec,
+          source: path.relative(this.projectRoot, path.join(this.resultsDir, entry.name)),
+          error: 'Failure artifact directory recovered after the JSON report became unavailable.',
+        });
+      });
+  }
+
+  _findFilesByExtension(dir, extension) {
+    if (!fs.existsSync(dir)) return [];
+    return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) return this._findFilesByExtension(fullPath, extension);
+      return entry.isFile() && entry.name.endsWith(extension) ? [fullPath] : [];
+    });
+  }
+
+  _addFailedTarget(target) {
+    const leafTitle = this.getLeafTestTitle(target.test);
+    const exists = this.analysis.failedTargets.some(item =>
+      item.target === target.target && this.getLeafTestTitle(item.test) === leafTitle
+    );
+    if (!exists) this.analysis.failedTargets.push(target);
   }
 
   _parseTestResults(results) {
@@ -53,6 +124,7 @@ class SelfHealingAnalyzer {
     this.analysis.totalTests = passed + failed + flaky + skipped;
     this.analysis.passedTests = passed;
     this.analysis.failedTests = failed;
+    this.analysis.status = failed > 0 ? 'failed' : 'passed';
 
     // Playwright nests: suites -> (suites) -> specs -> tests -> results.
     const walkSuites = (suites, suiteName) => {
@@ -71,6 +143,18 @@ class SelfHealingAnalyzer {
               .filter(Boolean)
               .join(' ');
             this._analyzeTestCase({ title: spec.title, status, error }, name);
+            if (status === 'failed' && spec.file) {
+              const location = spec.line
+                ? `${spec.file}:${spec.line}:${spec.column || 1}`
+                : spec.file;
+              this._addFailedTarget({
+                test: spec.title,
+                target: spec.file,
+                lineTarget: location,
+                source: 'playwright-json',
+                error,
+              });
+            }
           });
         });
         // Back-compat: some reporters attach tests directly to a suite.
@@ -371,6 +455,12 @@ class SelfHealingAnalyzer {
   getFailedTestTargets() {
     const targets = new Map();
 
+    this.analysis.failedTargets.forEach(target => {
+      if (!target.target) return;
+      const leafTitle = this.getLeafTestTitle(target.test);
+      targets.set(`${target.target}::${leafTitle || target.test}`, target);
+    });
+
     this.analysis.errorContexts.forEach(context => {
       const target = this._targetFromLocation(context.location);
       if (target) {
@@ -472,10 +562,11 @@ ${this.analysis.timeoutIssues
   }
 
   generateJiraReport() {
+    const hasResults = this.analysis.resultsFound;
     const report = {
       ticket: this.ticket,
       executionStatus:
-        this.analysis.failedTests === 0 ? 'PASSED' : 'FAILED',
+        !hasResults ? 'UNKNOWN' : this.analysis.failedTests === 0 ? 'PASSED' : 'FAILED',
       testSummary: {
         total: this.analysis.totalTests,
         passed: this.analysis.passedTests,
@@ -495,7 +586,9 @@ ${this.analysis.timeoutIssues
       },
       timestamp: this.analysis.timestamp,
       nextSteps:
-        this.analysis.failedTests === 0
+        !hasResults
+          ? 'No Playwright JSON results were available. Run the test suite before changing work-item status.'
+          : this.analysis.failedTests === 0
           ? `All tests passed. Mark ${this.ticket} as RESOLVED in Jira.`
           : 'Review PR and merge fixes.',
     };
@@ -504,13 +597,14 @@ ${this.analysis.timeoutIssues
   }
 
   generateXrayReport() {
+    const hasResults = this.analysis.resultsFound;
     const report = {
       testExecutionName: `${this.ticket} Playwright Execution - ${new Date().toLocaleDateString()}`,
       testPlan: `${this.ticket}-PLAYWRIGHT-FLOW`,
       results: Array.from({ length: this.analysis.totalTests || 1 }, (_, index) => ({
         testKey: `${this.ticket}-TC-${String(index + 1).padStart(2, '0')}`,
         testName: `${this.ticket} automated test ${index + 1}`,
-        status: index < this.analysis.passedTests ? 'PASSED' : 'FAILED',
+        status: !hasResults ? 'UNKNOWN' : index < this.analysis.passedTests ? 'PASSED' : 'FAILED',
         duration: 0,
         evidenceLink: 'playwright-report/index.html',
       })),

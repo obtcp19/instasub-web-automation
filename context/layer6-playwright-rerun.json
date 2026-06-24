@@ -1,0 +1,97 @@
+{
+  "layer": 6,
+  "tool": "mcp://playwright/self-heal",
+  "ticket": "ISE-1564",
+  "spec": "tests/ISE-1564.spec.ts",
+  "generatedAt": "2026-06-24T11:50:12.621Z",
+  "sessions": [],
+  "fixes": [],
+  "reruns": [],
+  "status": "passed",
+  "headed": true,
+  "targets": [
+    {
+      "target": "tests/ISE-1564.spec.ts",
+      "lineTarget": "tests/ISE-1564.spec.ts:187",
+      "test": "ISE-1564.spec.ts >> ISE-1564: data-driven regression >> T4: Illness-Family Member",
+      "source": "test-results/layer6-reruns/01-t4-illness-family-member/ISE-1564-ISE-1564-data-dri-07e04-on-T4-Illness-Family-Member-chromium/error-context.md",
+      "error": "Error: Substitute \"Sub 1\" is not the committed selection. Committed chips: (none)."
+    },
+    {
+      "target": "tests/ISE-1564.spec.ts",
+      "lineTarget": "tests/ISE-1564.spec.ts:187",
+      "test": "ISE-1564.spec.ts >> ISE-1564: data-driven regression >> T14: Personal",
+      "source": "test-results/layer6-reruns/02-t14-personal/ISE-1564-ISE-1564-data-driven-regression-T14-Personal-chromium/error-context.md",
+      "error": "Error: Substitute \"Sub 1\" is not the committed selection. Committed chips: (none)."
+    }
+  ],
+  "runs": [
+    {
+      "target": "tests/ISE-1564.spec.ts",
+      "lineTarget": "tests/ISE-1564.spec.ts:187",
+      "test": "ISE-1564.spec.ts >> ISE-1564: data-driven regression >> T4: Illness-Family Member",
+      "source": "test-results/layer6-reruns/01-t4-illness-family-member/ISE-1564-ISE-1564-data-dri-07e04-on-T4-Illness-Family-Member-chromium/error-context.md",
+      "error": "Error: Substitute \"Sub 1\" is not the committed selection. Committed chips: (none).",
+      "command": "npx playwright test tests/ISE-1564.spec.ts --project=chromium --workers=1 --reporter=line --output /Users/omerbakhtiar/Claude/Projects/instasub-web-automation/test-results/layer6-reruns/01-t4-illness-family-member/attempt-1 --grep T4: Illness-Family Member --headed",
+      "grep": "T4: Illness-Family Member",
+      "attempt": 1,
+      "repairedBy": null,
+      "exitCode": 0,
+      "status": "passed",
+      "duration": 21809,
+      "outputTail": "Running 2 tests using 1 worker\n\n[1/2] [setup] › tests/auth.setup.ts:67:1 › authenticate\n[setup] › tests/auth.setup.ts:67:1 › authenticate\nAuth setup using School_Admin_USERNAME/School_Admin_PASSWORD: schooladmin@mailinator.com\n\n[2/2] [chromium] › tests/ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T4: Illness-Family Member\n  2 passed (20.9s)",
+      "outputDir": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/test-results/layer6-reruns/01-t4-illness-family-member/attempt-1"
+    },
+    {
+      "target": "tests/ISE-1564.spec.ts",
+      "lineTarget": "tests/ISE-1564.spec.ts:187",
+      "test": "ISE-1564.spec.ts >> ISE-1564: data-driven regression >> T14: Personal",
+      "source": "test-results/layer6-reruns/02-t14-personal/ISE-1564-ISE-1564-data-driven-regression-T14-Personal-chromium/error-context.md",
+      "error": "Error: Substitute \"Sub 1\" is not the committed selection. Committed chips: (none).",
+      "command": "npx playwright test tests/ISE-1564.spec.ts --project=chromium --workers=1 --reporter=line --output /Users/omerbakhtiar/Claude/Projects/instasub-web-automation/test-results/layer6-reruns/02-t14-personal/attempt-1 --grep T14: Personal --headed",
+      "grep": "T14: Personal",
+      "attempt": 1,
+      "repairedBy": null,
+      "exitCode": 0,
+      "status": "passed",
+      "duration": 20695,
+      "outputTail": "Running 2 tests using 1 worker\n\n[1/2] [setup] › tests/auth.setup.ts:67:1 › authenticate\n[setup] › tests/auth.setup.ts:67:1 › authenticate\nAuth setup using School_Admin_USERNAME/School_Admin_PASSWORD: schooladmin@mailinator.com\n\n[2/2] [chromium] › tests/ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T14: Personal\n  2 passed (19.9s)",
+      "outputDir": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/test-results/layer6-reruns/02-t14-personal/attempt-1"
+    }
+  ],
+  "repairs": [],
+  "finalRuns": [
+    {
+      "target": "tests/ISE-1564.spec.ts",
+      "lineTarget": "tests/ISE-1564.spec.ts:187",
+      "test": "ISE-1564.spec.ts >> ISE-1564: data-driven regression >> T4: Illness-Family Member",
+      "source": "test-results/layer6-reruns/01-t4-illness-family-member/ISE-1564-ISE-1564-data-dri-07e04-on-T4-Illness-Family-Member-chromium/error-context.md",
+      "error": "Error: Substitute \"Sub 1\" is not the committed selection. Committed chips: (none).",
+      "command": "npx playwright test tests/ISE-1564.spec.ts --project=chromium --workers=1 --reporter=line --output /Users/omerbakhtiar/Claude/Projects/instasub-web-automation/test-results/layer6-reruns/01-t4-illness-family-member/attempt-1 --grep T4: Illness-Family Member --headed",
+      "grep": "T4: Illness-Family Member",
+      "attempt": 1,
+      "repairedBy": null,
+      "exitCode": 0,
+      "status": "passed",
+      "duration": 21809,
+      "outputTail": "Running 2 tests using 1 worker\n\n[1/2] [setup] › tests/auth.setup.ts:67:1 › authenticate\n[setup] › tests/auth.setup.ts:67:1 › authenticate\nAuth setup using School_Admin_USERNAME/School_Admin_PASSWORD: schooladmin@mailinator.com\n\n[2/2] [chromium] › tests/ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T4: Illness-Family Member\n  2 passed (20.9s)",
+      "outputDir": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/test-results/layer6-reruns/01-t4-illness-family-member/attempt-1"
+    },
+    {
+      "target": "tests/ISE-1564.spec.ts",
+      "lineTarget": "tests/ISE-1564.spec.ts:187",
+      "test": "ISE-1564.spec.ts >> ISE-1564: data-driven regression >> T14: Personal",
+      "source": "test-results/layer6-reruns/02-t14-personal/ISE-1564-ISE-1564-data-driven-regression-T14-Personal-chromium/error-context.md",
+      "error": "Error: Substitute \"Sub 1\" is not the committed selection. Committed chips: (none).",
+      "command": "npx playwright test tests/ISE-1564.spec.ts --project=chromium --workers=1 --reporter=line --output /Users/omerbakhtiar/Claude/Projects/instasub-web-automation/test-results/layer6-reruns/02-t14-personal/attempt-1 --grep T14: Personal --headed",
+      "grep": "T14: Personal",
+      "attempt": 1,
+      "repairedBy": null,
+      "exitCode": 0,
+      "status": "passed",
+      "duration": 20695,
+      "outputTail": "Running 2 tests using 1 worker\n\n[1/2] [setup] › tests/auth.setup.ts:67:1 › authenticate\n[setup] › tests/auth.setup.ts:67:1 › authenticate\nAuth setup using School_Admin_USERNAME/School_Admin_PASSWORD: schooladmin@mailinator.com\n\n[2/2] [chromium] › tests/ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T14: Personal\n  2 passed (19.9s)",
+      "outputDir": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/test-results/layer6-reruns/02-t14-personal/attempt-1"
+    }
+  ]
+}

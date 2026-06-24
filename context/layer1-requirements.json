@@ -1,97 +1,117 @@
 {
-  "ticket": "ISE-1563",
-  "title": "Completed 26 pairwise regression tests for the Self absence creation flow using the school administrator account (schooladmin@mailinator.com). All 26 tests passed.",
+  "ticket": "ISE-1564",
+  "title": "22/22 pairwise regression tests passed for the Find a Sub absence creation flow on the live InstaSub instance, using the school-level admin account (schooladmin@mailinator.com) across all 6 reasons, 5 duration types, and 2 sub preferences.",
   "priority": "Medium",
   "status": "Open",
   "assignee": "omerbakhtiar",
-  "created": "2026-06-23T05:34:05.989-0500",
-  "updated": "2026-06-23T05:34:26.842-0500",
-  "description": "Description\nPairwise regression coverage for the Self absence creation flow, validating that an administrator can create absences for themselves across every reason, duration type, and substitute preference. The run confirms the form, leave balance deductions, and sub picker all behave correctly in Self mode.\nTest Scope\nEnvironment: InstaSub Staging — InstaSub Account:  (School Administrator role) Flow: Self absence creation (/absence/createAbsence, Self radio selected) Sub selected (Notify 1 Sub / Assign a specific sub): Sub 1\nPairwise Matrix\nCoverage dimensions\n6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development 5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (10:00–15:00), Add Class 5 sub preferences: Notify all subs, Notify 1 Sub, Notify my favorites, Assign a specific sub, No sub required\nPart A — Duration Tests (T1–T20)\n#\nDate\nReason\nDuration\nSub Preference\nSub Selected\nResult T1\nJan 1, 2027\nSick\nFull Day\nNotify all subs\n—\n✅ PASS T2\nJan 2, 2027\nPersonal\nFull Day\nNotify 1 Sub\nSub 2\n✅ PASS T3\nJan 3, 2027\nVacation\nFull Day\nNotify my favorites\n—\n✅ PASS T4\nJan 4, 2027\nIllness-Family Member\nFull Day\nAssign a specific sub\nSub 2\n✅ PASS T5\nJan 5, 2027\nEducational Leave\nFull Day\nNo sub required\n—\n✅ PASS T6\nJan 6, 2027\nProfessional Development\nHalf Day AM\nNotify all subs\n—\n✅ PASS T7\nJan 7, 2027\nSick\nHalf Day AM\nNotify 1 Sub\nSub 2\n✅ PASS T8\nJan 8, 2027\nPersonal\nHalf Day AM\nNotify my favorites\n—\n✅ PASS T9\nJan 9, 2027\nVacation\nHalf Day AM\nAssign a specific sub\nSub 2\n✅ PASS T10\nJan 10, 2027\nIllness-Family Member\nHalf Day AM\nNo sub required\n—\n✅ PASS T11\nJan 11, 2027\nEducational Leave\nHalf Day PM\nNotify all subs\n—\n✅ PASS T12\nJan 12, 2027\nProfessional Development\nHalf Day PM\nNotify 1 Sub\nSub 2\n✅ PASS T13\nJan 13, 2027\nSick\nHalf Day PM\nNotify my favorites\n—\n✅ PASS T14\nJan 14, 2027\nPersonal\nHalf Day PM\nAssign a specific sub\nSub 2\n✅ PASS T15\nJan 15, 2027\nVacation\nHalf Day PM\nNo sub required\n—\n✅ PASS T16\nJan 18, 2027\nIllness-Family Member\nEnter Time Manually (10:00–15:00)\nNotify all subs\n—\n✅ PASS T17\nJan 19, 2027\nEducational Leave\nEnter Time Manually (10:00–15:00)\nNotify 1 Sub\nSub 2\n✅ PASS T18\nJan 20, 2027\nProfessional Development\nEnter Time Manually (10:00–15:00)\nNotify my favorites\n—\n✅ PASS T19\nJan 21, 2027\nSick\nEnter Time Manually (10:00–15:00)\nAssign a specific sub\nSub 2\n✅ PASS T20\nJan 22, 2027\nPersonal\nEnter Time Manually (10:00–15:00)\nNo sub required\n—\n✅ PASS\nPart B — Add Class Tests (T21–T26)\nAdd Class replaces the Duration dropdown. The class time inputs define the absence window.\n#\nDate\nReason\nClass Time\nSub Preference\nSub Selected\nResult T21\nJan 25, 2027\nVacation\n08:00–12:00\nNotify all subs\n—\n✅ PASS T22\nJan 26, 2027\nIllness-Family Member\n10:00–14:00\nNotify 1 Sub\nSub 2\n✅ PASS T23\nJan 27, 2027\nEducational Leave\n09:00–11:00\nNotify my favorites\n—\n✅ PASS T24\nFeb 8, 2027\nProfessional Development\n12:00–16:00\nAssign a specific sub\nSub 2\n✅ PASS T25\nFeb 9, 2027\nSick\n08:00–10:00\nNo sub required\n—\n✅ PASS T26\nFeb 10, 2027\nPersonal\n13:00–17:00\nNotify all subs\n—\n✅ PASS\nResult\n26/26 tests passed. All 6 reasons, all 5 duration types (including Add Class), and all 5 sub preferences exercised. Sub 2 was successfully selected for all Notify 1 Sub and assigned a specific sub case.\nNotes and Observations\nSub picker behaviour: In the Self flow, the sub picker is available once a start and end date are set. Sub selection worked as expected for all applicable tests.\nAcceptance Criteria\nAll 6 absence reasons selectable via the Self flow All 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Self mode Add Class flow works for all 6 reasons in Self mode All 5 sub preference options available and functional in Self mode Sub 2 selectable via Notify 1 Sub and Assign a specific sub Leave balance deducted correctly after each absence creation No blocking errors or UI failures across the 26-test run",
+  "created": "2026-06-24T05:53:39.002-0500",
+  "updated": "2026-06-24T05:53:42.244-0500",
+  "description": "h2. Description\n\nPairwise regression coverage for the Find a Sub absence creation flow. The test signs in to the school-level admin account and creates absences using the Find a Sub mode across every reason, duration type, and substitute preference available in this flow. The run confirms the form, substitute search panel, class time inputs, and sub picker all behave correctly in Find a Sub mode.\nh2. Test Scope\nEnvironment: InstaSub Live — InstaSub\nLogin: school-level admin account — username [schooladmin@mailinator.com|mailto:schooladmin@mailinator.com], password [redacted]\nFlow: Find a Sub absence creation (/absence/createAbsence), type: Find a Sub\nSub selected (Assign a specific sub): Sub 1\nh2. Pairwise Matrix\n\nCoverage dimensions\n6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development\n5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (09:00–15:00), Add Class\n2 sub preferences: Notify all subs, Assign a specific sub\nh3. Part A — Duration Tests (T1–T16)\n\n||#||Date||Reason||Duration||Sub Preference||Sub Selected||Result||\n\n|T1|Jan 1, 2027|Sick|Full Day|Notify all subs|—|(/) PASS|\n\n|T2|Jan 2, 2027|Personal|Full Day|Assign a specific sub|Sub 1|(/) PASS|\n\n|T3|Jan 3, 2027|Vacation|Full Day|Notify all subs|—|(/) PASS|\n\n|T4|Jan 4, 2027|Illness-Family Member|Full Day|Assign a specific sub|Sub 1|(/) PASS|\n\n|T5|Jan 5, 2027|Educational Leave|Half Day AM|Notify all subs|—|(/) PASS|\n\n|T6|Jan 6, 2027|Professional Development|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T7|Jan 7, 2027|Sick|Half Day AM|Notify all subs|—|(/) PASS|\n\n|T8|Jan 8, 2027|Personal|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T9|Jan 9, 2027|Vacation|Half Day PM|Notify all subs|—|(/) PASS|\n\n|T10|Jan 10, 2027|Illness-Family Member|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T11|Jan 11, 2027|Educational Leave|Half Day PM|Notify all subs|—|(/) PASS|\n\n|T12|Jan 12, 2027|Professional Development|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T13|Jan 13, 2027|Sick|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|\n\n|T14|Jan 14, 2027|Personal|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|\n\n|T15|Jan 15, 2027|Vacation|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|\n\n|T16|Jan 18, 2027|Illness-Family Member|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|\nh3. Part B — Add Class Tests (T17–T22)\n\nAdd Class replaces the Duration dropdown. The class time inputs define the absence window.\n\n||#||Date||Reason||Class Time||Sub Preference||Sub Selected||Result||\n\n|T17|Jan 25, 2027|Educational Leave|08:00–12:00|Notify all subs|—|(/) PASS|\n\n|T18|Jan 26, 2027|Professional Development|10:00–14:00|Assign a specific sub|Sub 1|(/) PASS|\n\n|T19|Jan 27, 2027|Sick|09:00–11:00|Notify all subs|—|(/) PASS|\n\n|T20|Feb 8, 2027|Personal|12:00–16:00|Assign a specific sub|Sub 1|(/) PASS|\n\n|T21|Feb 9, 2027|Vacation|08:00–10:00|Notify all subs|—|(/) PASS|\n\n|T22|Feb 10, 2027|Illness-Family Member|13:00–17:00|Assign a specific sub|Sub 1|(/) PASS|\nh2. Result\n\n22/22 tests passed. All 6 reasons, all 5 duration types (including Add Class), and both available sub preferences exercised. Sub 1 was successfully selected for all Assign a specific sub cases. The substitute search panel correctly required a date to be entered before listing available subs, and the submit button changed to \"Create And Assign\" when Assign a specific sub was selected.\nh2. Acceptance Criteria\nLogin succeeds with the school-level admin account ([schooladmin@mailinator.com|mailto:schooladmin@mailinator.com])\nAll 6 absence reasons selectable via the Find a Sub flow\nSelecting Find a Sub reveals additional fields: School Location, Position, Grade, Subject, Subbing For, Add Class, Add Location\nOnly 2 sub preferences are available in Find a Sub mode: Notify all subs and Assign a specific sub\nAll 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Find a Sub mode\nHalf Day AM auto-sets times to 08:00 AM – 12:00 PM (read-only)\nHalf Day PM auto-sets times to 12:00 PM – 05:00 PM (read-only)\nEnter Time Manually renders editable Start/End time fields\nAdd Class flow works for all 6 reasons in Find a Sub mode\nSelecting Assign a specific sub triggers a date-gated substitute search panel listing available subs\nSub 1 selectable via Assign a specific sub\nSubmit button changes to \"Create And Assign\" when Assign a specific sub is selected\nA toast notification confirms successful absence creation with a unique confirmation number\nNo blocking errors or UI failures across the 22-test run",
   "detailedContent": {
-    "plainText": "Description\nPairwise regression coverage for the Self absence creation flow, validating that an administrator can create absences for themselves across every reason, duration type, and substitute preference. The run confirms the form, leave balance deductions, and sub picker all behave correctly in Self mode.\nTest Scope\nEnvironment: InstaSub Staging — InstaSub Account:  (School Administrator role) Flow: Self absence creation (/absence/createAbsence, Self radio selected) Sub selected (Notify 1 Sub / Assign a specific sub): Sub 1\nPairwise Matrix\nCoverage dimensions\n6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development 5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (10:00–15:00), Add Class 5 sub preferences: Notify all subs, Notify 1 Sub, Notify my favorites, Assign a specific sub, No sub required\nPart A — Duration Tests (T1–T20)\n#\nDate\nReason\nDuration\nSub Preference\nSub Selected\nResult T1\nJan 1, 2027\nSick\nFull Day\nNotify all subs\n—\n✅ PASS T2\nJan 2, 2027\nPersonal\nFull Day\nNotify 1 Sub\nSub 2\n✅ PASS T3\nJan 3, 2027\nVacation\nFull Day\nNotify my favorites\n—\n✅ PASS T4\nJan 4, 2027\nIllness-Family Member\nFull Day\nAssign a specific sub\nSub 2\n✅ PASS T5\nJan 5, 2027\nEducational Leave\nFull Day\nNo sub required\n—\n✅ PASS T6\nJan 6, 2027\nProfessional Development\nHalf Day AM\nNotify all subs\n—\n✅ PASS T7\nJan 7, 2027\nSick\nHalf Day AM\nNotify 1 Sub\nSub 2\n✅ PASS T8\nJan 8, 2027\nPersonal\nHalf Day AM\nNotify my favorites\n—\n✅ PASS T9\nJan 9, 2027\nVacation\nHalf Day AM\nAssign a specific sub\nSub 2\n✅ PASS T10\nJan 10, 2027\nIllness-Family Member\nHalf Day AM\nNo sub required\n—\n✅ PASS T11\nJan 11, 2027\nEducational Leave\nHalf Day PM\nNotify all subs\n—\n✅ PASS T12\nJan 12, 2027\nProfessional Development\nHalf Day PM\nNotify 1 Sub\nSub 2\n✅ PASS T13\nJan 13, 2027\nSick\nHalf Day PM\nNotify my favorites\n—\n✅ PASS T14\nJan 14, 2027\nPersonal\nHalf Day PM\nAssign a specific sub\nSub 2\n✅ PASS T15\nJan 15, 2027\nVacation\nHalf Day PM\nNo sub required\n—\n✅ PASS T16\nJan 18, 2027\nIllness-Family Member\nEnter Time Manually (10:00–15:00)\nNotify all subs\n—\n✅ PASS T17\nJan 19, 2027\nEducational Leave\nEnter Time Manually (10:00–15:00)\nNotify 1 Sub\nSub 2\n✅ PASS T18\nJan 20, 2027\nProfessional Development\nEnter Time Manually (10:00–15:00)\nNotify my favorites\n—\n✅ PASS T19\nJan 21, 2027\nSick\nEnter Time Manually (10:00–15:00)\nAssign a specific sub\nSub 2\n✅ PASS T20\nJan 22, 2027\nPersonal\nEnter Time Manually (10:00–15:00)\nNo sub required\n—\n✅ PASS\nPart B — Add Class Tests (T21–T26)\nAdd Class replaces the Duration dropdown. The class time inputs define the absence window.\n#\nDate\nReason\nClass Time\nSub Preference\nSub Selected\nResult T21\nJan 25, 2027\nVacation\n08:00–12:00\nNotify all subs\n—\n✅ PASS T22\nJan 26, 2027\nIllness-Family Member\n10:00–14:00\nNotify 1 Sub\nSub 2\n✅ PASS T23\nJan 27, 2027\nEducational Leave\n09:00–11:00\nNotify my favorites\n—\n✅ PASS T24\nFeb 8, 2027\nProfessional Development\n12:00–16:00\nAssign a specific sub\nSub 2\n✅ PASS T25\nFeb 9, 2027\nSick\n08:00–10:00\nNo sub required\n—\n✅ PASS T26\nFeb 10, 2027\nPersonal\n13:00–17:00\nNotify all subs\n—\n✅ PASS\nResult\n26/26 tests passed. All 6 reasons, all 5 duration types (including Add Class), and all 5 sub preferences exercised. Sub 2 was successfully selected for all Notify 1 Sub and assigned a specific sub case.\nNotes and Observations\nSub picker behaviour: In the Self flow, the sub picker is available once a start and end date are set. Sub selection worked as expected for all applicable tests.\nAcceptance Criteria\nAll 6 absence reasons selectable via the Self flow All 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Self mode Add Class flow works for all 6 reasons in Self mode All 5 sub preference options available and functional in Self mode Sub 2 selectable via Notify 1 Sub and Assign a specific sub Leave balance deducted correctly after each absence creation No blocking errors or UI failures across the 26-test run",
+    "plainText": "h2. Description\n\nPairwise regression coverage for the Find a Sub absence creation flow. The test signs in to the school-level admin account and creates absences using the Find a Sub mode across every reason, duration type, and substitute preference available in this flow. The run confirms the form, substitute search panel, class time inputs, and sub picker all behave correctly in Find a Sub mode.\nh2. Test Scope\nEnvironment: InstaSub Live — InstaSub\nLogin: school-level admin account — username [schooladmin@mailinator.com|mailto:schooladmin@mailinator.com], password [redacted]\nFlow: Find a Sub absence creation (/absence/createAbsence), type: Find a Sub\nSub selected (Assign a specific sub): Sub 1\nh2. Pairwise Matrix\n\nCoverage dimensions\n6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development\n5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (09:00–15:00), Add Class\n2 sub preferences: Notify all subs, Assign a specific sub\nh3. Part A — Duration Tests (T1–T16)\n\n||#||Date||Reason||Duration||Sub Preference||Sub Selected||Result||\n\n|T1|Jan 1, 2027|Sick|Full Day|Notify all subs|—|(/) PASS|\n\n|T2|Jan 2, 2027|Personal|Full Day|Assign a specific sub|Sub 1|(/) PASS|\n\n|T3|Jan 3, 2027|Vacation|Full Day|Notify all subs|—|(/) PASS|\n\n|T4|Jan 4, 2027|Illness-Family Member|Full Day|Assign a specific sub|Sub 1|(/) PASS|\n\n|T5|Jan 5, 2027|Educational Leave|Half Day AM|Notify all subs|—|(/) PASS|\n\n|T6|Jan 6, 2027|Professional Development|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T7|Jan 7, 2027|Sick|Half Day AM|Notify all subs|—|(/) PASS|\n\n|T8|Jan 8, 2027|Personal|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T9|Jan 9, 2027|Vacation|Half Day PM|Notify all subs|—|(/) PASS|\n\n|T10|Jan 10, 2027|Illness-Family Member|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T11|Jan 11, 2027|Educational Leave|Half Day PM|Notify all subs|—|(/) PASS|\n\n|T12|Jan 12, 2027|Professional Development|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T13|Jan 13, 2027|Sick|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|\n\n|T14|Jan 14, 2027|Personal|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|\n\n|T15|Jan 15, 2027|Vacation|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|\n\n|T16|Jan 18, 2027|Illness-Family Member|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|\nh3. Part B — Add Class Tests (T17–T22)\n\nAdd Class replaces the Duration dropdown. The class time inputs define the absence window.\n\n||#||Date||Reason||Class Time||Sub Preference||Sub Selected||Result||\n\n|T17|Jan 25, 2027|Educational Leave|08:00–12:00|Notify all subs|—|(/) PASS|\n\n|T18|Jan 26, 2027|Professional Development|10:00–14:00|Assign a specific sub|Sub 1|(/) PASS|\n\n|T19|Jan 27, 2027|Sick|09:00–11:00|Notify all subs|—|(/) PASS|\n\n|T20|Feb 8, 2027|Personal|12:00–16:00|Assign a specific sub|Sub 1|(/) PASS|\n\n|T21|Feb 9, 2027|Vacation|08:00–10:00|Notify all subs|—|(/) PASS|\n\n|T22|Feb 10, 2027|Illness-Family Member|13:00–17:00|Assign a specific sub|Sub 1|(/) PASS|\nh2. Result\n\n22/22 tests passed. All 6 reasons, all 5 duration types (including Add Class), and both available sub preferences exercised. Sub 1 was successfully selected for all Assign a specific sub cases. The substitute search panel correctly required a date to be entered before listing available subs, and the submit button changed to \"Create And Assign\" when Assign a specific sub was selected.\nh2. Acceptance Criteria\nLogin succeeds with the school-level admin account ([schooladmin@mailinator.com|mailto:schooladmin@mailinator.com])\nAll 6 absence reasons selectable via the Find a Sub flow\nSelecting Find a Sub reveals additional fields: School Location, Position, Grade, Subject, Subbing For, Add Class, Add Location\nOnly 2 sub preferences are available in Find a Sub mode: Notify all subs and Assign a specific sub\nAll 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Find a Sub mode\nHalf Day AM auto-sets times to 08:00 AM – 12:00 PM (read-only)\nHalf Day PM auto-sets times to 12:00 PM – 05:00 PM (read-only)\nEnter Time Manually renders editable Start/End time fields\nAdd Class flow works for all 6 reasons in Find a Sub mode\nSelecting Assign a specific sub triggers a date-gated substitute search panel listing available subs\nSub 1 selectable via Assign a specific sub\nSubmit button changes to \"Create And Assign\" when Assign a specific sub is selected\nA toast notification confirms successful absence creation with a unique confirmation number\nNo blocking errors or UI failures across the 22-test run",
     "sections": [
       {
         "title": "Description",
-        "level": 0,
+        "level": 2,
         "content": [
-          {
-            "type": "paragraph",
-            "text": "Description"
-          },
-          {
-            "type": "paragraph",
-            "text": "Pairwise regression coverage for the Self absence creation flow, validating that an administrator can create absences for themselves across every reason, duration type, and substitute preference. The run confirms the form, leave balance deductions, and sub picker all behave correctly in Self mode."
-          },
-          {
-            "type": "paragraph",
-            "text": "Test Scope"
-          },
-          {
-            "type": "paragraph",
-            "text": "Environment: InstaSub Staging — InstaSub Account:  (School Administrator role) Flow: Self absence creation (/absence/createAbsence, Self radio selected) Sub selected (Notify 1 Sub / Assign a specific sub): Sub 1"
-          },
-          {
-            "type": "paragraph",
-            "text": "Pairwise Matrix"
-          },
-          {
-            "type": "paragraph",
-            "text": "Coverage dimensions"
-          },
-          {
-            "type": "paragraph",
-            "text": "6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development 5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (10:00–15:00), Add Class 5 sub preferences: Notify all subs, Notify 1 Sub, Notify my favorites, Assign a specific sub, No sub required"
-          },
-          {
-            "type": "paragraph",
-            "text": "Part A — Duration Tests (T1–T20)"
-          },
-          {
-            "type": "table",
-            "text": "# | Date | Reason | Duration | Sub Preference | Sub Selected | Result\nT1 | Jan 1, 2027 | Sick | Full Day | Notify all subs | — | ✅ PASS\nT2 | Jan 2, 2027 | Personal | Full Day | Notify 1 Sub | Sub 2 | ✅ PASS\nT3 | Jan 3, 2027 | Vacation | Full Day | Notify my favorites | — | ✅ PASS\nT4 | Jan 4, 2027 | Illness-Family Member | Full Day | Assign a specific sub | Sub 2 | ✅ PASS\nT5 | Jan 5, 2027 | Educational Leave | Full Day | No sub required | — | ✅ PASS\nT6 | Jan 6, 2027 | Professional Development | Half Day AM | Notify all subs | — | ✅ PASS\nT7 | Jan 7, 2027 | Sick | Half Day AM | Notify 1 Sub | Sub 2 | ✅ PASS\nT8 | Jan 8, 2027 | Personal | Half Day AM | Notify my favorites | — | ✅ PASS\nT9 | Jan 9, 2027 | Vacation | Half Day AM | Assign a specific sub | Sub 2 | ✅ PASS\nT10 | Jan 10, 2027 | Illness-Family Member | Half Day AM | No sub required | — | ✅ PASS\nT11 | Jan 11, 2027 | Educational Leave | Half Day PM | Notify all subs | — | ✅ PASS\nT12 | Jan 12, 2027 | Professional Development | Half Day PM | Notify 1 Sub | Sub 2 | ✅ PASS\nT13 | Jan 13, 2027 | Sick | Half Day PM | Notify my favorites | — | ✅ PASS\nT14 | Jan 14, 2027 | Personal | Half Day PM | Assign a specific sub | Sub 2 | ✅ PASS\nT15 | Jan 15, 2027 | Vacation | Half Day PM | No sub required | — | ✅ PASS\nT16 | Jan 18, 2027 | Illness-Family Member | Enter Time Manually (10:00–15:00) | Notify all subs | — | ✅ PASS\nT17 | Jan 19, 2027 | Educational Leave | Enter Time Manually (10:00–15:00) | Notify 1 Sub | Sub 2 | ✅ PASS\nT18 | Jan 20, 2027 | Professional Development | Enter Time Manually (10:00–15:00) | Notify my favorites | — | ✅ PASS\nT19 | Jan 21, 2027 | Sick | Enter Time Manually (10:00–15:00) | Assign a specific sub | Sub 2 | ✅ PASS\nT20 | Jan 22, 2027 | Personal | Enter Time Manually (10:00–15:00) | No sub required | — | ✅ PASS"
-          },
-          {
-            "type": "paragraph",
-            "text": "Part B — Add Class Tests (T21–T26)"
-          },
-          {
-            "type": "paragraph",
-            "text": "Add Class replaces the Duration dropdown. The class time inputs define the absence window."
-          },
-          {
-            "type": "table",
-            "text": "# | Date | Reason | Class Time | Sub Preference | Sub Selected | Result\nT21 | Jan 25, 2027 | Vacation | 08:00–12:00 | Notify all subs | — | ✅ PASS\nT22 | Jan 26, 2027 | Illness-Family Member | 10:00–14:00 | Notify 1 Sub | Sub 2 | ✅ PASS\nT23 | Jan 27, 2027 | Educational Leave | 09:00–11:00 | Notify my favorites | — | ✅ PASS\nT24 | Feb 8, 2027 | Professional Development | 12:00–16:00 | Assign a specific sub | Sub 2 | ✅ PASS\nT25 | Feb 9, 2027 | Sick | 08:00–10:00 | No sub required | — | ✅ PASS\nT26 | Feb 10, 2027 | Personal | 13:00–17:00 | Notify all subs | — | ✅ PASS"
-          },
-          {
-            "type": "paragraph",
-            "text": "Result"
-          },
-          {
-            "type": "paragraph",
-            "text": "26/26 tests passed. All 6 reasons, all 5 duration types (including Add Class), and all 5 sub preferences exercised. Sub 2 was successfully selected for all Notify 1 Sub and assigned a specific sub case."
-          },
-          {
-            "type": "paragraph",
-            "text": "Notes and Observations"
-          },
-          {
-            "type": "paragraph",
-            "text": "Sub picker behaviour: In the Self flow, the sub picker is available once a start and end date are set. Sub selection worked as expected for all applicable tests."
-          },
-          {
-            "type": "paragraph",
-            "text": "Acceptance Criteria"
-          },
-          {
-            "type": "paragraph",
-            "text": "All 6 absence reasons selectable via the Self flow All 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Self mode Add Class flow works for all 6 reasons in Self mode All 5 sub preference options available and functional in Self mode Sub 2 selectable via Notify 1 Sub and Assign a specific sub Leave balance deducted correctly after each absence creation No blocking errors or UI failures across the 26-test run"
-          }
+          "Pairwise regression coverage for the Find a Sub absence creation flow. The test signs in to the school-level admin account and creates absences using the Find a Sub mode across every reason, duration type, and substitute preference available in this flow. The run confirms the form, substitute search panel, class time inputs, and sub picker all behave correctly in Find a Sub mode."
         ],
-        "text": "Description\nPairwise regression coverage for the Self absence creation flow, validating that an administrator can create absences for themselves across every reason, duration type, and substitute preference. The run confirms the form, leave balance deductions, and sub picker all behave correctly in Self mode.\nTest Scope\nEnvironment: InstaSub Staging — InstaSub Account:  (School Administrator role) Flow: Self absence creation (/absence/createAbsence, Self radio selected) Sub selected (Notify 1 Sub / Assign a specific sub): Sub 1\nPairwise Matrix\nCoverage dimensions\n6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development 5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (10:00–15:00), Add Class 5 sub preferences: Notify all subs, Notify 1 Sub, Notify my favorites, Assign a specific sub, No sub required\nPart A — Duration Tests (T1–T20)\n# | Date | Reason | Duration | Sub Preference | Sub Selected | Result\nT1 | Jan 1, 2027 | Sick | Full Day | Notify all subs | — | ✅ PASS\nT2 | Jan 2, 2027 | Personal | Full Day | Notify 1 Sub | Sub 2 | ✅ PASS\nT3 | Jan 3, 2027 | Vacation | Full Day | Notify my favorites | — | ✅ PASS\nT4 | Jan 4, 2027 | Illness-Family Member | Full Day | Assign a specific sub | Sub 2 | ✅ PASS\nT5 | Jan 5, 2027 | Educational Leave | Full Day | No sub required | — | ✅ PASS\nT6 | Jan 6, 2027 | Professional Development | Half Day AM | Notify all subs | — | ✅ PASS\nT7 | Jan 7, 2027 | Sick | Half Day AM | Notify 1 Sub | Sub 2 | ✅ PASS\nT8 | Jan 8, 2027 | Personal | Half Day AM | Notify my favorites | — | ✅ PASS\nT9 | Jan 9, 2027 | Vacation | Half Day AM | Assign a specific sub | Sub 2 | ✅ PASS\nT10 | Jan 10, 2027 | Illness-Family Member | Half Day AM | No sub required | — | ✅ PASS\nT11 | Jan 11, 2027 | Educational Leave | Half Day PM | Notify all subs | — | ✅ PASS\nT12 | Jan 12, 2027 | Professional Development | Half Day PM | Notify 1 Sub | Sub 2 | ✅ PASS\nT13 | Jan 13, 2027 | Sick | Half Day PM | Notify my favorites | — | ✅ PASS\nT14 | Jan 14, 2027 | Personal | Half Day PM | Assign a specific sub | Sub 2 | ✅ PASS\nT15 | Jan 15, 2027 | Vacation | Half Day PM | No sub required | — | ✅ PASS\nT16 | Jan 18, 2027 | Illness-Family Member | Enter Time Manually (10:00–15:00) | Notify all subs | — | ✅ PASS\nT17 | Jan 19, 2027 | Educational Leave | Enter Time Manually (10:00–15:00) | Notify 1 Sub | Sub 2 | ✅ PASS\nT18 | Jan 20, 2027 | Professional Development | Enter Time Manually (10:00–15:00) | Notify my favorites | — | ✅ PASS\nT19 | Jan 21, 2027 | Sick | Enter Time Manually (10:00–15:00) | Assign a specific sub | Sub 2 | ✅ PASS\nT20 | Jan 22, 2027 | Personal | Enter Time Manually (10:00–15:00) | No sub required | — | ✅ PASS\nPart B — Add Class Tests (T21–T26)\nAdd Class replaces the Duration dropdown. The class time inputs define the absence window.\n# | Date | Reason | Class Time | Sub Preference | Sub Selected | Result\nT21 | Jan 25, 2027 | Vacation | 08:00–12:00 | Notify all subs | — | ✅ PASS\nT22 | Jan 26, 2027 | Illness-Family Member | 10:00–14:00 | Notify 1 Sub | Sub 2 | ✅ PASS\nT23 | Jan 27, 2027 | Educational Leave | 09:00–11:00 | Notify my favorites | — | ✅ PASS\nT24 | Feb 8, 2027 | Professional Development | 12:00–16:00 | Assign a specific sub | Sub 2 | ✅ PASS\nT25 | Feb 9, 2027 | Sick | 08:00–10:00 | No sub required | — | ✅ PASS\nT26 | Feb 10, 2027 | Personal | 13:00–17:00 | Notify all subs | — | ✅ PASS\nResult\n26/26 tests passed. All 6 reasons, all 5 duration types (including Add Class), and all 5 sub preferences exercised. Sub 2 was successfully selected for all Notify 1 Sub and assigned a specific sub case.\nNotes and Observations\nSub picker behaviour: In the Self flow, the sub picker is available once a start and end date are set. Sub selection worked as expected for all applicable tests.\nAcceptance Criteria\nAll 6 absence reasons selectable via the Self flow All 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Self mode Add Class flow works for all 6 reasons in Self mode All 5 sub preference options available and functional in Self mode Sub 2 selectable via Notify 1 Sub and Assign a specific sub Leave balance deducted correctly after each absence creation No blocking errors or UI failures across the 26-test run"
+        "text": "Pairwise regression coverage for the Find a Sub absence creation flow. The test signs in to the school-level admin account and creates absences using the Find a Sub mode across every reason, duration type, and substitute preference available in this flow. The run confirms the form, substitute search panel, class time inputs, and sub picker all behave correctly in Find a Sub mode."
+      },
+      {
+        "title": "Test Scope",
+        "level": 2,
+        "content": [
+          "Environment: InstaSub Live — InstaSub",
+          "Login: school-level admin account — username [schooladmin@mailinator.com|mailto:schooladmin@mailinator.com], password [redacted]",
+          "Flow: Find a Sub absence creation (/absence/createAbsence), type: Find a Sub",
+          "Sub selected (Assign a specific sub): Sub 1"
+        ],
+        "text": "Environment: InstaSub Live — InstaSub\nLogin: school-level admin account — username [schooladmin@mailinator.com|mailto:schooladmin@mailinator.com], password [redacted]\nFlow: Find a Sub absence creation (/absence/createAbsence), type: Find a Sub\nSub selected (Assign a specific sub): Sub 1"
+      },
+      {
+        "title": "Pairwise Matrix",
+        "level": 2,
+        "content": [
+          "Coverage dimensions",
+          "6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development",
+          "5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (09:00–15:00), Add Class",
+          "2 sub preferences: Notify all subs, Assign a specific sub"
+        ],
+        "text": "Coverage dimensions\n6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development\n5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (09:00–15:00), Add Class\n2 sub preferences: Notify all subs, Assign a specific sub"
+      },
+      {
+        "title": "Part A — Duration Tests (T1–T16)",
+        "level": 3,
+        "content": [
+          "||#||Date||Reason||Duration||Sub Preference||Sub Selected||Result||",
+          "|T1|Jan 1, 2027|Sick|Full Day|Notify all subs|—|(/) PASS|",
+          "|T2|Jan 2, 2027|Personal|Full Day|Assign a specific sub|Sub 1|(/) PASS|",
+          "|T3|Jan 3, 2027|Vacation|Full Day|Notify all subs|—|(/) PASS|",
+          "|T4|Jan 4, 2027|Illness-Family Member|Full Day|Assign a specific sub|Sub 1|(/) PASS|",
+          "|T5|Jan 5, 2027|Educational Leave|Half Day AM|Notify all subs|—|(/) PASS|",
+          "|T6|Jan 6, 2027|Professional Development|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|",
+          "|T7|Jan 7, 2027|Sick|Half Day AM|Notify all subs|—|(/) PASS|",
+          "|T8|Jan 8, 2027|Personal|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|",
+          "|T9|Jan 9, 2027|Vacation|Half Day PM|Notify all subs|—|(/) PASS|",
+          "|T10|Jan 10, 2027|Illness-Family Member|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|",
+          "|T11|Jan 11, 2027|Educational Leave|Half Day PM|Notify all subs|—|(/) PASS|",
+          "|T12|Jan 12, 2027|Professional Development|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|",
+          "|T13|Jan 13, 2027|Sick|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|",
+          "|T14|Jan 14, 2027|Personal|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|",
+          "|T15|Jan 15, 2027|Vacation|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|",
+          "|T16|Jan 18, 2027|Illness-Family Member|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|"
+        ],
+        "text": "||#||Date||Reason||Duration||Sub Preference||Sub Selected||Result||\n|T1|Jan 1, 2027|Sick|Full Day|Notify all subs|—|(/) PASS|\n|T2|Jan 2, 2027|Personal|Full Day|Assign a specific sub|Sub 1|(/) PASS|\n|T3|Jan 3, 2027|Vacation|Full Day|Notify all subs|—|(/) PASS|\n|T4|Jan 4, 2027|Illness-Family Member|Full Day|Assign a specific sub|Sub 1|(/) PASS|\n|T5|Jan 5, 2027|Educational Leave|Half Day AM|Notify all subs|—|(/) PASS|\n|T6|Jan 6, 2027|Professional Development|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|\n|T7|Jan 7, 2027|Sick|Half Day AM|Notify all subs|—|(/) PASS|\n|T8|Jan 8, 2027|Personal|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|\n|T9|Jan 9, 2027|Vacation|Half Day PM|Notify all subs|—|(/) PASS|\n|T10|Jan 10, 2027|Illness-Family Member|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|\n|T11|Jan 11, 2027|Educational Leave|Half Day PM|Notify all subs|—|(/) PASS|\n|T12|Jan 12, 2027|Professional Development|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|\n|T13|Jan 13, 2027|Sick|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|\n|T14|Jan 14, 2027|Personal|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|\n|T15|Jan 15, 2027|Vacation|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|\n|T16|Jan 18, 2027|Illness-Family Member|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|"
+      },
+      {
+        "title": "Part B — Add Class Tests (T17–T22)",
+        "level": 3,
+        "content": [
+          "Add Class replaces the Duration dropdown. The class time inputs define the absence window.",
+          "||#||Date||Reason||Class Time||Sub Preference||Sub Selected||Result||",
+          "|T17|Jan 25, 2027|Educational Leave|08:00–12:00|Notify all subs|—|(/) PASS|",
+          "|T18|Jan 26, 2027|Professional Development|10:00–14:00|Assign a specific sub|Sub 1|(/) PASS|",
+          "|T19|Jan 27, 2027|Sick|09:00–11:00|Notify all subs|—|(/) PASS|",
+          "|T20|Feb 8, 2027|Personal|12:00–16:00|Assign a specific sub|Sub 1|(/) PASS|",
+          "|T21|Feb 9, 2027|Vacation|08:00–10:00|Notify all subs|—|(/) PASS|",
+          "|T22|Feb 10, 2027|Illness-Family Member|13:00–17:00|Assign a specific sub|Sub 1|(/) PASS|"
+        ],
+        "text": "Add Class replaces the Duration dropdown. The class time inputs define the absence window.\n||#||Date||Reason||Class Time||Sub Preference||Sub Selected||Result||\n|T17|Jan 25, 2027|Educational Leave|08:00–12:00|Notify all subs|—|(/) PASS|\n|T18|Jan 26, 2027|Professional Development|10:00–14:00|Assign a specific sub|Sub 1|(/) PASS|\n|T19|Jan 27, 2027|Sick|09:00–11:00|Notify all subs|—|(/) PASS|\n|T20|Feb 8, 2027|Personal|12:00–16:00|Assign a specific sub|Sub 1|(/) PASS|\n|T21|Feb 9, 2027|Vacation|08:00–10:00|Notify all subs|—|(/) PASS|\n|T22|Feb 10, 2027|Illness-Family Member|13:00–17:00|Assign a specific sub|Sub 1|(/) PASS|"
+      },
+      {
+        "title": "Result",
+        "level": 2,
+        "content": [
+          "22/22 tests passed. All 6 reasons, all 5 duration types (including Add Class), and both available sub preferences exercised. Sub 1 was successfully selected for all Assign a specific sub cases. The substitute search panel correctly required a date to be entered before listing available subs, and the submit button changed to \"Create And Assign\" when Assign a specific sub was selected."
+        ],
+        "text": "22/22 tests passed. All 6 reasons, all 5 duration types (including Add Class), and both available sub preferences exercised. Sub 1 was successfully selected for all Assign a specific sub cases. The substitute search panel correctly required a date to be entered before listing available subs, and the submit button changed to \"Create And Assign\" when Assign a specific sub was selected."
+      },
+      {
+        "title": "Acceptance Criteria",
+        "level": 2,
+        "content": [
+          "Login succeeds with the school-level admin account ([schooladmin@mailinator.com|mailto:schooladmin@mailinator.com])",
+          "All 6 absence reasons selectable via the Find a Sub flow",
+          "Selecting Find a Sub reveals additional fields: School Location, Position, Grade, Subject, Subbing For, Add Class, Add Location",
+          "Only 2 sub preferences are available in Find a Sub mode: Notify all subs and Assign a specific sub",
+          "All 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Find a Sub mode",
+          "Half Day AM auto-sets times to 08:00 AM – 12:00 PM (read-only)",
+          "Half Day PM auto-sets times to 12:00 PM – 05:00 PM (read-only)",
+          "Enter Time Manually renders editable Start/End time fields",
+          "Add Class flow works for all 6 reasons in Find a Sub mode",
+          "Selecting Assign a specific sub triggers a date-gated substitute search panel listing available subs",
+          "Sub 1 selectable via Assign a specific sub",
+          "Submit button changes to \"Create And Assign\" when Assign a specific sub is selected",
+          "A toast notification confirms successful absence creation with a unique confirmation number",
+          "No blocking errors or UI failures across the 22-test run"
+        ],
+        "text": "Login succeeds with the school-level admin account ([schooladmin@mailinator.com|mailto:schooladmin@mailinator.com])\nAll 6 absence reasons selectable via the Find a Sub flow\nSelecting Find a Sub reveals additional fields: School Location, Position, Grade, Subject, Subbing For, Add Class, Add Location\nOnly 2 sub preferences are available in Find a Sub mode: Notify all subs and Assign a specific sub\nAll 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Find a Sub mode\nHalf Day AM auto-sets times to 08:00 AM – 12:00 PM (read-only)\nHalf Day PM auto-sets times to 12:00 PM – 05:00 PM (read-only)\nEnter Time Manually renders editable Start/End time fields\nAdd Class flow works for all 6 reasons in Find a Sub mode\nSelecting Assign a specific sub triggers a date-gated substitute search panel listing available subs\nSub 1 selectable via Assign a specific sub\nSubmit button changes to \"Create And Assign\" when Assign a specific sub is selected\nA toast notification confirms successful absence creation with a unique confirmation number\nNo blocking errors or UI failures across the 22-test run"
       }
     ],
     "tables": [
       {
+        "source": "jira-wiki-markup",
         "headers": [
           "#",
           "Date",
@@ -109,25 +129,25 @@
             "Duration": "Full Day",
             "Sub Preference": "Notify all subs",
             "Sub Selected": "—",
-            "Result": "✅ PASS"
+            "Result": "(/) PASS"
           },
           {
             "#": "T2",
             "Date": "Jan 2, 2027",
             "Reason": "Personal",
             "Duration": "Full Day",
-            "Sub Preference": "Notify 1 Sub",
-            "Sub Selected": "Sub 2",
-            "Result": "✅ PASS"
+            "Sub Preference": "Assign a specific sub",
+            "Sub Selected": "Sub 1",
+            "Result": "(/) PASS"
           },
           {
             "#": "T3",
             "Date": "Jan 3, 2027",
             "Reason": "Vacation",
             "Duration": "Full Day",
-            "Sub Preference": "Notify my favorites",
+            "Sub Preference": "Notify all subs",
             "Sub Selected": "—",
-            "Result": "✅ PASS"
+            "Result": "(/) PASS"
           },
           {
             "#": "T4",
@@ -135,62 +155,62 @@
             "Reason": "Illness-Family Member",
             "Duration": "Full Day",
             "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 2",
-            "Result": "✅ PASS"
+            "Sub Selected": "Sub 1",
+            "Result": "(/) PASS"
           },
           {
             "#": "T5",
             "Date": "Jan 5, 2027",
             "Reason": "Educational Leave",
-            "Duration": "Full Day",
-            "Sub Preference": "No sub required",
+            "Duration": "Half Day AM",
+            "Sub Preference": "Notify all subs",
             "Sub Selected": "—",
-            "Result": "✅ PASS"
+            "Result": "(/) PASS"
           },
           {
             "#": "T6",
             "Date": "Jan 6, 2027",
             "Reason": "Professional Development",
             "Duration": "Half Day AM",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "✅ PASS"
+            "Sub Preference": "Assign a specific sub",
+            "Sub Selected": "Sub 1",
+            "Result": "(/) PASS"
           },
           {
             "#": "T7",
             "Date": "Jan 7, 2027",
             "Reason": "Sick",
             "Duration": "Half Day AM",
-            "Sub Preference": "Notify 1 Sub",
-            "Sub Selected": "Sub 2",
-            "Result": "✅ PASS"
+            "Sub Preference": "Notify all subs",
+            "Sub Selected": "—",
+            "Result": "(/) PASS"
           },
           {
             "#": "T8",
             "Date": "Jan 8, 2027",
             "Reason": "Personal",
             "Duration": "Half Day AM",
-            "Sub Preference": "Notify my favorites",
-            "Sub Selected": "—",
-            "Result": "✅ PASS"
+            "Sub Preference": "Assign a specific sub",
+            "Sub Selected": "Sub 1",
+            "Result": "(/) PASS"
           },
           {
             "#": "T9",
             "Date": "Jan 9, 2027",
             "Reason": "Vacation",
-            "Duration": "Half Day AM",
-            "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 2",
-            "Result": "✅ PASS"
+            "Duration": "Half Day PM",
+            "Sub Preference": "Notify all subs",
+            "Sub Selected": "—",
+            "Result": "(/) PASS"
           },
           {
             "#": "T10",
             "Date": "Jan 10, 2027",
             "Reason": "Illness-Family Member",
-            "Duration": "Half Day AM",
-            "Sub Preference": "No sub required",
-            "Sub Selected": "—",
-            "Result": "✅ PASS"
+            "Duration": "Half Day PM",
+            "Sub Preference": "Assign a specific sub",
+            "Sub Selected": "Sub 1",
+            "Result": "(/) PASS"
           },
           {
             "#": "T11",
@@ -199,88 +219,52 @@
             "Duration": "Half Day PM",
             "Sub Preference": "Notify all subs",
             "Sub Selected": "—",
-            "Result": "✅ PASS"
+            "Result": "(/) PASS"
           },
           {
             "#": "T12",
             "Date": "Jan 12, 2027",
             "Reason": "Professional Development",
             "Duration": "Half Day PM",
-            "Sub Preference": "Notify 1 Sub",
-            "Sub Selected": "Sub 2",
-            "Result": "✅ PASS"
+            "Sub Preference": "Assign a specific sub",
+            "Sub Selected": "Sub 1",
+            "Result": "(/) PASS"
           },
           {
             "#": "T13",
             "Date": "Jan 13, 2027",
             "Reason": "Sick",
-            "Duration": "Half Day PM",
-            "Sub Preference": "Notify my favorites",
+            "Duration": "Enter Time Manually (09:00–15:00)",
+            "Sub Preference": "Notify all subs",
             "Sub Selected": "—",
-            "Result": "✅ PASS"
+            "Result": "(/) PASS"
           },
           {
             "#": "T14",
             "Date": "Jan 14, 2027",
             "Reason": "Personal",
-            "Duration": "Half Day PM",
+            "Duration": "Enter Time Manually (09:00–15:00)",
             "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 2",
-            "Result": "✅ PASS"
+            "Sub Selected": "Sub 1",
+            "Result": "(/) PASS"
           },
           {
             "#": "T15",
             "Date": "Jan 15, 2027",
             "Reason": "Vacation",
-            "Duration": "Half Day PM",
-            "Sub Preference": "No sub required",
+            "Duration": "Enter Time Manually (09:00–15:00)",
+            "Sub Preference": "Notify all subs",
             "Sub Selected": "—",
-            "Result": "✅ PASS"
+            "Result": "(/) PASS"
           },
           {
             "#": "T16",
             "Date": "Jan 18, 2027",
             "Reason": "Illness-Family Member",
-            "Duration": "Enter Time Manually (10:00–15:00)",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "✅ PASS"
-          },
-          {
-            "#": "T17",
-            "Date": "Jan 19, 2027",
-            "Reason": "Educational Leave",
-            "Duration": "Enter Time Manually (10:00–15:00)",
-            "Sub Preference": "Notify 1 Sub",
-            "Sub Selected": "Sub 2",
-            "Result": "✅ PASS"
-          },
-          {
-            "#": "T18",
-            "Date": "Jan 20, 2027",
-            "Reason": "Professional Development",
-            "Duration": "Enter Time Manually (10:00–15:00)",
-            "Sub Preference": "Notify my favorites",
-            "Sub Selected": "—",
-            "Result": "✅ PASS"
-          },
-          {
-            "#": "T19",
-            "Date": "Jan 21, 2027",
-            "Reason": "Sick",
-            "Duration": "Enter Time Manually (10:00–15:00)",
+            "Duration": "Enter Time Manually (09:00–15:00)",
             "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 2",
-            "Result": "✅ PASS"
-          },
-          {
-            "#": "T20",
-            "Date": "Jan 22, 2027",
-            "Reason": "Personal",
-            "Duration": "Enter Time Manually (10:00–15:00)",
-            "Sub Preference": "No sub required",
-            "Sub Selected": "—",
-            "Result": "✅ PASS"
+            "Sub Selected": "Sub 1",
+            "Result": "(/) PASS"
           }
         ],
         "rawRows": [
@@ -300,25 +284,25 @@
             "Full Day",
             "Notify all subs",
             "—",
-            "✅ PASS"
+            "(/) PASS"
           ],
           [
             "T2",
             "Jan 2, 2027",
             "Personal",
             "Full Day",
-            "Notify 1 Sub",
-            "Sub 2",
-            "✅ PASS"
+            "Assign a specific sub",
+            "Sub 1",
+            "(/) PASS"
           ],
           [
             "T3",
             "Jan 3, 2027",
             "Vacation",
             "Full Day",
-            "Notify my favorites",
+            "Notify all subs",
             "—",
-            "✅ PASS"
+            "(/) PASS"
           ],
           [
             "T4",
@@ -326,62 +310,62 @@
             "Illness-Family Member",
             "Full Day",
             "Assign a specific sub",
-            "Sub 2",
-            "✅ PASS"
+            "Sub 1",
+            "(/) PASS"
           ],
           [
             "T5",
             "Jan 5, 2027",
             "Educational Leave",
-            "Full Day",
-            "No sub required",
+            "Half Day AM",
+            "Notify all subs",
             "—",
-            "✅ PASS"
+            "(/) PASS"
           ],
           [
             "T6",
             "Jan 6, 2027",
             "Professional Development",
             "Half Day AM",
-            "Notify all subs",
-            "—",
-            "✅ PASS"
+            "Assign a specific sub",
+            "Sub 1",
+            "(/) PASS"
           ],
           [
             "T7",
             "Jan 7, 2027",
             "Sick",
             "Half Day AM",
-            "Notify 1 Sub",
-            "Sub 2",
-            "✅ PASS"
+            "Notify all subs",
+            "—",
+            "(/) PASS"
           ],
           [
             "T8",
             "Jan 8, 2027",
             "Personal",
             "Half Day AM",
-            "Notify my favorites",
-            "—",
-            "✅ PASS"
+            "Assign a specific sub",
+            "Sub 1",
+            "(/) PASS"
           ],
           [
             "T9",
             "Jan 9, 2027",
             "Vacation",
-            "Half Day AM",
-            "Assign a specific sub",
-            "Sub 2",
-            "✅ PASS"
+            "Half Day PM",
+            "Notify all subs",
+            "—",
+            "(/) PASS"
           ],
           [
             "T10",
             "Jan 10, 2027",
             "Illness-Family Member",
-            "Half Day AM",
-            "No sub required",
-            "—",
-            "✅ PASS"
+            "Half Day PM",
+            "Assign a specific sub",
+            "Sub 1",
+            "(/) PASS"
           ],
           [
             "T11",
@@ -390,93 +374,58 @@
             "Half Day PM",
             "Notify all subs",
             "—",
-            "✅ PASS"
+            "(/) PASS"
           ],
           [
             "T12",
             "Jan 12, 2027",
             "Professional Development",
             "Half Day PM",
-            "Notify 1 Sub",
-            "Sub 2",
-            "✅ PASS"
+            "Assign a specific sub",
+            "Sub 1",
+            "(/) PASS"
           ],
           [
             "T13",
             "Jan 13, 2027",
             "Sick",
-            "Half Day PM",
-            "Notify my favorites",
+            "Enter Time Manually (09:00–15:00)",
+            "Notify all subs",
             "—",
-            "✅ PASS"
+            "(/) PASS"
           ],
           [
             "T14",
             "Jan 14, 2027",
             "Personal",
-            "Half Day PM",
+            "Enter Time Manually (09:00–15:00)",
             "Assign a specific sub",
-            "Sub 2",
-            "✅ PASS"
+            "Sub 1",
+            "(/) PASS"
           ],
           [
             "T15",
             "Jan 15, 2027",
             "Vacation",
-            "Half Day PM",
-            "No sub required",
+            "Enter Time Manually (09:00–15:00)",
+            "Notify all subs",
             "—",
-            "✅ PASS"
+            "(/) PASS"
           ],
           [
             "T16",
             "Jan 18, 2027",
             "Illness-Family Member",
-            "Enter Time Manually (10:00–15:00)",
-            "Notify all subs",
-            "—",
-            "✅ PASS"
-          ],
-          [
-            "T17",
-            "Jan 19, 2027",
-            "Educational Leave",
-            "Enter Time Manually (10:00–15:00)",
-            "Notify 1 Sub",
-            "Sub 2",
-            "✅ PASS"
-          ],
-          [
-            "T18",
-            "Jan 20, 2027",
-            "Professional Development",
-            "Enter Time Manually (10:00–15:00)",
-            "Notify my favorites",
-            "—",
-            "✅ PASS"
-          ],
-          [
-            "T19",
-            "Jan 21, 2027",
-            "Sick",
-            "Enter Time Manually (10:00–15:00)",
+            "Enter Time Manually (09:00–15:00)",
             "Assign a specific sub",
-            "Sub 2",
-            "✅ PASS"
-          ],
-          [
-            "T20",
-            "Jan 22, 2027",
-            "Personal",
-            "Enter Time Manually (10:00–15:00)",
-            "No sub required",
-            "—",
-            "✅ PASS"
+            "Sub 1",
+            "(/) PASS"
           ]
         ],
-        "text": "# | Date | Reason | Duration | Sub Preference | Sub Selected | Result\nT1 | Jan 1, 2027 | Sick | Full Day | Notify all subs | — | ✅ PASS\nT2 | Jan 2, 2027 | Personal | Full Day | Notify 1 Sub | Sub 2 | ✅ PASS\nT3 | Jan 3, 2027 | Vacation | Full Day | Notify my favorites | — | ✅ PASS\nT4 | Jan 4, 2027 | Illness-Family Member | Full Day | Assign a specific sub | Sub 2 | ✅ PASS\nT5 | Jan 5, 2027 | Educational Leave | Full Day | No sub required | — | ✅ PASS\nT6 | Jan 6, 2027 | Professional Development | Half Day AM | Notify all subs | — | ✅ PASS\nT7 | Jan 7, 2027 | Sick | Half Day AM | Notify 1 Sub | Sub 2 | ✅ PASS\nT8 | Jan 8, 2027 | Personal | Half Day AM | Notify my favorites | — | ✅ PASS\nT9 | Jan 9, 2027 | Vacation | Half Day AM | Assign a specific sub | Sub 2 | ✅ PASS\nT10 | Jan 10, 2027 | Illness-Family Member | Half Day AM | No sub required | — | ✅ PASS\nT11 | Jan 11, 2027 | Educational Leave | Half Day PM | Notify all subs | — | ✅ PASS\nT12 | Jan 12, 2027 | Professional Development | Half Day PM | Notify 1 Sub | Sub 2 | ✅ PASS\nT13 | Jan 13, 2027 | Sick | Half Day PM | Notify my favorites | — | ✅ PASS\nT14 | Jan 14, 2027 | Personal | Half Day PM | Assign a specific sub | Sub 2 | ✅ PASS\nT15 | Jan 15, 2027 | Vacation | Half Day PM | No sub required | — | ✅ PASS\nT16 | Jan 18, 2027 | Illness-Family Member | Enter Time Manually (10:00–15:00) | Notify all subs | — | ✅ PASS\nT17 | Jan 19, 2027 | Educational Leave | Enter Time Manually (10:00–15:00) | Notify 1 Sub | Sub 2 | ✅ PASS\nT18 | Jan 20, 2027 | Professional Development | Enter Time Manually (10:00–15:00) | Notify my favorites | — | ✅ PASS\nT19 | Jan 21, 2027 | Sick | Enter Time Manually (10:00–15:00) | Assign a specific sub | Sub 2 | ✅ PASS\nT20 | Jan 22, 2027 | Personal | Enter Time Manually (10:00–15:00) | No sub required | — | ✅ PASS"
+        "text": "# | Date | Reason | Duration | Sub Preference | Sub Selected | Result\nT1 | Jan 1, 2027 | Sick | Full Day | Notify all subs | — | (/) PASS\nT2 | Jan 2, 2027 | Personal | Full Day | Assign a specific sub | Sub 1 | (/) PASS\nT3 | Jan 3, 2027 | Vacation | Full Day | Notify all subs | — | (/) PASS\nT4 | Jan 4, 2027 | Illness-Family Member | Full Day | Assign a specific sub | Sub 1 | (/) PASS\nT5 | Jan 5, 2027 | Educational Leave | Half Day AM | Notify all subs | — | (/) PASS\nT6 | Jan 6, 2027 | Professional Development | Half Day AM | Assign a specific sub | Sub 1 | (/) PASS\nT7 | Jan 7, 2027 | Sick | Half Day AM | Notify all subs | — | (/) PASS\nT8 | Jan 8, 2027 | Personal | Half Day AM | Assign a specific sub | Sub 1 | (/) PASS\nT9 | Jan 9, 2027 | Vacation | Half Day PM | Notify all subs | — | (/) PASS\nT10 | Jan 10, 2027 | Illness-Family Member | Half Day PM | Assign a specific sub | Sub 1 | (/) PASS\nT11 | Jan 11, 2027 | Educational Leave | Half Day PM | Notify all subs | — | (/) PASS\nT12 | Jan 12, 2027 | Professional Development | Half Day PM | Assign a specific sub | Sub 1 | (/) PASS\nT13 | Jan 13, 2027 | Sick | Enter Time Manually (09:00–15:00) | Notify all subs | — | (/) PASS\nT14 | Jan 14, 2027 | Personal | Enter Time Manually (09:00–15:00) | Assign a specific sub | Sub 1 | (/) PASS\nT15 | Jan 15, 2027 | Vacation | Enter Time Manually (09:00–15:00) | Notify all subs | — | (/) PASS\nT16 | Jan 18, 2027 | Illness-Family Member | Enter Time Manually (09:00–15:00) | Assign a specific sub | Sub 1 | (/) PASS"
       },
       {
+        "source": "jira-wiki-markup",
         "headers": [
           "#",
           "Date",
@@ -488,58 +437,58 @@
         ],
         "rows": [
           {
-            "#": "T21",
+            "#": "T17",
             "Date": "Jan 25, 2027",
-            "Reason": "Vacation",
+            "Reason": "Educational Leave",
             "Class Time": "08:00–12:00",
             "Sub Preference": "Notify all subs",
             "Sub Selected": "—",
-            "Result": "✅ PASS"
+            "Result": "(/) PASS"
+          },
+          {
+            "#": "T18",
+            "Date": "Jan 26, 2027",
+            "Reason": "Professional Development",
+            "Class Time": "10:00–14:00",
+            "Sub Preference": "Assign a specific sub",
+            "Sub Selected": "Sub 1",
+            "Result": "(/) PASS"
+          },
+          {
+            "#": "T19",
+            "Date": "Jan 27, 2027",
+            "Reason": "Sick",
+            "Class Time": "09:00–11:00",
+            "Sub Preference": "Notify all subs",
+            "Sub Selected": "—",
+            "Result": "(/) PASS"
+          },
+          {
+            "#": "T20",
+            "Date": "Feb 8, 2027",
+            "Reason": "Personal",
+            "Class Time": "12:00–16:00",
+            "Sub Preference": "Assign a specific sub",
+            "Sub Selected": "Sub 1",
+            "Result": "(/) PASS"
+          },
+          {
+            "#": "T21",
+            "Date": "Feb 9, 2027",
+            "Reason": "Vacation",
+            "Class Time": "08:00–10:00",
+            "Sub Preference": "Notify all subs",
+            "Sub Selected": "—",
+            "Result": "(/) PASS"
           },
           {
             "#": "T22",
-            "Date": "Jan 26, 2027",
-            "Reason": "Illness-Family Member",
-            "Class Time": "10:00–14:00",
-            "Sub Preference": "Notify 1 Sub",
-            "Sub Selected": "Sub 2",
-            "Result": "✅ PASS"
-          },
-          {
-            "#": "T23",
-            "Date": "Jan 27, 2027",
-            "Reason": "Educational Leave",
-            "Class Time": "09:00–11:00",
-            "Sub Preference": "Notify my favorites",
-            "Sub Selected": "—",
-            "Result": "✅ PASS"
-          },
-          {
-            "#": "T24",
-            "Date": "Feb 8, 2027",
-            "Reason": "Professional Development",
-            "Class Time": "12:00–16:00",
-            "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 2",
-            "Result": "✅ PASS"
-          },
-          {
-            "#": "T25",
-            "Date": "Feb 9, 2027",
-            "Reason": "Sick",
-            "Class Time": "08:00–10:00",
-            "Sub Preference": "No sub required",
-            "Sub Selected": "—",
-            "Result": "✅ PASS"
-          },
-          {
-            "#": "T26",
             "Date": "Feb 10, 2027",
-            "Reason": "Personal",
+            "Reason": "Illness-Family Member",
             "Class Time": "13:00–17:00",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "✅ PASS"
+            "Sub Preference": "Assign a specific sub",
+            "Sub Selected": "Sub 1",
+            "Result": "(/) PASS"
           }
         ],
         "rawRows": [
@@ -553,61 +502,61 @@
             "Result"
           ],
           [
-            "T21",
+            "T17",
             "Jan 25, 2027",
-            "Vacation",
+            "Educational Leave",
             "08:00–12:00",
             "Notify all subs",
             "—",
-            "✅ PASS"
+            "(/) PASS"
+          ],
+          [
+            "T18",
+            "Jan 26, 2027",
+            "Professional Development",
+            "10:00–14:00",
+            "Assign a specific sub",
+            "Sub 1",
+            "(/) PASS"
+          ],
+          [
+            "T19",
+            "Jan 27, 2027",
+            "Sick",
+            "09:00–11:00",
+            "Notify all subs",
+            "—",
+            "(/) PASS"
+          ],
+          [
+            "T20",
+            "Feb 8, 2027",
+            "Personal",
+            "12:00–16:00",
+            "Assign a specific sub",
+            "Sub 1",
+            "(/) PASS"
+          ],
+          [
+            "T21",
+            "Feb 9, 2027",
+            "Vacation",
+            "08:00–10:00",
+            "Notify all subs",
+            "—",
+            "(/) PASS"
           ],
           [
             "T22",
-            "Jan 26, 2027",
-            "Illness-Family Member",
-            "10:00–14:00",
-            "Notify 1 Sub",
-            "Sub 2",
-            "✅ PASS"
-          ],
-          [
-            "T23",
-            "Jan 27, 2027",
-            "Educational Leave",
-            "09:00–11:00",
-            "Notify my favorites",
-            "—",
-            "✅ PASS"
-          ],
-          [
-            "T24",
-            "Feb 8, 2027",
-            "Professional Development",
-            "12:00–16:00",
-            "Assign a specific sub",
-            "Sub 2",
-            "✅ PASS"
-          ],
-          [
-            "T25",
-            "Feb 9, 2027",
-            "Sick",
-            "08:00–10:00",
-            "No sub required",
-            "—",
-            "✅ PASS"
-          ],
-          [
-            "T26",
             "Feb 10, 2027",
-            "Personal",
+            "Illness-Family Member",
             "13:00–17:00",
-            "Notify all subs",
-            "—",
-            "✅ PASS"
+            "Assign a specific sub",
+            "Sub 1",
+            "(/) PASS"
           ]
         ],
-        "text": "# | Date | Reason | Class Time | Sub Preference | Sub Selected | Result\nT21 | Jan 25, 2027 | Vacation | 08:00–12:00 | Notify all subs | — | ✅ PASS\nT22 | Jan 26, 2027 | Illness-Family Member | 10:00–14:00 | Notify 1 Sub | Sub 2 | ✅ PASS\nT23 | Jan 27, 2027 | Educational Leave | 09:00–11:00 | Notify my favorites | — | ✅ PASS\nT24 | Feb 8, 2027 | Professional Development | 12:00–16:00 | Assign a specific sub | Sub 2 | ✅ PASS\nT25 | Feb 9, 2027 | Sick | 08:00–10:00 | No sub required | — | ✅ PASS\nT26 | Feb 10, 2027 | Personal | 13:00–17:00 | Notify all subs | — | ✅ PASS"
+        "text": "# | Date | Reason | Class Time | Sub Preference | Sub Selected | Result\nT17 | Jan 25, 2027 | Educational Leave | 08:00–12:00 | Notify all subs | — | (/) PASS\nT18 | Jan 26, 2027 | Professional Development | 10:00–14:00 | Assign a specific sub | Sub 1 | (/) PASS\nT19 | Jan 27, 2027 | Sick | 09:00–11:00 | Notify all subs | — | (/) PASS\nT20 | Feb 8, 2027 | Personal | 12:00–16:00 | Assign a specific sub | Sub 1 | (/) PASS\nT21 | Feb 9, 2027 | Vacation | 08:00–10:00 | Notify all subs | — | (/) PASS\nT22 | Feb 10, 2027 | Illness-Family Member | 13:00–17:00 | Assign a specific sub | Sub 1 | (/) PASS"
       }
     ],
     "panels": [],
@@ -616,57 +565,60 @@
     "comments": [],
     "attachments": [],
     "links": [],
-    "parent": {
-      "key": "ISE-1535",
-      "summary": "InstaSub Enhancements Q2 - 2026"
-    },
+    "parent": null,
     "subtasks": []
   },
   "businessRequirements": [
     {
       "id": "BR-1",
-      "description": "Pairwise regression coverage for the Self absence creation flow, validating that an administrator can create absences for themselves across every reason, duration type, and substitute preference. The run confirms the form, leave balance deductions, and sub picker all behave correctly in Self mode.",
+      "description": "Pairwise regression coverage for the Find a Sub absence creation flow. The test signs in to the school-level admin account and creates absences using the Find a Sub mode across every reason, duration type, and substitute preference available in this flow. The run confirms the form, substitute search panel, class time inputs, and sub picker all behave correctly in Find a Sub mode.",
       "testable": true
     },
     {
       "id": "BR-2",
-      "description": "Environment: InstaSub Staging — InstaSub Account:  (School Administrator role) Flow: Self absence creation (/absence/createAbsence, Self radio selected) Sub selected (Notify 1 Sub / Assign a specific sub): Sub 1",
+      "description": "Flow: Find a Sub absence creation (/absence/createAbsence), type: Find a Sub",
       "testable": true
     }
   ],
   "acceptanceCriteria": [
-    "Given valid absence data, When submitted, Then record persists",
-    "Given missing required fields, When submitted, Then validation error shown",
-    "Given past date, When submitted, Then rejection error shown",
-    "Given confirmation number returned, Then system displays it to user"
+    "Login succeeds with the school-level admin account ([schooladmin@mailinator.com|mailto:schooladmin@mailinator.com])",
+    "All 6 absence reasons selectable via the Find a Sub flow",
+    "Selecting Find a Sub reveals additional fields: School Location, Position, Grade, Subject, Subbing For, Add Class, Add Location",
+    "Only 2 sub preferences are available in Find a Sub mode: Notify all subs and Assign a specific sub",
+    "All 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Find a Sub mode",
+    "Half Day AM auto-sets times to 08:00 AM – 12:00 PM (read-only)",
+    "Half Day PM auto-sets times to 12:00 PM – 05:00 PM (read-only)",
+    "Enter Time Manually renders editable Start/End time fields",
+    "Add Class flow works for all 6 reasons in Find a Sub mode",
+    "Selecting Assign a specific sub triggers a date-gated substitute search panel listing available subs",
+    "Sub 1 selectable via Assign a specific sub",
+    "Submit button changes to \"Create And Assign\" when Assign a specific sub is selected",
+    "A toast notification confirms successful absence creation with a unique confirmation number",
+    "No blocking errors or UI failures across the 22-test run"
   ],
   "testableItems": [
     "T1 / Sick / Full Day / Notify all subs / Jan 1, 2027",
-    "T2 / Personal / Full Day / Notify 1 Sub / Jan 2, 2027",
-    "T3 / Vacation / Full Day / Notify my favorites / Jan 3, 2027",
+    "T2 / Personal / Full Day / Assign a specific sub / Jan 2, 2027",
+    "T3 / Vacation / Full Day / Notify all subs / Jan 3, 2027",
     "T4 / Illness-Family Member / Full Day / Assign a specific sub / Jan 4, 2027",
-    "T5 / Educational Leave / Full Day / No sub required / Jan 5, 2027",
-    "T6 / Professional Development / Half Day AM / Notify all subs / Jan 6, 2027",
-    "T7 / Sick / Half Day AM / Notify 1 Sub / Jan 7, 2027",
-    "T8 / Personal / Half Day AM / Notify my favorites / Jan 8, 2027",
-    "T9 / Vacation / Half Day AM / Assign a specific sub / Jan 9, 2027",
-    "T10 / Illness-Family Member / Half Day AM / No sub required / Jan 10, 2027",
+    "T5 / Educational Leave / Half Day AM / Notify all subs / Jan 5, 2027",
+    "T6 / Professional Development / Half Day AM / Assign a specific sub / Jan 6, 2027",
+    "T7 / Sick / Half Day AM / Notify all subs / Jan 7, 2027",
+    "T8 / Personal / Half Day AM / Assign a specific sub / Jan 8, 2027",
+    "T9 / Vacation / Half Day PM / Notify all subs / Jan 9, 2027",
+    "T10 / Illness-Family Member / Half Day PM / Assign a specific sub / Jan 10, 2027",
     "T11 / Educational Leave / Half Day PM / Notify all subs / Jan 11, 2027",
-    "T12 / Professional Development / Half Day PM / Notify 1 Sub / Jan 12, 2027",
-    "T13 / Sick / Half Day PM / Notify my favorites / Jan 13, 2027",
-    "T14 / Personal / Half Day PM / Assign a specific sub / Jan 14, 2027",
-    "T15 / Vacation / Half Day PM / No sub required / Jan 15, 2027",
-    "T16 / Illness-Family Member / Enter Time Manually (10:00–15:00) / Notify all subs / Jan 18, 2027",
-    "T17 / Educational Leave / Enter Time Manually (10:00–15:00) / Notify 1 Sub / Jan 19, 2027",
-    "T18 / Professional Development / Enter Time Manually (10:00–15:00) / Notify my favorites / Jan 20, 2027",
-    "T19 / Sick / Enter Time Manually (10:00–15:00) / Assign a specific sub / Jan 21, 2027",
-    "T20 / Personal / Enter Time Manually (10:00–15:00) / No sub required / Jan 22, 2027",
-    "T21 / Vacation / 08:00–12:00 / Notify all subs / Jan 25, 2027",
-    "T22 / Illness-Family Member / 10:00–14:00 / Notify 1 Sub / Jan 26, 2027",
-    "T23 / Educational Leave / 09:00–11:00 / Notify my favorites / Jan 27, 2027",
-    "T24 / Professional Development / 12:00–16:00 / Assign a specific sub / Feb 8, 2027",
-    "T25 / Sick / 08:00–10:00 / No sub required / Feb 9, 2027",
-    "T26 / Personal / 13:00–17:00 / Notify all subs / Feb 10, 2027"
+    "T12 / Professional Development / Half Day PM / Assign a specific sub / Jan 12, 2027",
+    "T13 / Sick / Enter Time Manually (09:00–15:00) / Notify all subs / Jan 13, 2027",
+    "T14 / Personal / Enter Time Manually (09:00–15:00) / Assign a specific sub / Jan 14, 2027",
+    "T15 / Vacation / Enter Time Manually (09:00–15:00) / Notify all subs / Jan 15, 2027",
+    "T16 / Illness-Family Member / Enter Time Manually (09:00–15:00) / Assign a specific sub / Jan 18, 2027",
+    "T17 / Educational Leave / 08:00–12:00 / Notify all subs / Jan 25, 2027",
+    "T18 / Professional Development / 10:00–14:00 / Assign a specific sub / Jan 26, 2027",
+    "T19 / Sick / 09:00–11:00 / Notify all subs / Jan 27, 2027",
+    "T20 / Personal / 12:00–16:00 / Assign a specific sub / Feb 8, 2027",
+    "T21 / Vacation / 08:00–10:00 / Notify all subs / Feb 9, 2027",
+    "T22 / Illness-Family Member / 13:00–17:00 / Assign a specific sub / Feb 10, 2027"
   ],
   "pairwiseScenarios": [
     {
@@ -676,25 +628,25 @@
       "duration": "Full Day",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "result": "✅ PASS"
+      "result": "(/) PASS"
     },
     {
       "id": "T2",
       "date": "Jan 2, 2027",
       "reason": "Personal",
       "duration": "Full Day",
-      "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 2",
-      "result": "✅ PASS"
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "result": "(/) PASS"
     },
     {
       "id": "T3",
       "date": "Jan 3, 2027",
       "reason": "Vacation",
       "duration": "Full Day",
-      "subPreference": "Notify my favorites",
+      "subPreference": "Notify all subs",
       "subSelected": "—",
-      "result": "✅ PASS"
+      "result": "(/) PASS"
     },
     {
       "id": "T4",
@@ -702,62 +654,62 @@
       "reason": "Illness-Family Member",
       "duration": "Full Day",
       "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 2",
-      "result": "✅ PASS"
+      "subSelected": "Sub 1",
+      "result": "(/) PASS"
     },
     {
       "id": "T5",
       "date": "Jan 5, 2027",
       "reason": "Educational Leave",
-      "duration": "Full Day",
-      "subPreference": "No sub required",
+      "duration": "Half Day AM",
+      "subPreference": "Notify all subs",
       "subSelected": "—",
-      "result": "✅ PASS"
+      "result": "(/) PASS"
     },
     {
       "id": "T6",
       "date": "Jan 6, 2027",
       "reason": "Professional Development",
       "duration": "Half Day AM",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "✅ PASS"
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "result": "(/) PASS"
     },
     {
       "id": "T7",
       "date": "Jan 7, 2027",
       "reason": "Sick",
       "duration": "Half Day AM",
-      "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 2",
-      "result": "✅ PASS"
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "result": "(/) PASS"
     },
     {
       "id": "T8",
       "date": "Jan 8, 2027",
       "reason": "Personal",
       "duration": "Half Day AM",
-      "subPreference": "Notify my favorites",
-      "subSelected": "—",
-      "result": "✅ PASS"
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "result": "(/) PASS"
     },
     {
       "id": "T9",
       "date": "Jan 9, 2027",
       "reason": "Vacation",
-      "duration": "Half Day AM",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 2",
-      "result": "✅ PASS"
+      "duration": "Half Day PM",
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "result": "(/) PASS"
     },
     {
       "id": "T10",
       "date": "Jan 10, 2027",
       "reason": "Illness-Family Member",
-      "duration": "Half Day AM",
-      "subPreference": "No sub required",
-      "subSelected": "—",
-      "result": "✅ PASS"
+      "duration": "Half Day PM",
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "result": "(/) PASS"
     },
     {
       "id": "T11",
@@ -766,142 +718,106 @@
       "duration": "Half Day PM",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "result": "✅ PASS"
+      "result": "(/) PASS"
     },
     {
       "id": "T12",
       "date": "Jan 12, 2027",
       "reason": "Professional Development",
       "duration": "Half Day PM",
-      "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 2",
-      "result": "✅ PASS"
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "result": "(/) PASS"
     },
     {
       "id": "T13",
       "date": "Jan 13, 2027",
       "reason": "Sick",
-      "duration": "Half Day PM",
-      "subPreference": "Notify my favorites",
+      "duration": "Enter Time Manually (09:00–15:00)",
+      "subPreference": "Notify all subs",
       "subSelected": "—",
-      "result": "✅ PASS"
+      "result": "(/) PASS"
     },
     {
       "id": "T14",
       "date": "Jan 14, 2027",
       "reason": "Personal",
-      "duration": "Half Day PM",
+      "duration": "Enter Time Manually (09:00–15:00)",
       "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 2",
-      "result": "✅ PASS"
+      "subSelected": "Sub 1",
+      "result": "(/) PASS"
     },
     {
       "id": "T15",
       "date": "Jan 15, 2027",
       "reason": "Vacation",
-      "duration": "Half Day PM",
-      "subPreference": "No sub required",
+      "duration": "Enter Time Manually (09:00–15:00)",
+      "subPreference": "Notify all subs",
       "subSelected": "—",
-      "result": "✅ PASS"
+      "result": "(/) PASS"
     },
     {
       "id": "T16",
       "date": "Jan 18, 2027",
       "reason": "Illness-Family Member",
-      "duration": "Enter Time Manually (10:00–15:00)",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "✅ PASS"
+      "duration": "Enter Time Manually (09:00–15:00)",
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "result": "(/) PASS"
     },
     {
       "id": "T17",
-      "date": "Jan 19, 2027",
-      "reason": "Educational Leave",
-      "duration": "Enter Time Manually (10:00–15:00)",
-      "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 2",
-      "result": "✅ PASS"
-    },
-    {
-      "id": "T18",
-      "date": "Jan 20, 2027",
-      "reason": "Professional Development",
-      "duration": "Enter Time Manually (10:00–15:00)",
-      "subPreference": "Notify my favorites",
-      "subSelected": "—",
-      "result": "✅ PASS"
-    },
-    {
-      "id": "T19",
-      "date": "Jan 21, 2027",
-      "reason": "Sick",
-      "duration": "Enter Time Manually (10:00–15:00)",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 2",
-      "result": "✅ PASS"
-    },
-    {
-      "id": "T20",
-      "date": "Jan 22, 2027",
-      "reason": "Personal",
-      "duration": "Enter Time Manually (10:00–15:00)",
-      "subPreference": "No sub required",
-      "subSelected": "—",
-      "result": "✅ PASS"
-    },
-    {
-      "id": "T21",
       "date": "Jan 25, 2027",
-      "reason": "Vacation",
+      "reason": "Educational Leave",
       "duration": "08:00–12:00",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "result": "✅ PASS"
+      "result": "(/) PASS"
+    },
+    {
+      "id": "T18",
+      "date": "Jan 26, 2027",
+      "reason": "Professional Development",
+      "duration": "10:00–14:00",
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "result": "(/) PASS"
+    },
+    {
+      "id": "T19",
+      "date": "Jan 27, 2027",
+      "reason": "Sick",
+      "duration": "09:00–11:00",
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "result": "(/) PASS"
+    },
+    {
+      "id": "T20",
+      "date": "Feb 8, 2027",
+      "reason": "Personal",
+      "duration": "12:00–16:00",
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "result": "(/) PASS"
+    },
+    {
+      "id": "T21",
+      "date": "Feb 9, 2027",
+      "reason": "Vacation",
+      "duration": "08:00–10:00",
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "result": "(/) PASS"
     },
     {
       "id": "T22",
-      "date": "Jan 26, 2027",
-      "reason": "Illness-Family Member",
-      "duration": "10:00–14:00",
-      "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 2",
-      "result": "✅ PASS"
-    },
-    {
-      "id": "T23",
-      "date": "Jan 27, 2027",
-      "reason": "Educational Leave",
-      "duration": "09:00–11:00",
-      "subPreference": "Notify my favorites",
-      "subSelected": "—",
-      "result": "✅ PASS"
-    },
-    {
-      "id": "T24",
-      "date": "Feb 8, 2027",
-      "reason": "Professional Development",
-      "duration": "12:00–16:00",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 2",
-      "result": "✅ PASS"
-    },
-    {
-      "id": "T25",
-      "date": "Feb 9, 2027",
-      "reason": "Sick",
-      "duration": "08:00–10:00",
-      "subPreference": "No sub required",
-      "subSelected": "—",
-      "result": "✅ PASS"
-    },
-    {
-      "id": "T26",
       "date": "Feb 10, 2027",
-      "reason": "Personal",
+      "reason": "Illness-Family Member",
       "duration": "13:00–17:00",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "✅ PASS"
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "result": "(/) PASS"
     }
   ],
   "riskFactors": [
