@@ -425,6 +425,7 @@ class Layer3Agent {
 
   async captureExplorerContext(testPlan, verification, options = {}) {
     const url = options.explorerUrl || process.env.EXPLORER_URL || 'https://instasublogin.tcpsoftware.com/';
+    const workflow = this.workflowFromContext(options.layer1Data, options.layer2Context, testPlan);
     const baseContext = {
       layer: 3,
       source: 'manual-playwright-mcp',
@@ -439,6 +440,7 @@ class Layer3Agent {
         endpoint: 'mcp://playwright/explore',
       },
       why: 'Layer 3 captures authoritative selectors and flow docs for downstream Layer 4 codegen.',
+      workflow,
       coverage: this.explorerCoverage(testPlan, verification),
       snapshots: {
         accessibility: null,
@@ -496,11 +498,15 @@ class Layer3Agent {
       baseContext.snapshots.elements = await this.indexUiElements(page);
       baseContext.snapshots.pages.push(await this.capturePageSnapshot(page, 'landing'));
 
-      const wizardResult = await this.exploreAbsenceWizard(page, testPlan[0], childEnv);
-      baseContext.snapshots.pages.push(...wizardResult.pages);
-      baseContext.flowDocs = this.buildExplorerFlowDocs(testPlan, baseContext.snapshots.elements, wizardResult);
-      baseContext.explorerActions = wizardResult.actions;
-      baseContext.notes.push(...wizardResult.notes);
+      const workflowResult = workflow.kind === 'absence'
+        ? await this.exploreAbsenceWizard(page, testPlan[0], childEnv)
+        : await this.exploreContextWorkflow(page, workflow);
+      baseContext.snapshots.pages.push(...workflowResult.pages);
+      baseContext.flowDocs = workflow.kind === 'absence'
+        ? this.buildExplorerFlowDocs(testPlan, baseContext.snapshots.elements, workflowResult)
+        : this.buildContextFlowDocs(testPlan, baseContext.snapshots.elements, workflow, workflowResult);
+      baseContext.explorerActions = workflowResult.actions;
+      baseContext.notes.push(...workflowResult.notes);
 
       console.log(
         `✅ Explorer captured ${baseContext.snapshots.elements.buttons.length} buttons, ` +
@@ -517,6 +523,101 @@ class Layer3Agent {
     }
 
     return baseContext;
+  }
+
+  workflowFromContext(layer1Data = null, layer2Context = null, testPlan = []) {
+    const sections = layer1Data?.detailedContent?.sections || [];
+    const searchable = [
+      layer1Data?.title,
+      layer1Data?.description,
+      layer2Context?.sourceRequirements?.title,
+      ...(layer2Context?.retrievalQueries || []),
+      ...sections.map(section => `${section.title}\n${section.text}`),
+      ...(testPlan || []).map(testCase => `${testCase.id || ''} ${testCase.description || ''}`),
+    ].filter(Boolean).join('\n');
+    const route = searchable.match(/\/[a-z0-9][a-z0-9/_-]*/i)?.[0] || '/';
+    const testCases = sections
+      .filter(section => /^TC-[A-Z0-9-]+\b/i.test(section.title || ''))
+      .map(section => ({
+        id: section.title.match(/^(TC-[A-Z0-9-]+)/i)?.[1]?.toUpperCase() || section.title,
+        title: section.title,
+        steps: section.text,
+      }));
+
+    if (/staff management|staff seeding|add staff|\/manage\/employees/i.test(searchable)) {
+      return { kind: 'staff-management', name: 'Staff management', route: '/manage/employees', testCases };
+    }
+    if (/absence|\/absence\/createAbsence/i.test(searchable)) {
+      return { kind: 'absence', name: 'Absence workflow', route: '/absence/createAbsence', testCases };
+    }
+    return { kind: 'generic', name: layer1Data?.title || 'Ticket workflow', route, testCases };
+  }
+
+  async exploreContextWorkflow(page, workflow) {
+    const pages = [];
+    const actions = [];
+    const notes = [];
+
+    try {
+      const targetUrl = new URL(workflow.route || '/', page.url()).toString();
+      await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 60000 });
+      await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
+      actions.push(`Navigated to ${workflow.route || '/'}`);
+      pages.push(await this.capturePageSnapshot(page, `${workflow.kind}-page`));
+
+      if (workflow.kind === 'staff-management') {
+        const addStaff = page.getByRole('button', { name: /add staff/i }).first();
+        if (await addStaff.isVisible({ timeout: 5000 }).catch(() => false)) {
+          await addStaff.click();
+          actions.push('Opened Add Staff form for non-destructive selector capture');
+          await page.waitForTimeout(500);
+          pages.push(await this.capturePageSnapshot(page, 'add-staff-form'));
+
+          const close = page.getByRole('button', { name: /cancel|close/i }).first();
+          if (await close.isVisible({ timeout: 1500 }).catch(() => false)) {
+            await close.click().catch(() => {});
+            actions.push('Closed Add Staff form without saving');
+          }
+        } else {
+          notes.push('Add Staff button was not visible on the staff-management page.');
+        }
+      }
+    } catch (error) {
+      notes.push(`Workflow exploration stopped early: ${error.message}`);
+    }
+
+    return { pages, actions, notes };
+  }
+
+  buildContextFlowDocs(testPlan, elements, workflow, workflowResult) {
+    return {
+      workflow: {
+        kind: workflow.kind,
+        name: workflow.name,
+        route: workflow.route,
+        requirements: workflow.testCases,
+        actions: workflowResult.actions,
+        capturedPages: workflowResult.pages.map(page => ({
+          label: page.label,
+          url: page.url,
+          buttons: page.elements.buttons.length,
+          inputs: page.elements.inputs.length,
+          tables: page.elements.tables.length,
+        })),
+      },
+      discoveredElements: {
+        buttons: elements.buttons.length,
+        inputs: elements.inputs.length,
+        tables: elements.tables.length,
+      },
+      generatedCases: (testPlan || []).map(testCase => ({
+        id: testCase.id,
+        title: testCase.description,
+        verification: testCase.playwrightTitle
+          ? 'mapped-to-current-playwright-spec'
+          : 'requires-codegen-or-manual-exploration',
+      })),
+    };
   }
 
   async ensureExplorerAuthenticated(page, env) {

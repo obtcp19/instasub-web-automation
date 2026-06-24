@@ -1,562 +1,502 @@
 {
-  "ticket": "ISE-1564",
-  "title": "22/22 pairwise regression tests passed for the Find a Sub absence creation flow on the live InstaSub instance, using the school-level admin account (schooladmin@mailinator.com) across all 6 reasons, 5 duration types, and 2 sub preferences.",
+  "ticket": "ISE-1565",
+  "title": "Playwright Automation — Staff Seeding & Deletion Flow (UI-Based)",
   "priority": "Medium",
   "status": "Open",
   "assignee": "omerbakhtiar",
-  "created": "2026-06-24T05:53:39.002-0500",
-  "updated": "2026-06-24T05:53:42.244-0500",
-  "description": "h2. Description\n\nPairwise regression coverage for the Find a Sub absence creation flow. The test signs in to the school-level admin account and creates absences using the Find a Sub mode across every reason, duration type, and substitute preference available in this flow. The run confirms the form, substitute search panel, class time inputs, and sub picker all behave correctly in Find a Sub mode.\nh2. Test Scope\nEnvironment: InstaSub Live — InstaSub\nLogin: school-level admin account — username [schooladmin@mailinator.com|mailto:schooladmin@mailinator.com], password [redacted]\nFlow: Find a Sub absence creation (/absence/createAbsence), type: Find a Sub\nSub selected (Assign a specific sub): Sub 1\nh2. Pairwise Matrix\n\nCoverage dimensions\n6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development\n5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (09:00–15:00), Add Class\n2 sub preferences: Notify all subs, Assign a specific sub\nh3. Part A — Duration Tests (T1–T16)\n\n||#||Date||Reason||Duration||Sub Preference||Sub Selected||Result||\n\n|T1|Jan 1, 2027|Sick|Full Day|Notify all subs|—|(/) PASS|\n\n|T2|Jan 2, 2027|Personal|Full Day|Assign a specific sub|Sub 1|(/) PASS|\n\n|T3|Jan 3, 2027|Vacation|Full Day|Notify all subs|—|(/) PASS|\n\n|T4|Jan 4, 2027|Illness-Family Member|Full Day|Assign a specific sub|Sub 1|(/) PASS|\n\n|T5|Jan 5, 2027|Educational Leave|Half Day AM|Notify all subs|—|(/) PASS|\n\n|T6|Jan 6, 2027|Professional Development|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T7|Jan 7, 2027|Sick|Half Day AM|Notify all subs|—|(/) PASS|\n\n|T8|Jan 8, 2027|Personal|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T9|Jan 9, 2027|Vacation|Half Day PM|Notify all subs|—|(/) PASS|\n\n|T10|Jan 10, 2027|Illness-Family Member|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T11|Jan 11, 2027|Educational Leave|Half Day PM|Notify all subs|—|(/) PASS|\n\n|T12|Jan 12, 2027|Professional Development|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T13|Jan 13, 2027|Sick|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|\n\n|T14|Jan 14, 2027|Personal|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|\n\n|T15|Jan 15, 2027|Vacation|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|\n\n|T16|Jan 18, 2027|Illness-Family Member|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|\nh3. Part B — Add Class Tests (T17–T22)\n\nAdd Class replaces the Duration dropdown. The class time inputs define the absence window.\n\n||#||Date||Reason||Class Time||Sub Preference||Sub Selected||Result||\n\n|T17|Jan 25, 2027|Educational Leave|08:00–12:00|Notify all subs|—|(/) PASS|\n\n|T18|Jan 26, 2027|Professional Development|10:00–14:00|Assign a specific sub|Sub 1|(/) PASS|\n\n|T19|Jan 27, 2027|Sick|09:00–11:00|Notify all subs|—|(/) PASS|\n\n|T20|Feb 8, 2027|Personal|12:00–16:00|Assign a specific sub|Sub 1|(/) PASS|\n\n|T21|Feb 9, 2027|Vacation|08:00–10:00|Notify all subs|—|(/) PASS|\n\n|T22|Feb 10, 2027|Illness-Family Member|13:00–17:00|Assign a specific sub|Sub 1|(/) PASS|\nh2. Result\n\n22/22 tests passed. All 6 reasons, all 5 duration types (including Add Class), and both available sub preferences exercised. Sub 1 was successfully selected for all Assign a specific sub cases. The substitute search panel correctly required a date to be entered before listing available subs, and the submit button changed to \"Create And Assign\" when Assign a specific sub was selected.\nh2. Acceptance Criteria\nLogin succeeds with the school-level admin account ([schooladmin@mailinator.com|mailto:schooladmin@mailinator.com])\nAll 6 absence reasons selectable via the Find a Sub flow\nSelecting Find a Sub reveals additional fields: School Location, Position, Grade, Subject, Subbing For, Add Class, Add Location\nOnly 2 sub preferences are available in Find a Sub mode: Notify all subs and Assign a specific sub\nAll 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Find a Sub mode\nHalf Day AM auto-sets times to 08:00 AM – 12:00 PM (read-only)\nHalf Day PM auto-sets times to 12:00 PM – 05:00 PM (read-only)\nEnter Time Manually renders editable Start/End time fields\nAdd Class flow works for all 6 reasons in Find a Sub mode\nSelecting Assign a specific sub triggers a date-gated substitute search panel listing available subs\nSub 1 selectable via Assign a specific sub\nSubmit button changes to \"Create And Assign\" when Assign a specific sub is selected\nA toast notification confirms successful absence creation with a unique confirmation number\nNo blocking errors or UI failures across the 22-test run",
+  "created": "2026-06-24T08:43:56.924-0500",
+  "updated": "2026-06-24T08:44:00.831-0500",
+  "description": "Description\nThis ticket covers the Playwright automation script for seeding and resetting the staff data in the InstaSub application via the UI. The script logs in as the protected admin, deletes all non-protected staff members through the UI delete flow, and re-creates them using the\nAdd Staff\n button with stored data. This script is intended as a\none-time or on-demand seed script\n to reset the environment to a known state before running test suites.\n🔐 Protected Account (Must NEVER be deleted)\nField\nValue Name\nadmin userx Email\nadminuserxadminzx@mailinator.com\n /\nadminzx@maillinator.com Role\nDistrict Admin Location\nregscus\n👥 Staff to be Deleted & Re-created (6 users)\n#\nName\nEmail\nPhone\nLocation\nRole\nType\nCertified 1\nregs admin\nregsadmin@mailinator.com\n+144516515651365\nregscus\nDistrict Admin\nTeacher\nYes 2\nschool admin\nschooladmin@mailinator.com\n+16516532123\nSchoolAcademyTest2345\nSchool Admin\nTeacher\nYes 3\nuser third\nthirdezce@mailinator.com\n+1564332151322215\nregscus\nEmployee\nTeacher\nYes 4\nuser one\nschoolruser670@mailinator.com\n+119199899\nSchoolAcademyTest2345\nEmployee\nTeacher\nYes 5\nuser automation\nstaffuser210@mailinator.com\n+1415611515311353\nSchoolAcademyTest2345\nEmployee\nTeacher\nYes 6\nuser two\nschoolteacher890@mailinator.com\n+1456645345456\nSchoolAcademyTest2345\nEmployee\nTeacher\nYes\n🧪 Test Cases\nTC-SEED-01 — Login as Protected Admin\nPreconditions:\n App is running at\n<https://instasublogin.tcpsoftware.com\n>\n\nSteps:\nNavigate to the login page\nEnter email:\nadminuserxadminzx@mailinator.com\nEnter the admin password\nClick Login / Submit\nVerify redirect to Dashboard/Home (\n/home\n)\nExpected Result:\n Admin is logged in and redirected to the home dashboard without errors.\nTC-SEED-02 — Navigate to Staff Management Page\nPreconditions:\n Logged in as admin\n\nSteps:\nNavigate to\n/manage/employees\nVerify the staff table loads with all existing staff rows\nVerify the protected admin (\nadminzx@maillinator.com\n) is visible in the list\nExpected Result:\n Staff management page loads, showing all staff members including the protected admin row.\nTC-SEED-03 — Delete All Non-Protected Staff (UI Flow)\nPreconditions:\n On\n/manage/employees\n, at least 1 non-protected staff member exists\n\nSteps:\nFor each staff row in the table:\n\na. Check if the email matches\nadminzx@maillinator.com\n — if yes,\nskip\n\nb. If not protected, click the\nDelete\n icon/button on that row\n\nc. Wait for the confirmation dialog to appear\n\nd. Click\nConfirm / Yes\n in the dialog\n\ne. Wait for success toast / row removal\nRepeat until all non-protected staff are deleted\nVerify only the protected admin row remains\nExpected Result:\n All 6 non-protected staff members are deleted. Protected admin row is untouched and still visible.\nCritical Constraint:\n Under no circumstances should the script delete\nadminzx@maillinator.com\n.\nTC-SEED-04 — Protected Admin is Never Deleted\nPreconditions:\n Script is executing the deletion loop\n\nSteps:\nScript evaluates each row's email against the protected list\nWhen the protected admin email is found, the delete action is\nskipped entirely\nAfter full deletion loop completes, confirm protected admin still appears in staff table\nExpected Result:\n Protected admin account remains intact throughout and after the full deletion loop. No delete action is triggered for this account.\nTC-SEED-05 — Re-create Staff via Add Staff Button (Per User)\nPreconditions:\n Non-protected staff have been deleted; on\n/manage/employees\n\nSteps (repeat for each of the 6 staff members):\nClick the\nAdd Staff\n button on the staff management page\nIn the Add Staff modal/form, fill in:\nFirst Name\n and\nLast Name\nEmail\nPhone\nLocation / School\n (select from dropdown)\nRole\n (District Admin / School Admin / Employee)\nType\n (Teacher)\nCertified\n (Yes)\nSubmit / Save the form\nVerify success toast appears\nVerify the new staff member row appears in the staff table\nExpected Result:\n Each of the 6 staff members is successfully re-created with all correct field values. Success toast confirms creation. Staff table reflects updated count.\nTC-SEED-06 — Verify Full Staff State After Seeding\nPreconditions:\n All 6 staff have been re-created\n\nSteps:\nReload\n/manage/employees\nCount total staff rows — expect\n7\nFor each expected staff member, verify:\nName\nEmail\nRole\nLocation\nConfirm protected admin is present and unchanged\nExpected Result:\n Staff table shows exactly 7 members with all correct data matching the seed dataset. No duplicate or missing entries.\nTC-SEED-07 — Idempotency — Re-run Script on Already-Seeded State\nPreconditions:\n Script has already been run once; all 7 staff exist\n\nSteps:\nRun the seed script again\nScript detects existing non-protected users and deletes them\nScript re-creates all 6 staff again\nVerify final state is 7 staff (1 protected + 6 re-created)\nExpected Result:\n Script is idempotent — running it multiple times always results in the same clean 7-user state without errors or duplicates.\n⚙️ Automation Details\nField\nValue Framework\nPlaywright (Node.js) Script file\nseed-staff.js Run command\nnode seed-staff.js Script type\nOne-time / on-demand seed script Login method\nUI (email + password) Delete method\nUI delete button + confirmation dialog Create method\nUI Add Staff button + form fill Environment\n<https://instasublogin.tcpsoftware.com\n>\n✅ Acceptance Criteria\n[ ] Script logs in successfully as the protected admin\n[ ] All 6 non-protected staff are deleted via UI delete flow\n[ ] Protected admin (\nadminzx@maillinator.com\n) is never deleted under any circumstances\n[ ] All 6 staff are re-created via Add Staff UI button with correct field data\n[ ] Final staff table shows exactly 7 members matching the seed dataset\n[ ] Script can be re-run multiple times (idempotent)\n[ ] No hardcoded passwords —\nLOGIN_PASSWORD\n is passed via environment variable\n🔗 Related\nPlaywright seeding script:\nseed-staff.js\nApplication URL:\n<https://instasublogin.tcpsoftware.com/manage/employees\n>\nThis ticket is structured to serve as both a QA test plan and a\nprompt for code generation\n — each test case maps directly to a function or step in the Playwright script. Let me know if you'd like to adjust any test cases, add edge cases (e.g. network failure handling, missing fields), or split this into sub-tasks!",
   "detailedContent": {
-    "plainText": "h2. Description\n\nPairwise regression coverage for the Find a Sub absence creation flow. The test signs in to the school-level admin account and creates absences using the Find a Sub mode across every reason, duration type, and substitute preference available in this flow. The run confirms the form, substitute search panel, class time inputs, and sub picker all behave correctly in Find a Sub mode.\nh2. Test Scope\nEnvironment: InstaSub Live — InstaSub\nLogin: school-level admin account — username [schooladmin@mailinator.com|mailto:schooladmin@mailinator.com], password [redacted]\nFlow: Find a Sub absence creation (/absence/createAbsence), type: Find a Sub\nSub selected (Assign a specific sub): Sub 1\nh2. Pairwise Matrix\n\nCoverage dimensions\n6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development\n5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (09:00–15:00), Add Class\n2 sub preferences: Notify all subs, Assign a specific sub\nh3. Part A — Duration Tests (T1–T16)\n\n||#||Date||Reason||Duration||Sub Preference||Sub Selected||Result||\n\n|T1|Jan 1, 2027|Sick|Full Day|Notify all subs|—|(/) PASS|\n\n|T2|Jan 2, 2027|Personal|Full Day|Assign a specific sub|Sub 1|(/) PASS|\n\n|T3|Jan 3, 2027|Vacation|Full Day|Notify all subs|—|(/) PASS|\n\n|T4|Jan 4, 2027|Illness-Family Member|Full Day|Assign a specific sub|Sub 1|(/) PASS|\n\n|T5|Jan 5, 2027|Educational Leave|Half Day AM|Notify all subs|—|(/) PASS|\n\n|T6|Jan 6, 2027|Professional Development|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T7|Jan 7, 2027|Sick|Half Day AM|Notify all subs|—|(/) PASS|\n\n|T8|Jan 8, 2027|Personal|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T9|Jan 9, 2027|Vacation|Half Day PM|Notify all subs|—|(/) PASS|\n\n|T10|Jan 10, 2027|Illness-Family Member|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T11|Jan 11, 2027|Educational Leave|Half Day PM|Notify all subs|—|(/) PASS|\n\n|T12|Jan 12, 2027|Professional Development|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|\n\n|T13|Jan 13, 2027|Sick|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|\n\n|T14|Jan 14, 2027|Personal|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|\n\n|T15|Jan 15, 2027|Vacation|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|\n\n|T16|Jan 18, 2027|Illness-Family Member|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|\nh3. Part B — Add Class Tests (T17–T22)\n\nAdd Class replaces the Duration dropdown. The class time inputs define the absence window.\n\n||#||Date||Reason||Class Time||Sub Preference||Sub Selected||Result||\n\n|T17|Jan 25, 2027|Educational Leave|08:00–12:00|Notify all subs|—|(/) PASS|\n\n|T18|Jan 26, 2027|Professional Development|10:00–14:00|Assign a specific sub|Sub 1|(/) PASS|\n\n|T19|Jan 27, 2027|Sick|09:00–11:00|Notify all subs|—|(/) PASS|\n\n|T20|Feb 8, 2027|Personal|12:00–16:00|Assign a specific sub|Sub 1|(/) PASS|\n\n|T21|Feb 9, 2027|Vacation|08:00–10:00|Notify all subs|—|(/) PASS|\n\n|T22|Feb 10, 2027|Illness-Family Member|13:00–17:00|Assign a specific sub|Sub 1|(/) PASS|\nh2. Result\n\n22/22 tests passed. All 6 reasons, all 5 duration types (including Add Class), and both available sub preferences exercised. Sub 1 was successfully selected for all Assign a specific sub cases. The substitute search panel correctly required a date to be entered before listing available subs, and the submit button changed to \"Create And Assign\" when Assign a specific sub was selected.\nh2. Acceptance Criteria\nLogin succeeds with the school-level admin account ([schooladmin@mailinator.com|mailto:schooladmin@mailinator.com])\nAll 6 absence reasons selectable via the Find a Sub flow\nSelecting Find a Sub reveals additional fields: School Location, Position, Grade, Subject, Subbing For, Add Class, Add Location\nOnly 2 sub preferences are available in Find a Sub mode: Notify all subs and Assign a specific sub\nAll 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Find a Sub mode\nHalf Day AM auto-sets times to 08:00 AM – 12:00 PM (read-only)\nHalf Day PM auto-sets times to 12:00 PM – 05:00 PM (read-only)\nEnter Time Manually renders editable Start/End time fields\nAdd Class flow works for all 6 reasons in Find a Sub mode\nSelecting Assign a specific sub triggers a date-gated substitute search panel listing available subs\nSub 1 selectable via Assign a specific sub\nSubmit button changes to \"Create And Assign\" when Assign a specific sub is selected\nA toast notification confirms successful absence creation with a unique confirmation number\nNo blocking errors or UI failures across the 22-test run",
+    "plainText": "Description\nThis ticket covers the Playwright automation script for seeding and resetting the staff data in the InstaSub application via the UI. The script logs in as the protected admin, deletes all non-protected staff members through the UI delete flow, and re-creates them using the\nAdd Staff\n button with stored data. This script is intended as a\none-time or on-demand seed script\n to reset the environment to a known state before running test suites.\n🔐 Protected Account (Must NEVER be deleted)\nField\nValue Name\nadmin userx Email\nadminuserxadminzx@mailinator.com\n /\nadminzx@maillinator.com Role\nDistrict Admin Location\nregscus\n👥 Staff to be Deleted & Re-created (6 users)\n#\nName\nEmail\nPhone\nLocation\nRole\nType\nCertified 1\nregs admin\nregsadmin@mailinator.com\n+144516515651365\nregscus\nDistrict Admin\nTeacher\nYes 2\nschool admin\nschooladmin@mailinator.com\n+16516532123\nSchoolAcademyTest2345\nSchool Admin\nTeacher\nYes 3\nuser third\nthirdezce@mailinator.com\n+1564332151322215\nregscus\nEmployee\nTeacher\nYes 4\nuser one\nschoolruser670@mailinator.com\n+119199899\nSchoolAcademyTest2345\nEmployee\nTeacher\nYes 5\nuser automation\nstaffuser210@mailinator.com\n+1415611515311353\nSchoolAcademyTest2345\nEmployee\nTeacher\nYes 6\nuser two\nschoolteacher890@mailinator.com\n+1456645345456\nSchoolAcademyTest2345\nEmployee\nTeacher\nYes\n🧪 Test Cases\nTC-SEED-01 — Login as Protected Admin\nPreconditions:\n App is running at\n<https://instasublogin.tcpsoftware.com\n>\n\nSteps:\nNavigate to the login page\nEnter email:\nadminuserxadminzx@mailinator.com\nEnter the admin password\nClick Login / Submit\nVerify redirect to Dashboard/Home (\n/home\n)\nExpected Result:\n Admin is logged in and redirected to the home dashboard without errors.\nTC-SEED-02 — Navigate to Staff Management Page\nPreconditions:\n Logged in as admin\n\nSteps:\nNavigate to\n/manage/employees\nVerify the staff table loads with all existing staff rows\nVerify the protected admin (\nadminzx@maillinator.com\n) is visible in the list\nExpected Result:\n Staff management page loads, showing all staff members including the protected admin row.\nTC-SEED-03 — Delete All Non-Protected Staff (UI Flow)\nPreconditions:\n On\n/manage/employees\n, at least 1 non-protected staff member exists\n\nSteps:\nFor each staff row in the table:\n\na. Check if the email matches\nadminzx@maillinator.com\n — if yes,\nskip\n\nb. If not protected, click the\nDelete\n icon/button on that row\n\nc. Wait for the confirmation dialog to appear\n\nd. Click\nConfirm / Yes\n in the dialog\n\ne. Wait for success toast / row removal\nRepeat until all non-protected staff are deleted\nVerify only the protected admin row remains\nExpected Result:\n All 6 non-protected staff members are deleted. Protected admin row is untouched and still visible.\nCritical Constraint:\n Under no circumstances should the script delete\nadminzx@maillinator.com\n.\nTC-SEED-04 — Protected Admin is Never Deleted\nPreconditions:\n Script is executing the deletion loop\n\nSteps:\nScript evaluates each row's email against the protected list\nWhen the protected admin email is found, the delete action is\nskipped entirely\nAfter full deletion loop completes, confirm protected admin still appears in staff table\nExpected Result:\n Protected admin account remains intact throughout and after the full deletion loop. No delete action is triggered for this account.\nTC-SEED-05 — Re-create Staff via Add Staff Button (Per User)\nPreconditions:\n Non-protected staff have been deleted; on\n/manage/employees\n\nSteps (repeat for each of the 6 staff members):\nClick the\nAdd Staff\n button on the staff management page\nIn the Add Staff modal/form, fill in:\nFirst Name\n and\nLast Name\nEmail\nPhone\nLocation / School\n (select from dropdown)\nRole\n (District Admin / School Admin / Employee)\nType\n (Teacher)\nCertified\n (Yes)\nSubmit / Save the form\nVerify success toast appears\nVerify the new staff member row appears in the staff table\nExpected Result:\n Each of the 6 staff members is successfully re-created with all correct field values. Success toast confirms creation. Staff table reflects updated count.\nTC-SEED-06 — Verify Full Staff State After Seeding\nPreconditions:\n All 6 staff have been re-created\n\nSteps:\nReload\n/manage/employees\nCount total staff rows — expect\n7\nFor each expected staff member, verify:\nName\nEmail\nRole\nLocation\nConfirm protected admin is present and unchanged\nExpected Result:\n Staff table shows exactly 7 members with all correct data matching the seed dataset. No duplicate or missing entries.\nTC-SEED-07 — Idempotency — Re-run Script on Already-Seeded State\nPreconditions:\n Script has already been run once; all 7 staff exist\n\nSteps:\nRun the seed script again\nScript detects existing non-protected users and deletes them\nScript re-creates all 6 staff again\nVerify final state is 7 staff (1 protected + 6 re-created)\nExpected Result:\n Script is idempotent — running it multiple times always results in the same clean 7-user state without errors or duplicates.\n⚙️ Automation Details\nField\nValue Framework\nPlaywright (Node.js) Script file\nseed-staff.js Run command\nnode seed-staff.js Script type\nOne-time / on-demand seed script Login method\nUI (email + password) Delete method\nUI delete button + confirmation dialog Create method\nUI Add Staff button + form fill Environment\n<https://instasublogin.tcpsoftware.com\n>\n✅ Acceptance Criteria\n[ ] Script logs in successfully as the protected admin\n[ ] All 6 non-protected staff are deleted via UI delete flow\n[ ] Protected admin (\nadminzx@maillinator.com\n) is never deleted under any circumstances\n[ ] All 6 staff are re-created via Add Staff UI button with correct field data\n[ ] Final staff table shows exactly 7 members matching the seed dataset\n[ ] Script can be re-run multiple times (idempotent)\n[ ] No hardcoded passwords —\nLOGIN_PASSWORD\n is passed via environment variable\n🔗 Related\nPlaywright seeding script:\nseed-staff.js\nApplication URL:\n<https://instasublogin.tcpsoftware.com/manage/employees\n>\nThis ticket is structured to serve as both a QA test plan and a\nprompt for code generation\n — each test case maps directly to a function or step in the Playwright script. Let me know if you'd like to adjust any test cases, add edge cases (e.g. network failure handling, missing fields), or split this into sub-tasks!",
     "sections": [
       {
         "title": "Description",
-        "level": 2,
-        "content": [
-          "Pairwise regression coverage for the Find a Sub absence creation flow. The test signs in to the school-level admin account and creates absences using the Find a Sub mode across every reason, duration type, and substitute preference available in this flow. The run confirms the form, substitute search panel, class time inputs, and sub picker all behave correctly in Find a Sub mode."
-        ],
-        "text": "Pairwise regression coverage for the Find a Sub absence creation flow. The test signs in to the school-level admin account and creates absences using the Find a Sub mode across every reason, duration type, and substitute preference available in this flow. The run confirms the form, substitute search panel, class time inputs, and sub picker all behave correctly in Find a Sub mode."
-      },
-      {
-        "title": "Test Scope",
-        "level": 2,
-        "content": [
-          "Environment: InstaSub Live — InstaSub",
-          "Login: school-level admin account — username [schooladmin@mailinator.com|mailto:schooladmin@mailinator.com], password [redacted]",
-          "Flow: Find a Sub absence creation (/absence/createAbsence), type: Find a Sub",
-          "Sub selected (Assign a specific sub): Sub 1"
-        ],
-        "text": "Environment: InstaSub Live — InstaSub\nLogin: school-level admin account — username [schooladmin@mailinator.com|mailto:schooladmin@mailinator.com], password [redacted]\nFlow: Find a Sub absence creation (/absence/createAbsence), type: Find a Sub\nSub selected (Assign a specific sub): Sub 1"
-      },
-      {
-        "title": "Pairwise Matrix",
-        "level": 2,
-        "content": [
-          "Coverage dimensions",
-          "6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development",
-          "5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (09:00–15:00), Add Class",
-          "2 sub preferences: Notify all subs, Assign a specific sub"
-        ],
-        "text": "Coverage dimensions\n6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development\n5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (09:00–15:00), Add Class\n2 sub preferences: Notify all subs, Assign a specific sub"
-      },
-      {
-        "title": "Part A — Duration Tests (T1–T16)",
         "level": 3,
         "content": [
-          "||#||Date||Reason||Duration||Sub Preference||Sub Selected||Result||",
-          "|T1|Jan 1, 2027|Sick|Full Day|Notify all subs|—|(/) PASS|",
-          "|T2|Jan 2, 2027|Personal|Full Day|Assign a specific sub|Sub 1|(/) PASS|",
-          "|T3|Jan 3, 2027|Vacation|Full Day|Notify all subs|—|(/) PASS|",
-          "|T4|Jan 4, 2027|Illness-Family Member|Full Day|Assign a specific sub|Sub 1|(/) PASS|",
-          "|T5|Jan 5, 2027|Educational Leave|Half Day AM|Notify all subs|—|(/) PASS|",
-          "|T6|Jan 6, 2027|Professional Development|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|",
-          "|T7|Jan 7, 2027|Sick|Half Day AM|Notify all subs|—|(/) PASS|",
-          "|T8|Jan 8, 2027|Personal|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|",
-          "|T9|Jan 9, 2027|Vacation|Half Day PM|Notify all subs|—|(/) PASS|",
-          "|T10|Jan 10, 2027|Illness-Family Member|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|",
-          "|T11|Jan 11, 2027|Educational Leave|Half Day PM|Notify all subs|—|(/) PASS|",
-          "|T12|Jan 12, 2027|Professional Development|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|",
-          "|T13|Jan 13, 2027|Sick|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|",
-          "|T14|Jan 14, 2027|Personal|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|",
-          "|T15|Jan 15, 2027|Vacation|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|",
-          "|T16|Jan 18, 2027|Illness-Family Member|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|"
+          {
+            "type": "paragraph",
+            "text": "This ticket covers the Playwright automation script for seeding and resetting the staff data in the InstaSub application via the UI. The script logs in as the protected admin, deletes all non-protected staff members through the UI delete flow, and re-creates them using the\nAdd Staff\n button with stored data. This script is intended as a\none-time or on-demand seed script\n to reset the environment to a known state before running test suites."
+          }
         ],
-        "text": "||#||Date||Reason||Duration||Sub Preference||Sub Selected||Result||\n|T1|Jan 1, 2027|Sick|Full Day|Notify all subs|—|(/) PASS|\n|T2|Jan 2, 2027|Personal|Full Day|Assign a specific sub|Sub 1|(/) PASS|\n|T3|Jan 3, 2027|Vacation|Full Day|Notify all subs|—|(/) PASS|\n|T4|Jan 4, 2027|Illness-Family Member|Full Day|Assign a specific sub|Sub 1|(/) PASS|\n|T5|Jan 5, 2027|Educational Leave|Half Day AM|Notify all subs|—|(/) PASS|\n|T6|Jan 6, 2027|Professional Development|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|\n|T7|Jan 7, 2027|Sick|Half Day AM|Notify all subs|—|(/) PASS|\n|T8|Jan 8, 2027|Personal|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|\n|T9|Jan 9, 2027|Vacation|Half Day PM|Notify all subs|—|(/) PASS|\n|T10|Jan 10, 2027|Illness-Family Member|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|\n|T11|Jan 11, 2027|Educational Leave|Half Day PM|Notify all subs|—|(/) PASS|\n|T12|Jan 12, 2027|Professional Development|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|\n|T13|Jan 13, 2027|Sick|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|\n|T14|Jan 14, 2027|Personal|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|\n|T15|Jan 15, 2027|Vacation|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|\n|T16|Jan 18, 2027|Illness-Family Member|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|"
+        "text": "This ticket covers the Playwright automation script for seeding and resetting the staff data in the InstaSub application via the UI. The script logs in as the protected admin, deletes all non-protected staff members through the UI delete flow, and re-creates them using the\nAdd Staff\n button with stored data. This script is intended as a\none-time or on-demand seed script\n to reset the environment to a known state before running test suites."
       },
       {
-        "title": "Part B — Add Class Tests (T17–T22)",
+        "title": "🔐 Protected Account (Must NEVER be deleted)",
         "level": 3,
         "content": [
-          "Add Class replaces the Duration dropdown. The class time inputs define the absence window.",
-          "||#||Date||Reason||Class Time||Sub Preference||Sub Selected||Result||",
-          "|T17|Jan 25, 2027|Educational Leave|08:00–12:00|Notify all subs|—|(/) PASS|",
-          "|T18|Jan 26, 2027|Professional Development|10:00–14:00|Assign a specific sub|Sub 1|(/) PASS|",
-          "|T19|Jan 27, 2027|Sick|09:00–11:00|Notify all subs|—|(/) PASS|",
-          "|T20|Feb 8, 2027|Personal|12:00–16:00|Assign a specific sub|Sub 1|(/) PASS|",
-          "|T21|Feb 9, 2027|Vacation|08:00–10:00|Notify all subs|—|(/) PASS|",
-          "|T22|Feb 10, 2027|Illness-Family Member|13:00–17:00|Assign a specific sub|Sub 1|(/) PASS|"
+          {
+            "type": "table",
+            "text": "Field | Value\nName | admin userx\nEmail | adminuserxadminzx@mailinator.com / adminzx@maillinator.com\nRole | District Admin\nLocation | regscus"
+          }
         ],
-        "text": "Add Class replaces the Duration dropdown. The class time inputs define the absence window.\n||#||Date||Reason||Class Time||Sub Preference||Sub Selected||Result||\n|T17|Jan 25, 2027|Educational Leave|08:00–12:00|Notify all subs|—|(/) PASS|\n|T18|Jan 26, 2027|Professional Development|10:00–14:00|Assign a specific sub|Sub 1|(/) PASS|\n|T19|Jan 27, 2027|Sick|09:00–11:00|Notify all subs|—|(/) PASS|\n|T20|Feb 8, 2027|Personal|12:00–16:00|Assign a specific sub|Sub 1|(/) PASS|\n|T21|Feb 9, 2027|Vacation|08:00–10:00|Notify all subs|—|(/) PASS|\n|T22|Feb 10, 2027|Illness-Family Member|13:00–17:00|Assign a specific sub|Sub 1|(/) PASS|"
+        "text": "Field | Value\nName | admin userx\nEmail | adminuserxadminzx@mailinator.com / adminzx@maillinator.com\nRole | District Admin\nLocation | regscus"
       },
       {
-        "title": "Result",
-        "level": 2,
+        "title": "👥 Staff to be Deleted & Re-created (6 users)",
+        "level": 3,
         "content": [
-          "22/22 tests passed. All 6 reasons, all 5 duration types (including Add Class), and both available sub preferences exercised. Sub 1 was successfully selected for all Assign a specific sub cases. The substitute search panel correctly required a date to be entered before listing available subs, and the submit button changed to \"Create And Assign\" when Assign a specific sub was selected."
+          {
+            "type": "table",
+            "text": "# | Name | Email | Phone | Location | Role | Type | Certified\n1 | regs admin | regsadmin@mailinator.com | +144516515651365 | regscus | District Admin | Teacher | Yes\n2 | school admin | schooladmin@mailinator.com | +16516532123 | SchoolAcademyTest2345 | School Admin | Teacher | Yes\n3 | user third | thirdezce@mailinator.com | +1564332151322215 | regscus | Employee | Teacher | Yes\n4 | user one | schoolruser670@mailinator.com | +119199899 | SchoolAcademyTest2345 | Employee | Teacher | Yes\n5 | user automation | staffuser210@mailinator.com | +1415611515311353 | SchoolAcademyTest2345 | Employee | Teacher | Yes\n6 | user two | schoolteacher890@mailinator.com | +1456645345456 | SchoolAcademyTest2345 | Employee | Teacher | Yes"
+          }
         ],
-        "text": "22/22 tests passed. All 6 reasons, all 5 duration types (including Add Class), and both available sub preferences exercised. Sub 1 was successfully selected for all Assign a specific sub cases. The substitute search panel correctly required a date to be entered before listing available subs, and the submit button changed to \"Create And Assign\" when Assign a specific sub was selected."
+        "text": "# | Name | Email | Phone | Location | Role | Type | Certified\n1 | regs admin | regsadmin@mailinator.com | +144516515651365 | regscus | District Admin | Teacher | Yes\n2 | school admin | schooladmin@mailinator.com | +16516532123 | SchoolAcademyTest2345 | School Admin | Teacher | Yes\n3 | user third | thirdezce@mailinator.com | +1564332151322215 | regscus | Employee | Teacher | Yes\n4 | user one | schoolruser670@mailinator.com | +119199899 | SchoolAcademyTest2345 | Employee | Teacher | Yes\n5 | user automation | staffuser210@mailinator.com | +1415611515311353 | SchoolAcademyTest2345 | Employee | Teacher | Yes\n6 | user two | schoolteacher890@mailinator.com | +1456645345456 | SchoolAcademyTest2345 | Employee | Teacher | Yes"
       },
       {
-        "title": "Acceptance Criteria",
-        "level": 2,
+        "title": "🧪 Test Cases",
+        "level": 3,
+        "content": [],
+        "text": ""
+      },
+      {
+        "title": "TC-SEED-01 — Login as Protected Admin",
+        "level": 4,
         "content": [
-          "Login succeeds with the school-level admin account ([schooladmin@mailinator.com|mailto:schooladmin@mailinator.com])",
-          "All 6 absence reasons selectable via the Find a Sub flow",
-          "Selecting Find a Sub reveals additional fields: School Location, Position, Grade, Subject, Subbing For, Add Class, Add Location",
-          "Only 2 sub preferences are available in Find a Sub mode: Notify all subs and Assign a specific sub",
-          "All 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Find a Sub mode",
-          "Half Day AM auto-sets times to 08:00 AM – 12:00 PM (read-only)",
-          "Half Day PM auto-sets times to 12:00 PM – 05:00 PM (read-only)",
-          "Enter Time Manually renders editable Start/End time fields",
-          "Add Class flow works for all 6 reasons in Find a Sub mode",
-          "Selecting Assign a specific sub triggers a date-gated substitute search panel listing available subs",
-          "Sub 1 selectable via Assign a specific sub",
-          "Submit button changes to \"Create And Assign\" when Assign a specific sub is selected",
-          "A toast notification confirms successful absence creation with a unique confirmation number",
-          "No blocking errors or UI failures across the 22-test run"
+          {
+            "type": "paragraph",
+            "text": "Preconditions:\n App is running at\n<https://instasublogin.tcpsoftware.com\n>\n\nSteps:"
+          },
+          {
+            "type": "orderedList",
+            "text": "Navigate to the login page\nEnter email:\nadminuserxadminzx@mailinator.com\nEnter the admin password\nClick Login / Submit\nVerify redirect to Dashboard/Home (\n/home\n)"
+          },
+          {
+            "type": "paragraph",
+            "text": "Expected Result:\n Admin is logged in and redirected to the home dashboard without errors."
+          }
         ],
-        "text": "Login succeeds with the school-level admin account ([schooladmin@mailinator.com|mailto:schooladmin@mailinator.com])\nAll 6 absence reasons selectable via the Find a Sub flow\nSelecting Find a Sub reveals additional fields: School Location, Position, Grade, Subject, Subbing For, Add Class, Add Location\nOnly 2 sub preferences are available in Find a Sub mode: Notify all subs and Assign a specific sub\nAll 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Find a Sub mode\nHalf Day AM auto-sets times to 08:00 AM – 12:00 PM (read-only)\nHalf Day PM auto-sets times to 12:00 PM – 05:00 PM (read-only)\nEnter Time Manually renders editable Start/End time fields\nAdd Class flow works for all 6 reasons in Find a Sub mode\nSelecting Assign a specific sub triggers a date-gated substitute search panel listing available subs\nSub 1 selectable via Assign a specific sub\nSubmit button changes to \"Create And Assign\" when Assign a specific sub is selected\nA toast notification confirms successful absence creation with a unique confirmation number\nNo blocking errors or UI failures across the 22-test run"
+        "text": "Preconditions:\n App is running at\n<https://instasublogin.tcpsoftware.com\n>\n\nSteps:\nNavigate to the login page\nEnter email:\nadminuserxadminzx@mailinator.com\nEnter the admin password\nClick Login / Submit\nVerify redirect to Dashboard/Home (\n/home\n)\nExpected Result:\n Admin is logged in and redirected to the home dashboard without errors."
+      },
+      {
+        "title": "TC-SEED-02 — Navigate to Staff Management Page",
+        "level": 4,
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "Preconditions:\n Logged in as admin\n\nSteps:"
+          },
+          {
+            "type": "orderedList",
+            "text": "Navigate to\n/manage/employees\nVerify the staff table loads with all existing staff rows\nVerify the protected admin (\nadminzx@maillinator.com\n) is visible in the list"
+          },
+          {
+            "type": "paragraph",
+            "text": "Expected Result:\n Staff management page loads, showing all staff members including the protected admin row."
+          }
+        ],
+        "text": "Preconditions:\n Logged in as admin\n\nSteps:\nNavigate to\n/manage/employees\nVerify the staff table loads with all existing staff rows\nVerify the protected admin (\nadminzx@maillinator.com\n) is visible in the list\nExpected Result:\n Staff management page loads, showing all staff members including the protected admin row."
+      },
+      {
+        "title": "TC-SEED-03 — Delete All Non-Protected Staff (UI Flow)",
+        "level": 4,
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "Preconditions:\n On\n/manage/employees\n, at least 1 non-protected staff member exists\n\nSteps:"
+          },
+          {
+            "type": "orderedList",
+            "text": "For each staff row in the table:\n\na. Check if the email matches\nadminzx@maillinator.com\n — if yes,\nskip\n\nb. If not protected, click the\nDelete\n icon/button on that row\n\nc. Wait for the confirmation dialog to appear\n\nd. Click\nConfirm / Yes\n in the dialog\n\ne. Wait for success toast / row removal\nRepeat until all non-protected staff are deleted\nVerify only the protected admin row remains"
+          },
+          {
+            "type": "paragraph",
+            "text": "Expected Result:\n All 6 non-protected staff members are deleted. Protected admin row is untouched and still visible."
+          },
+          {
+            "type": "paragraph",
+            "text": "Critical Constraint:\n Under no circumstances should the script delete\nadminzx@maillinator.com\n."
+          }
+        ],
+        "text": "Preconditions:\n On\n/manage/employees\n, at least 1 non-protected staff member exists\n\nSteps:\nFor each staff row in the table:\n\na. Check if the email matches\nadminzx@maillinator.com\n — if yes,\nskip\n\nb. If not protected, click the\nDelete\n icon/button on that row\n\nc. Wait for the confirmation dialog to appear\n\nd. Click\nConfirm / Yes\n in the dialog\n\ne. Wait for success toast / row removal\nRepeat until all non-protected staff are deleted\nVerify only the protected admin row remains\nExpected Result:\n All 6 non-protected staff members are deleted. Protected admin row is untouched and still visible.\nCritical Constraint:\n Under no circumstances should the script delete\nadminzx@maillinator.com\n."
+      },
+      {
+        "title": "TC-SEED-04 — Protected Admin is Never Deleted",
+        "level": 4,
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "Preconditions:\n Script is executing the deletion loop\n\nSteps:"
+          },
+          {
+            "type": "orderedList",
+            "text": "Script evaluates each row's email against the protected list\nWhen the protected admin email is found, the delete action is\nskipped entirely\nAfter full deletion loop completes, confirm protected admin still appears in staff table"
+          },
+          {
+            "type": "paragraph",
+            "text": "Expected Result:\n Protected admin account remains intact throughout and after the full deletion loop. No delete action is triggered for this account."
+          }
+        ],
+        "text": "Preconditions:\n Script is executing the deletion loop\n\nSteps:\nScript evaluates each row's email against the protected list\nWhen the protected admin email is found, the delete action is\nskipped entirely\nAfter full deletion loop completes, confirm protected admin still appears in staff table\nExpected Result:\n Protected admin account remains intact throughout and after the full deletion loop. No delete action is triggered for this account."
+      },
+      {
+        "title": "TC-SEED-05 — Re-create Staff via Add Staff Button (Per User)",
+        "level": 4,
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "Preconditions:\n Non-protected staff have been deleted; on\n/manage/employees\n\nSteps (repeat for each of the 6 staff members):"
+          },
+          {
+            "type": "orderedList",
+            "text": "Click the\nAdd Staff\n button on the staff management page\nIn the Add Staff modal/form, fill in:\nFirst Name\n and\nLast Name\nEmail\nPhone\nLocation / School\n (select from dropdown)\nRole\n (District Admin / School Admin / Employee)\nType\n (Teacher)\nCertified\n (Yes)\nSubmit / Save the form\nVerify success toast appears\nVerify the new staff member row appears in the staff table"
+          },
+          {
+            "type": "paragraph",
+            "text": "Expected Result:\n Each of the 6 staff members is successfully re-created with all correct field values. Success toast confirms creation. Staff table reflects updated count."
+          }
+        ],
+        "text": "Preconditions:\n Non-protected staff have been deleted; on\n/manage/employees\n\nSteps (repeat for each of the 6 staff members):\nClick the\nAdd Staff\n button on the staff management page\nIn the Add Staff modal/form, fill in:\nFirst Name\n and\nLast Name\nEmail\nPhone\nLocation / School\n (select from dropdown)\nRole\n (District Admin / School Admin / Employee)\nType\n (Teacher)\nCertified\n (Yes)\nSubmit / Save the form\nVerify success toast appears\nVerify the new staff member row appears in the staff table\nExpected Result:\n Each of the 6 staff members is successfully re-created with all correct field values. Success toast confirms creation. Staff table reflects updated count."
+      },
+      {
+        "title": "TC-SEED-06 — Verify Full Staff State After Seeding",
+        "level": 4,
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "Preconditions:\n All 6 staff have been re-created\n\nSteps:"
+          },
+          {
+            "type": "orderedList",
+            "text": "Reload\n/manage/employees\nCount total staff rows — expect\n7\nFor each expected staff member, verify:\nName\nEmail\nRole\nLocation\nConfirm protected admin is present and unchanged"
+          },
+          {
+            "type": "paragraph",
+            "text": "Expected Result:\n Staff table shows exactly 7 members with all correct data matching the seed dataset. No duplicate or missing entries."
+          }
+        ],
+        "text": "Preconditions:\n All 6 staff have been re-created\n\nSteps:\nReload\n/manage/employees\nCount total staff rows — expect\n7\nFor each expected staff member, verify:\nName\nEmail\nRole\nLocation\nConfirm protected admin is present and unchanged\nExpected Result:\n Staff table shows exactly 7 members with all correct data matching the seed dataset. No duplicate or missing entries."
+      },
+      {
+        "title": "TC-SEED-07 — Idempotency — Re-run Script on Already-Seeded State",
+        "level": 4,
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "Preconditions:\n Script has already been run once; all 7 staff exist\n\nSteps:"
+          },
+          {
+            "type": "orderedList",
+            "text": "Run the seed script again\nScript detects existing non-protected users and deletes them\nScript re-creates all 6 staff again\nVerify final state is 7 staff (1 protected + 6 re-created)"
+          },
+          {
+            "type": "paragraph",
+            "text": "Expected Result:\n Script is idempotent — running it multiple times always results in the same clean 7-user state without errors or duplicates."
+          }
+        ],
+        "text": "Preconditions:\n Script has already been run once; all 7 staff exist\n\nSteps:\nRun the seed script again\nScript detects existing non-protected users and deletes them\nScript re-creates all 6 staff again\nVerify final state is 7 staff (1 protected + 6 re-created)\nExpected Result:\n Script is idempotent — running it multiple times always results in the same clean 7-user state without errors or duplicates."
+      },
+      {
+        "title": "⚙️ Automation Details",
+        "level": 3,
+        "content": [
+          {
+            "type": "table",
+            "text": "Field | Value\nFramework | Playwright (Node.js)\nScript file | seed-staff.js\nRun command | node seed-staff.js\nScript type | One-time / on-demand seed script\nLogin method | UI (email + password)\nDelete method | UI delete button + confirmation dialog\nCreate method | UI Add Staff button + form fill\nEnvironment | <https://instasublogin.tcpsoftware.com >"
+          }
+        ],
+        "text": "Field | Value\nFramework | Playwright (Node.js)\nScript file | seed-staff.js\nRun command | node seed-staff.js\nScript type | One-time / on-demand seed script\nLogin method | UI (email + password)\nDelete method | UI delete button + confirmation dialog\nCreate method | UI Add Staff button + form fill\nEnvironment | <https://instasublogin.tcpsoftware.com >"
+      },
+      {
+        "title": "✅ Acceptance Criteria",
+        "level": 3,
+        "content": [
+          {
+            "type": "bulletList",
+            "text": "[ ] Script logs in successfully as the protected admin\n[ ] All 6 non-protected staff are deleted via UI delete flow\n[ ] Protected admin (\nadminzx@maillinator.com\n) is never deleted under any circumstances\n[ ] All 6 staff are re-created via Add Staff UI button with correct field data\n[ ] Final staff table shows exactly 7 members matching the seed dataset\n[ ] Script can be re-run multiple times (idempotent)\n[ ] No hardcoded passwords —\nLOGIN_PASSWORD\n is passed via environment variable"
+          }
+        ],
+        "text": "[ ] Script logs in successfully as the protected admin\n[ ] All 6 non-protected staff are deleted via UI delete flow\n[ ] Protected admin (\nadminzx@maillinator.com\n) is never deleted under any circumstances\n[ ] All 6 staff are re-created via Add Staff UI button with correct field data\n[ ] Final staff table shows exactly 7 members matching the seed dataset\n[ ] Script can be re-run multiple times (idempotent)\n[ ] No hardcoded passwords —\nLOGIN_PASSWORD\n is passed via environment variable"
+      },
+      {
+        "title": "🔗 Related",
+        "level": 3,
+        "content": [
+          {
+            "type": "bulletList",
+            "text": "Playwright seeding script:\nseed-staff.js\nApplication URL:\n<https://instasublogin.tcpsoftware.com/manage/employees\n>"
+          },
+          {
+            "type": "paragraph",
+            "text": "This ticket is structured to serve as both a QA test plan and a\nprompt for code generation\n — each test case maps directly to a function or step in the Playwright script. Let me know if you'd like to adjust any test cases, add edge cases (e.g. network failure handling, missing fields), or split this into sub-tasks!"
+          }
+        ],
+        "text": "Playwright seeding script:\nseed-staff.js\nApplication URL:\n<https://instasublogin.tcpsoftware.com/manage/employees\n>\nThis ticket is structured to serve as both a QA test plan and a\nprompt for code generation\n — each test case maps directly to a function or step in the Playwright script. Let me know if you'd like to adjust any test cases, add edge cases (e.g. network failure handling, missing fields), or split this into sub-tasks!"
       }
     ],
     "tables": [
       {
-        "source": "jira-wiki-markup",
         "headers": [
-          "#",
-          "Date",
-          "Reason",
-          "Duration",
-          "Sub Preference",
-          "Sub Selected",
-          "Result"
+          "Field",
+          "Value"
         ],
         "rows": [
           {
-            "#": "T1",
-            "Date": "Jan 1, 2027",
-            "Reason": "Sick",
-            "Duration": "Full Day",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "(/) PASS"
+            "Field": "Name",
+            "Value": "admin userx"
           },
           {
-            "#": "T2",
-            "Date": "Jan 2, 2027",
-            "Reason": "Personal",
-            "Duration": "Full Day",
-            "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 1",
-            "Result": "(/) PASS"
+            "Field": "Email",
+            "Value": "adminuserxadminzx@mailinator.com / adminzx@maillinator.com"
           },
           {
-            "#": "T3",
-            "Date": "Jan 3, 2027",
-            "Reason": "Vacation",
-            "Duration": "Full Day",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "(/) PASS"
+            "Field": "Role",
+            "Value": "District Admin"
           },
           {
-            "#": "T4",
-            "Date": "Jan 4, 2027",
-            "Reason": "Illness-Family Member",
-            "Duration": "Full Day",
-            "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 1",
-            "Result": "(/) PASS"
-          },
-          {
-            "#": "T5",
-            "Date": "Jan 5, 2027",
-            "Reason": "Educational Leave",
-            "Duration": "Half Day AM",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "(/) PASS"
-          },
-          {
-            "#": "T6",
-            "Date": "Jan 6, 2027",
-            "Reason": "Professional Development",
-            "Duration": "Half Day AM",
-            "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 1",
-            "Result": "(/) PASS"
-          },
-          {
-            "#": "T7",
-            "Date": "Jan 7, 2027",
-            "Reason": "Sick",
-            "Duration": "Half Day AM",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "(/) PASS"
-          },
-          {
-            "#": "T8",
-            "Date": "Jan 8, 2027",
-            "Reason": "Personal",
-            "Duration": "Half Day AM",
-            "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 1",
-            "Result": "(/) PASS"
-          },
-          {
-            "#": "T9",
-            "Date": "Jan 9, 2027",
-            "Reason": "Vacation",
-            "Duration": "Half Day PM",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "(/) PASS"
-          },
-          {
-            "#": "T10",
-            "Date": "Jan 10, 2027",
-            "Reason": "Illness-Family Member",
-            "Duration": "Half Day PM",
-            "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 1",
-            "Result": "(/) PASS"
-          },
-          {
-            "#": "T11",
-            "Date": "Jan 11, 2027",
-            "Reason": "Educational Leave",
-            "Duration": "Half Day PM",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "(/) PASS"
-          },
-          {
-            "#": "T12",
-            "Date": "Jan 12, 2027",
-            "Reason": "Professional Development",
-            "Duration": "Half Day PM",
-            "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 1",
-            "Result": "(/) PASS"
-          },
-          {
-            "#": "T13",
-            "Date": "Jan 13, 2027",
-            "Reason": "Sick",
-            "Duration": "Enter Time Manually (09:00–15:00)",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "(/) PASS"
-          },
-          {
-            "#": "T14",
-            "Date": "Jan 14, 2027",
-            "Reason": "Personal",
-            "Duration": "Enter Time Manually (09:00–15:00)",
-            "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 1",
-            "Result": "(/) PASS"
-          },
-          {
-            "#": "T15",
-            "Date": "Jan 15, 2027",
-            "Reason": "Vacation",
-            "Duration": "Enter Time Manually (09:00–15:00)",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "(/) PASS"
-          },
-          {
-            "#": "T16",
-            "Date": "Jan 18, 2027",
-            "Reason": "Illness-Family Member",
-            "Duration": "Enter Time Manually (09:00–15:00)",
-            "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 1",
-            "Result": "(/) PASS"
+            "Field": "Location",
+            "Value": "regscus"
           }
         ],
         "rawRows": [
           [
-            "#",
-            "Date",
-            "Reason",
-            "Duration",
-            "Sub Preference",
-            "Sub Selected",
-            "Result"
+            "Field",
+            "Value"
           ],
           [
-            "T1",
-            "Jan 1, 2027",
-            "Sick",
-            "Full Day",
-            "Notify all subs",
-            "—",
-            "(/) PASS"
+            "Name",
+            "admin userx"
           ],
           [
-            "T2",
-            "Jan 2, 2027",
-            "Personal",
-            "Full Day",
-            "Assign a specific sub",
-            "Sub 1",
-            "(/) PASS"
+            "Email",
+            "adminuserxadminzx@mailinator.com / adminzx@maillinator.com"
           ],
           [
-            "T3",
-            "Jan 3, 2027",
-            "Vacation",
-            "Full Day",
-            "Notify all subs",
-            "—",
-            "(/) PASS"
+            "Role",
+            "District Admin"
           ],
           [
-            "T4",
-            "Jan 4, 2027",
-            "Illness-Family Member",
-            "Full Day",
-            "Assign a specific sub",
-            "Sub 1",
-            "(/) PASS"
-          ],
-          [
-            "T5",
-            "Jan 5, 2027",
-            "Educational Leave",
-            "Half Day AM",
-            "Notify all subs",
-            "—",
-            "(/) PASS"
-          ],
-          [
-            "T6",
-            "Jan 6, 2027",
-            "Professional Development",
-            "Half Day AM",
-            "Assign a specific sub",
-            "Sub 1",
-            "(/) PASS"
-          ],
-          [
-            "T7",
-            "Jan 7, 2027",
-            "Sick",
-            "Half Day AM",
-            "Notify all subs",
-            "—",
-            "(/) PASS"
-          ],
-          [
-            "T8",
-            "Jan 8, 2027",
-            "Personal",
-            "Half Day AM",
-            "Assign a specific sub",
-            "Sub 1",
-            "(/) PASS"
-          ],
-          [
-            "T9",
-            "Jan 9, 2027",
-            "Vacation",
-            "Half Day PM",
-            "Notify all subs",
-            "—",
-            "(/) PASS"
-          ],
-          [
-            "T10",
-            "Jan 10, 2027",
-            "Illness-Family Member",
-            "Half Day PM",
-            "Assign a specific sub",
-            "Sub 1",
-            "(/) PASS"
-          ],
-          [
-            "T11",
-            "Jan 11, 2027",
-            "Educational Leave",
-            "Half Day PM",
-            "Notify all subs",
-            "—",
-            "(/) PASS"
-          ],
-          [
-            "T12",
-            "Jan 12, 2027",
-            "Professional Development",
-            "Half Day PM",
-            "Assign a specific sub",
-            "Sub 1",
-            "(/) PASS"
-          ],
-          [
-            "T13",
-            "Jan 13, 2027",
-            "Sick",
-            "Enter Time Manually (09:00–15:00)",
-            "Notify all subs",
-            "—",
-            "(/) PASS"
-          ],
-          [
-            "T14",
-            "Jan 14, 2027",
-            "Personal",
-            "Enter Time Manually (09:00–15:00)",
-            "Assign a specific sub",
-            "Sub 1",
-            "(/) PASS"
-          ],
-          [
-            "T15",
-            "Jan 15, 2027",
-            "Vacation",
-            "Enter Time Manually (09:00–15:00)",
-            "Notify all subs",
-            "—",
-            "(/) PASS"
-          ],
-          [
-            "T16",
-            "Jan 18, 2027",
-            "Illness-Family Member",
-            "Enter Time Manually (09:00–15:00)",
-            "Assign a specific sub",
-            "Sub 1",
-            "(/) PASS"
+            "Location",
+            "regscus"
           ]
         ],
-        "text": "# | Date | Reason | Duration | Sub Preference | Sub Selected | Result\nT1 | Jan 1, 2027 | Sick | Full Day | Notify all subs | — | (/) PASS\nT2 | Jan 2, 2027 | Personal | Full Day | Assign a specific sub | Sub 1 | (/) PASS\nT3 | Jan 3, 2027 | Vacation | Full Day | Notify all subs | — | (/) PASS\nT4 | Jan 4, 2027 | Illness-Family Member | Full Day | Assign a specific sub | Sub 1 | (/) PASS\nT5 | Jan 5, 2027 | Educational Leave | Half Day AM | Notify all subs | — | (/) PASS\nT6 | Jan 6, 2027 | Professional Development | Half Day AM | Assign a specific sub | Sub 1 | (/) PASS\nT7 | Jan 7, 2027 | Sick | Half Day AM | Notify all subs | — | (/) PASS\nT8 | Jan 8, 2027 | Personal | Half Day AM | Assign a specific sub | Sub 1 | (/) PASS\nT9 | Jan 9, 2027 | Vacation | Half Day PM | Notify all subs | — | (/) PASS\nT10 | Jan 10, 2027 | Illness-Family Member | Half Day PM | Assign a specific sub | Sub 1 | (/) PASS\nT11 | Jan 11, 2027 | Educational Leave | Half Day PM | Notify all subs | — | (/) PASS\nT12 | Jan 12, 2027 | Professional Development | Half Day PM | Assign a specific sub | Sub 1 | (/) PASS\nT13 | Jan 13, 2027 | Sick | Enter Time Manually (09:00–15:00) | Notify all subs | — | (/) PASS\nT14 | Jan 14, 2027 | Personal | Enter Time Manually (09:00–15:00) | Assign a specific sub | Sub 1 | (/) PASS\nT15 | Jan 15, 2027 | Vacation | Enter Time Manually (09:00–15:00) | Notify all subs | — | (/) PASS\nT16 | Jan 18, 2027 | Illness-Family Member | Enter Time Manually (09:00–15:00) | Assign a specific sub | Sub 1 | (/) PASS"
+        "text": "Field | Value\nName | admin userx\nEmail | adminuserxadminzx@mailinator.com / adminzx@maillinator.com\nRole | District Admin\nLocation | regscus"
       },
       {
-        "source": "jira-wiki-markup",
         "headers": [
           "#",
-          "Date",
-          "Reason",
-          "Class Time",
-          "Sub Preference",
-          "Sub Selected",
-          "Result"
+          "Name",
+          "Email",
+          "Phone",
+          "Location",
+          "Role",
+          "Type",
+          "Certified"
         ],
         "rows": [
           {
-            "#": "T17",
-            "Date": "Jan 25, 2027",
-            "Reason": "Educational Leave",
-            "Class Time": "08:00–12:00",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "(/) PASS"
+            "#": "1",
+            "Name": "regs admin",
+            "Email": "regsadmin@mailinator.com",
+            "Phone": "+144516515651365",
+            "Location": "regscus",
+            "Role": "District Admin",
+            "Type": "Teacher",
+            "Certified": "Yes"
           },
           {
-            "#": "T18",
-            "Date": "Jan 26, 2027",
-            "Reason": "Professional Development",
-            "Class Time": "10:00–14:00",
-            "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 1",
-            "Result": "(/) PASS"
+            "#": "2",
+            "Name": "school admin",
+            "Email": "schooladmin@mailinator.com",
+            "Phone": "+16516532123",
+            "Location": "SchoolAcademyTest2345",
+            "Role": "School Admin",
+            "Type": "Teacher",
+            "Certified": "Yes"
           },
           {
-            "#": "T19",
-            "Date": "Jan 27, 2027",
-            "Reason": "Sick",
-            "Class Time": "09:00–11:00",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "(/) PASS"
+            "#": "3",
+            "Name": "user third",
+            "Email": "thirdezce@mailinator.com",
+            "Phone": "+1564332151322215",
+            "Location": "regscus",
+            "Role": "Employee",
+            "Type": "Teacher",
+            "Certified": "Yes"
           },
           {
-            "#": "T20",
-            "Date": "Feb 8, 2027",
-            "Reason": "Personal",
-            "Class Time": "12:00–16:00",
-            "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 1",
-            "Result": "(/) PASS"
+            "#": "4",
+            "Name": "user one",
+            "Email": "schoolruser670@mailinator.com",
+            "Phone": "+119199899",
+            "Location": "SchoolAcademyTest2345",
+            "Role": "Employee",
+            "Type": "Teacher",
+            "Certified": "Yes"
           },
           {
-            "#": "T21",
-            "Date": "Feb 9, 2027",
-            "Reason": "Vacation",
-            "Class Time": "08:00–10:00",
-            "Sub Preference": "Notify all subs",
-            "Sub Selected": "—",
-            "Result": "(/) PASS"
+            "#": "5",
+            "Name": "user automation",
+            "Email": "staffuser210@mailinator.com",
+            "Phone": "+1415611515311353",
+            "Location": "SchoolAcademyTest2345",
+            "Role": "Employee",
+            "Type": "Teacher",
+            "Certified": "Yes"
           },
           {
-            "#": "T22",
-            "Date": "Feb 10, 2027",
-            "Reason": "Illness-Family Member",
-            "Class Time": "13:00–17:00",
-            "Sub Preference": "Assign a specific sub",
-            "Sub Selected": "Sub 1",
-            "Result": "(/) PASS"
+            "#": "6",
+            "Name": "user two",
+            "Email": "schoolteacher890@mailinator.com",
+            "Phone": "+1456645345456",
+            "Location": "SchoolAcademyTest2345",
+            "Role": "Employee",
+            "Type": "Teacher",
+            "Certified": "Yes"
           }
         ],
         "rawRows": [
           [
             "#",
-            "Date",
-            "Reason",
-            "Class Time",
-            "Sub Preference",
-            "Sub Selected",
-            "Result"
+            "Name",
+            "Email",
+            "Phone",
+            "Location",
+            "Role",
+            "Type",
+            "Certified"
           ],
           [
-            "T17",
-            "Jan 25, 2027",
-            "Educational Leave",
-            "08:00–12:00",
-            "Notify all subs",
-            "—",
-            "(/) PASS"
+            "1",
+            "regs admin",
+            "regsadmin@mailinator.com",
+            "+144516515651365",
+            "regscus",
+            "District Admin",
+            "Teacher",
+            "Yes"
           ],
           [
-            "T18",
-            "Jan 26, 2027",
-            "Professional Development",
-            "10:00–14:00",
-            "Assign a specific sub",
-            "Sub 1",
-            "(/) PASS"
+            "2",
+            "school admin",
+            "schooladmin@mailinator.com",
+            "+16516532123",
+            "SchoolAcademyTest2345",
+            "School Admin",
+            "Teacher",
+            "Yes"
           ],
           [
-            "T19",
-            "Jan 27, 2027",
-            "Sick",
-            "09:00–11:00",
-            "Notify all subs",
-            "—",
-            "(/) PASS"
+            "3",
+            "user third",
+            "thirdezce@mailinator.com",
+            "+1564332151322215",
+            "regscus",
+            "Employee",
+            "Teacher",
+            "Yes"
           ],
           [
-            "T20",
-            "Feb 8, 2027",
-            "Personal",
-            "12:00–16:00",
-            "Assign a specific sub",
-            "Sub 1",
-            "(/) PASS"
+            "4",
+            "user one",
+            "schoolruser670@mailinator.com",
+            "+119199899",
+            "SchoolAcademyTest2345",
+            "Employee",
+            "Teacher",
+            "Yes"
           ],
           [
-            "T21",
-            "Feb 9, 2027",
-            "Vacation",
-            "08:00–10:00",
-            "Notify all subs",
-            "—",
-            "(/) PASS"
+            "5",
+            "user automation",
+            "staffuser210@mailinator.com",
+            "+1415611515311353",
+            "SchoolAcademyTest2345",
+            "Employee",
+            "Teacher",
+            "Yes"
           ],
           [
-            "T22",
-            "Feb 10, 2027",
-            "Illness-Family Member",
-            "13:00–17:00",
-            "Assign a specific sub",
-            "Sub 1",
-            "(/) PASS"
+            "6",
+            "user two",
+            "schoolteacher890@mailinator.com",
+            "+1456645345456",
+            "SchoolAcademyTest2345",
+            "Employee",
+            "Teacher",
+            "Yes"
           ]
         ],
-        "text": "# | Date | Reason | Class Time | Sub Preference | Sub Selected | Result\nT17 | Jan 25, 2027 | Educational Leave | 08:00–12:00 | Notify all subs | — | (/) PASS\nT18 | Jan 26, 2027 | Professional Development | 10:00–14:00 | Assign a specific sub | Sub 1 | (/) PASS\nT19 | Jan 27, 2027 | Sick | 09:00–11:00 | Notify all subs | — | (/) PASS\nT20 | Feb 8, 2027 | Personal | 12:00–16:00 | Assign a specific sub | Sub 1 | (/) PASS\nT21 | Feb 9, 2027 | Vacation | 08:00–10:00 | Notify all subs | — | (/) PASS\nT22 | Feb 10, 2027 | Illness-Family Member | 13:00–17:00 | Assign a specific sub | Sub 1 | (/) PASS"
+        "text": "# | Name | Email | Phone | Location | Role | Type | Certified\n1 | regs admin | regsadmin@mailinator.com | +144516515651365 | regscus | District Admin | Teacher | Yes\n2 | school admin | schooladmin@mailinator.com | +16516532123 | SchoolAcademyTest2345 | School Admin | Teacher | Yes\n3 | user third | thirdezce@mailinator.com | +1564332151322215 | regscus | Employee | Teacher | Yes\n4 | user one | schoolruser670@mailinator.com | +119199899 | SchoolAcademyTest2345 | Employee | Teacher | Yes\n5 | user automation | staffuser210@mailinator.com | +1415611515311353 | SchoolAcademyTest2345 | Employee | Teacher | Yes\n6 | user two | schoolteacher890@mailinator.com | +1456645345456 | SchoolAcademyTest2345 | Employee | Teacher | Yes"
+      },
+      {
+        "headers": [
+          "Field",
+          "Value"
+        ],
+        "rows": [
+          {
+            "Field": "Framework",
+            "Value": "Playwright (Node.js)"
+          },
+          {
+            "Field": "Script file",
+            "Value": "seed-staff.js"
+          },
+          {
+            "Field": "Run command",
+            "Value": "node seed-staff.js"
+          },
+          {
+            "Field": "Script type",
+            "Value": "One-time / on-demand seed script"
+          },
+          {
+            "Field": "Login method",
+            "Value": "UI (email + password)"
+          },
+          {
+            "Field": "Delete method",
+            "Value": "UI delete button + confirmation dialog"
+          },
+          {
+            "Field": "Create method",
+            "Value": "UI Add Staff button + form fill"
+          },
+          {
+            "Field": "Environment",
+            "Value": "<https://instasublogin.tcpsoftware.com >"
+          }
+        ],
+        "rawRows": [
+          [
+            "Field",
+            "Value"
+          ],
+          [
+            "Framework",
+            "Playwright (Node.js)"
+          ],
+          [
+            "Script file",
+            "seed-staff.js"
+          ],
+          [
+            "Run command",
+            "node seed-staff.js"
+          ],
+          [
+            "Script type",
+            "One-time / on-demand seed script"
+          ],
+          [
+            "Login method",
+            "UI (email + password)"
+          ],
+          [
+            "Delete method",
+            "UI delete button + confirmation dialog"
+          ],
+          [
+            "Create method",
+            "UI Add Staff button + form fill"
+          ],
+          [
+            "Environment",
+            "<https://instasublogin.tcpsoftware.com >"
+          ]
+        ],
+        "text": "Field | Value\nFramework | Playwright (Node.js)\nScript file | seed-staff.js\nRun command | node seed-staff.js\nScript type | One-time / on-demand seed script\nLogin method | UI (email + password)\nDelete method | UI delete button + confirmation dialog\nCreate method | UI Add Staff button + form fill\nEnvironment | <https://instasublogin.tcpsoftware.com >"
       }
     ],
     "panels": [],
@@ -571,255 +511,64 @@
   "businessRequirements": [
     {
       "id": "BR-1",
-      "description": "Pairwise regression coverage for the Find a Sub absence creation flow. The test signs in to the school-level admin account and creates absences using the Find a Sub mode across every reason, duration type, and substitute preference available in this flow. The run confirms the form, substitute search panel, class time inputs, and sub picker all behave correctly in Find a Sub mode.",
+      "description": "This ticket covers the Playwright automation script for seeding and resetting the staff data in the InstaSub application via the UI. The script logs in as the protected admin, deletes all non-protected staff members through the UI delete flow, and re-creates them using the",
       "testable": true
     },
     {
       "id": "BR-2",
-      "description": "Flow: Find a Sub absence creation (/absence/createAbsence), type: Find a Sub",
+      "description": "👥 Staff to be Deleted & Re-created (6 users)",
+      "testable": true
+    },
+    {
+      "id": "BR-3",
+      "description": "TC-SEED-05 — Re-create Staff via Add Staff Button (Per User)",
+      "testable": true
+    },
+    {
+      "id": "BR-4",
+      "description": "Each of the 6 staff members is successfully re-created with all correct field values. Success toast confirms creation. Staff table reflects updated count.",
+      "testable": true
+    },
+    {
+      "id": "BR-5",
+      "description": "All 6 staff have been re-created",
+      "testable": true
+    },
+    {
+      "id": "BR-6",
+      "description": "Script re-creates all 6 staff again",
+      "testable": true
+    },
+    {
+      "id": "BR-7",
+      "description": "Verify final state is 7 staff (1 protected + 6 re-created)",
+      "testable": true
+    },
+    {
+      "id": "BR-8",
+      "description": "[ ] All 6 staff are re-created via Add Staff UI button with correct field data",
       "testable": true
     }
   ],
   "acceptanceCriteria": [
-    "Login succeeds with the school-level admin account ([schooladmin@mailinator.com|mailto:schooladmin@mailinator.com])",
-    "All 6 absence reasons selectable via the Find a Sub flow",
-    "Selecting Find a Sub reveals additional fields: School Location, Position, Grade, Subject, Subbing For, Add Class, Add Location",
-    "Only 2 sub preferences are available in Find a Sub mode: Notify all subs and Assign a specific sub",
-    "All 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Find a Sub mode",
-    "Half Day AM auto-sets times to 08:00 AM – 12:00 PM (read-only)",
-    "Half Day PM auto-sets times to 12:00 PM – 05:00 PM (read-only)",
-    "Enter Time Manually renders editable Start/End time fields",
-    "Add Class flow works for all 6 reasons in Find a Sub mode",
-    "Selecting Assign a specific sub triggers a date-gated substitute search panel listing available subs",
-    "Sub 1 selectable via Assign a specific sub",
-    "Submit button changes to \"Create And Assign\" when Assign a specific sub is selected",
-    "A toast notification confirms successful absence creation with a unique confirmation number",
-    "No blocking errors or UI failures across the 22-test run"
+    "[ ] Script logs in successfully as the protected admin",
+    "[ ] All 6 non-protected staff are deleted via UI delete flow",
+    "[ ] Protected admin ( adminzx@maillinator.com ) is never deleted under any circumstances",
+    "[ ] All 6 staff are re-created via Add Staff UI button with correct field data",
+    "[ ] Final staff table shows exactly 7 members matching the seed dataset",
+    "[ ] Script can be re-run multiple times (idempotent)",
+    "[ ] No hardcoded passwords — LOGIN_PASSWORD is passed via environment variable"
   ],
   "testableItems": [
-    "T1 / Sick / Full Day / Notify all subs / Jan 1, 2027",
-    "T2 / Personal / Full Day / Assign a specific sub / Jan 2, 2027",
-    "T3 / Vacation / Full Day / Notify all subs / Jan 3, 2027",
-    "T4 / Illness-Family Member / Full Day / Assign a specific sub / Jan 4, 2027",
-    "T5 / Educational Leave / Half Day AM / Notify all subs / Jan 5, 2027",
-    "T6 / Professional Development / Half Day AM / Assign a specific sub / Jan 6, 2027",
-    "T7 / Sick / Half Day AM / Notify all subs / Jan 7, 2027",
-    "T8 / Personal / Half Day AM / Assign a specific sub / Jan 8, 2027",
-    "T9 / Vacation / Half Day PM / Notify all subs / Jan 9, 2027",
-    "T10 / Illness-Family Member / Half Day PM / Assign a specific sub / Jan 10, 2027",
-    "T11 / Educational Leave / Half Day PM / Notify all subs / Jan 11, 2027",
-    "T12 / Professional Development / Half Day PM / Assign a specific sub / Jan 12, 2027",
-    "T13 / Sick / Enter Time Manually (09:00–15:00) / Notify all subs / Jan 13, 2027",
-    "T14 / Personal / Enter Time Manually (09:00–15:00) / Assign a specific sub / Jan 14, 2027",
-    "T15 / Vacation / Enter Time Manually (09:00–15:00) / Notify all subs / Jan 15, 2027",
-    "T16 / Illness-Family Member / Enter Time Manually (09:00–15:00) / Assign a specific sub / Jan 18, 2027",
-    "T17 / Educational Leave / 08:00–12:00 / Notify all subs / Jan 25, 2027",
-    "T18 / Professional Development / 10:00–14:00 / Assign a specific sub / Jan 26, 2027",
-    "T19 / Sick / 09:00–11:00 / Notify all subs / Jan 27, 2027",
-    "T20 / Personal / 12:00–16:00 / Assign a specific sub / Feb 8, 2027",
-    "T21 / Vacation / 08:00–10:00 / Notify all subs / Feb 9, 2027",
-    "T22 / Illness-Family Member / 13:00–17:00 / Assign a specific sub / Feb 10, 2027"
+    "TC-SEED-01 — Login as Protected Admin: Preconditions: App is running at <https://instasublogin.tcpsoftware.com > Steps: Navigate to the login page Enter email: adminuserxadminzx@mailinator.com Enter the admin password Click Login / Submit Verify redirect to Dashboard/Home ( /home ) Expected Result: Admin is logged in and redirected to the home dashboard without errors.",
+    "TC-SEED-02 — Navigate to Staff Management Page: Preconditions: Logged in as admin Steps: Navigate to /manage/employees Verify the staff table loads with all existing staff rows Verify the protected admin ( adminzx@maillinator.com ) is visible in the list Expected Result: Staff management page loads, showing all staff members including the protected admin row.",
+    "TC-SEED-03 — Delete All Non-Protected Staff (UI Flow): Preconditions: On /manage/employees , at least 1 non-protected staff member exists Steps: For each staff row in the table: a. Check if the email matches adminzx@maillinator.com — if yes, skip b. If not protected, click the Delete icon/button on that row c. Wait for the confirmation dialog to appear d. Click Confirm / Yes in the dialog e. Wait for success toast / row removal Repeat until all non-protected staff are deleted Verify only the protected admin row remains Expected Result: All 6 non-protected staff members are deleted. Protected admin row is untouched and still visible. Critical Constraint: Under no circumstances should the script delete adminzx@maillinator.com .",
+    "TC-SEED-04 — Protected Admin is Never Deleted: Preconditions: Script is executing the deletion loop Steps: Script evaluates each row's email against the protected list When the protected admin email is found, the delete action is skipped entirely After full deletion loop completes, confirm protected admin still appears in staff table Expected Result: Protected admin account remains intact throughout and after the full deletion loop. No delete action is triggered for this account.",
+    "TC-SEED-05 — Re-create Staff via Add Staff Button (Per User): Preconditions: Non-protected staff have been deleted; on /manage/employees Steps (repeat for each of the 6 staff members): Click the Add Staff button on the staff management page In the Add Staff modal/form, fill in: First Name and Last Name Email Phone Location / School (select from dropdown) Role (District Admin / School Admin / Employee) Type (Teacher) Certified (Yes) Submit / Save the form Verify success toast appears Verify the new staff member row appears in the staff table Expected Result: Each of the 6 staff members is successfully re-created with all correct field values. Success toast confirms creation. Staff table reflects updated count.",
+    "TC-SEED-06 — Verify Full Staff State After Seeding: Preconditions: All 6 staff have been re-created Steps: Reload /manage/employees Count total staff rows — expect 7 For each expected staff member, verify: Name Email Role Location Confirm protected admin is present and unchanged Expected Result: Staff table shows exactly 7 members with all correct data matching the seed dataset. No duplicate or missing entries.",
+    "TC-SEED-07 — Idempotency — Re-run Script on Already-Seeded State: Preconditions: Script has already been run once; all 7 staff exist Steps: Run the seed script again Script detects existing non-protected users and deletes them Script re-creates all 6 staff again Verify final state is 7 staff (1 protected + 6 re-created) Expected Result: Script is idempotent — running it multiple times always results in the same clean 7-user state without errors or duplicates."
   ],
-  "pairwiseScenarios": [
-    {
-      "id": "T1",
-      "date": "Jan 1, 2027",
-      "reason": "Sick",
-      "duration": "Full Day",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T2",
-      "date": "Jan 2, 2027",
-      "reason": "Personal",
-      "duration": "Full Day",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 1",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T3",
-      "date": "Jan 3, 2027",
-      "reason": "Vacation",
-      "duration": "Full Day",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T4",
-      "date": "Jan 4, 2027",
-      "reason": "Illness-Family Member",
-      "duration": "Full Day",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 1",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T5",
-      "date": "Jan 5, 2027",
-      "reason": "Educational Leave",
-      "duration": "Half Day AM",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T6",
-      "date": "Jan 6, 2027",
-      "reason": "Professional Development",
-      "duration": "Half Day AM",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 1",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T7",
-      "date": "Jan 7, 2027",
-      "reason": "Sick",
-      "duration": "Half Day AM",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T8",
-      "date": "Jan 8, 2027",
-      "reason": "Personal",
-      "duration": "Half Day AM",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 1",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T9",
-      "date": "Jan 9, 2027",
-      "reason": "Vacation",
-      "duration": "Half Day PM",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T10",
-      "date": "Jan 10, 2027",
-      "reason": "Illness-Family Member",
-      "duration": "Half Day PM",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 1",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T11",
-      "date": "Jan 11, 2027",
-      "reason": "Educational Leave",
-      "duration": "Half Day PM",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T12",
-      "date": "Jan 12, 2027",
-      "reason": "Professional Development",
-      "duration": "Half Day PM",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 1",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T13",
-      "date": "Jan 13, 2027",
-      "reason": "Sick",
-      "duration": "Enter Time Manually (09:00–15:00)",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T14",
-      "date": "Jan 14, 2027",
-      "reason": "Personal",
-      "duration": "Enter Time Manually (09:00–15:00)",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 1",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T15",
-      "date": "Jan 15, 2027",
-      "reason": "Vacation",
-      "duration": "Enter Time Manually (09:00–15:00)",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T16",
-      "date": "Jan 18, 2027",
-      "reason": "Illness-Family Member",
-      "duration": "Enter Time Manually (09:00–15:00)",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 1",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T17",
-      "date": "Jan 25, 2027",
-      "reason": "Educational Leave",
-      "duration": "08:00–12:00",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T18",
-      "date": "Jan 26, 2027",
-      "reason": "Professional Development",
-      "duration": "10:00–14:00",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 1",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T19",
-      "date": "Jan 27, 2027",
-      "reason": "Sick",
-      "duration": "09:00–11:00",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T20",
-      "date": "Feb 8, 2027",
-      "reason": "Personal",
-      "duration": "12:00–16:00",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 1",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T21",
-      "date": "Feb 9, 2027",
-      "reason": "Vacation",
-      "duration": "08:00–10:00",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "result": "(/) PASS"
-    },
-    {
-      "id": "T22",
-      "date": "Feb 10, 2027",
-      "reason": "Illness-Family Member",
-      "duration": "13:00–17:00",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 1",
-      "result": "(/) PASS"
-    }
-  ],
+  "pairwiseScenarios": [],
   "riskFactors": [
     {
       "factor": "Async/Promise timeout on confirmation generation",

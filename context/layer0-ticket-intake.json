@@ -1,28 +1,2272 @@
 {
-  "timestamp": "2026-06-24T10:59:52.037Z",
-  "ticketKey": "ISE-1564",
-  "summary": "22/22 pairwise regression tests passed for the Find a Sub absence creation flow on the live InstaSub instance, using the school-level admin account (schooladmin@mailinator.com) across all 6 reasons, 5 duration types, and 2 sub preferences.",
+  "timestamp": "2026-06-24T13:45:12.717Z",
+  "ticketKey": "ISE-1565",
+  "summary": "Playwright Automation — Staff Seeding & Deletion Flow (UI-Based)",
   "description": {
     "type": "doc",
     "version": 1,
     "content": [
       {
+        "type": "heading",
+        "attrs": {
+          "level": 3,
+          "localId": "eeb7e2ca4ad7"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Description"
+          }
+        ]
+      },
+      {
         "type": "paragraph",
         "content": [
           {
             "type": "text",
-            "text": "h2. Description"
+            "text": "This ticket covers the Playwright automation script for seeding and resetting the staff data in the InstaSub application via the UI. The script logs in as the protected admin, deletes all non-protected staff members through the UI delete flow, and re-creates them using the "
+          },
+          {
+            "type": "text",
+            "text": "Add Staff",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " button with stored data. This script is intended as a "
+          },
+          {
+            "type": "text",
+            "text": "one-time or on-demand seed script",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " to reset the environment to a known state before running test suites."
+          }
+        ],
+        "attrs": {
+          "localId": "670097b491aa"
+        }
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "4b79ea91a0dd"
+        }
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 3,
+          "localId": "bae627ff0b2c"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "🔐 Protected Account (Must NEVER be deleted)"
+          }
+        ]
+      },
+      {
+        "type": "table",
+        "attrs": {
+          "isNumberColumnEnabled": false,
+          "layout": "default",
+          "localId": "18cebe1d-d6fc-4f29-ae49-f61f4edbd984"
+        },
+        "content": [
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "fb62d56ff9a1"
+            },
+            "content": [
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "ced1a6c4a6d6"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Field"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "a05907e7daa0"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "9b2e4c7cd71d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Value"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "02db88d44ee4"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "7d67e360a5a3"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "5736569536e5"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Name "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "72101d471a22"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "2bf5334946b4"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "admin userx "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "792e28747be0"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "67c68bdf7ba4"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "d6923b17d20e"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Email "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "ae78f822f863"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "666c2d306b0f"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "adminuserxadminzx@mailinator.com",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "mailto:adminuserxadminzx@mailinator.com"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " / "
+                      },
+                      {
+                        "type": "text",
+                        "text": "adminzx@maillinator.com",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "mailto:adminzx@maillinator.com"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e008b237de30"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "0d4681494e8a"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "6a2da489114b"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Role "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "39abd3e96ebf"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "f924d036d229"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "District Admin "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "54e087333a62"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "e3e203b839d5"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "933034140f8c"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Location "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e27e0e91e6e1"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "aede423cc203"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "regscus "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e99a7cb99a8e"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "88784303e296"
+        }
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 3,
+          "localId": "75335c7f8731"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "👥 Staff to be Deleted & Re-created (6 users)"
+          }
+        ]
+      },
+      {
+        "type": "table",
+        "attrs": {
+          "isNumberColumnEnabled": false,
+          "layout": "default",
+          "localId": "901f6d0e-7196-49ae-ae94-57d597950ac5"
+        },
+        "content": [
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "3a343d74ae76"
+            },
+            "content": [
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "cd46ee71b6d9"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "#"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "1f17874ee4c1"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "6c807cad955f"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Name"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "8198c7b88844"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "764d4ef64933"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Email"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "1ba0203d4826"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "93ce4d257d78"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Phone"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "8d5f4011a1c7"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "4642537b2af5"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Location"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "114691535e7a"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "89a9d2f5aa11"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Role"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "37fabff649da"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "5616c00b28e6"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Type"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "79e1a578cfec"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "7fb22581c9c6"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Certified"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f16e79d86c51"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "5c8357ce53c8"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "6b1feff6d544"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "1 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "5cc7fae2d90c"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "0cb4fccc2124"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "regs admin "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "6e3378c19011"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "bf024768c026"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "regsadmin@mailinator.com",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "mailto:regsadmin@mailinator.com"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "8370f529a3d6"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "bc9e9c94188a"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "+144516515651365 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "8aef8c2a1033"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "6f26a6d8ddfb"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "regscus "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "36aa1ed3900d"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "238b1d91d8c3"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "District Admin "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "a1c25a3ae1ac"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "390dd2bac0b4"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Teacher "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f837400e6dd6"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "3f39f1fc9650"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Yes "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "c89e333233d4"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "45d8c2c87216"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "40489c7841dc"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "2 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "9bd8b1022d48"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "24eb374639fb"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "school admin "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "52f2587ec566"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "870fa1356661"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "schooladmin@mailinator.com",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "mailto:schooladmin@mailinator.com"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "ff6dbba1cddf"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "6bbbf428ae1e"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "+16516532123 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "158c8eeb2b54"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "4e28749a9666"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "SchoolAcademyTest2345 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "91ca8dd3e70c"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "42968b35baad"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "School Admin "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "6a9de617ac6a"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "43c34ded9211"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Teacher "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "4f3ce1540208"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "ca078630503e"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Yes "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "b0d3fcbabefd"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "9dae9e986013"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "fe834d3f7e5c"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "3 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "159f930a259a"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "4305d638bdd2"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "user third "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "bf794d72f905"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "6ca022d21d89"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "thirdezce@mailinator.com",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "mailto:thirdezce@mailinator.com"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "31a61ca07fb4"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "7485136aad06"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "+1564332151322215 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e1d8464d7a8f"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9feab308ea38"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "regscus "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f4e79651a322"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "76ad78c0142a"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Employee "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "39dca02f4f14"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e0666c86b533"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Teacher "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "b6d5cd869278"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9482bf77becb"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Yes "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f704ed8043d0"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "2f89b90625a6"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e7e668e1a500"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "4 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3730bfc9f573"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "b449c2dbb986"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "user one "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "c85970f32916"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "92088fa8620d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "schoolruser670@mailinator.com",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "mailto:schoolruser670@mailinator.com"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "8d591620b593"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "767b1f023006"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "+119199899 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "1fb5df319b24"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "4b10fd9a948c"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "SchoolAcademyTest2345 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "5ea3e15ed4bc"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "936e3af11a37"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Employee "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "ada0b3e04a64"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "3cebd3e2d4e7"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Teacher "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "c16a761f5303"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9c1478c4dc6d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Yes "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f4db69d96d30"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "f5744a4ad8a7"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "1e35941b5ac3"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "5 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "03c3c742a9e0"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "1c23483c6329"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "user automation "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "626f1d745a13"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "6352ec243718"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "staffuser210@mailinator.com",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "mailto:staffuser210@mailinator.com"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "67649155efe9"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "4191a078ae99"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "+1415611515311353 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e0dd8b5e2669"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "1f8a0201a3c6"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "SchoolAcademyTest2345 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "1f10e3bf3564"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e9a80f882b52"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Employee "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "593234712884"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "40caddd71281"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Teacher "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "d83c17054de7"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "c862a35004ab"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Yes "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "8da546f98284"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "ee6e7dc66e59"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "7fa86d6883ea"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "6 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "540d272bf6ed"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "8f8c07fcac32"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "user two "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "40b1fb9e0728"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "80ea61690b9d"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "schoolteacher890@mailinator.com",
+                        "marks": [
+                          {
+                            "type": "link",
+                            "attrs": {
+                              "href": "mailto:schoolteacher890@mailinator.com"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "c7e551bcba95"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "b1dca86af56b"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "+1456645345456 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "1415cb456119"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "5e96dc44123a"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "SchoolAcademyTest2345 "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "826ef047e13e"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "7e7cbc1806d7"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Employee "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "714bb90f8271"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e8e52f7fc1a6"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Teacher "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "bef9c1c737d7"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "a5f591342920"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Yes "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "e4e53aadae38"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "9eaa17ee807d"
+        }
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 3,
+          "localId": "f71bcceee148"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "🧪 Test Cases"
+          }
+        ]
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "cba552321725"
+        }
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 4,
+          "localId": "c53e55397200"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "TC-SEED-01 — Login as Protected Admin"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Preconditions:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " App is running at "
+          },
+          {
+            "type": "text",
+            "text": "<https://instasublogin.tcpsoftware.com",
+            "marks": [
+              {
+                "type": "code"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ">"
           },
           {
             "type": "hardBreak"
           },
           {
             "type": "text",
-            "text": "Pairwise regression coverage for the Find a Sub absence creation flow. The test signs in to the school-level admin account and creates absences using the Find a Sub mode across every reason, duration type, and substitute preference available in this flow. The run confirms the form, substitute search panel, class time inputs, and sub picker all behave correctly in Find a Sub mode."
+            "text": "Steps:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
           }
         ],
         "attrs": {
-          "localId": "b16bf1384aa4"
+          "localId": "1abc48e80b77"
+        }
+      },
+      {
+        "type": "orderedList",
+        "attrs": {
+          "order": 1,
+          "localId": "740b48dae5e0"
+        },
+        "content": [
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "f83d656f9ccf"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Navigate to the login page"
+                  }
+                ],
+                "attrs": {
+                  "localId": "e750c053c610"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "7ec24a965146"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Enter email: "
+                  },
+                  {
+                    "type": "text",
+                    "text": "adminuserxadminzx@mailinator.com",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "localId": "4c154fa61857"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "22c1e2a23c06"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Enter the admin password"
+                  }
+                ],
+                "attrs": {
+                  "localId": "9881e7fbfd87"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "e73eb1e30c2b"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Click Login / Submit"
+                  }
+                ],
+                "attrs": {
+                  "localId": "47cca4772538"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "274e00f913b6"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Verify redirect to Dashboard/Home ("
+                  },
+                  {
+                    "type": "text",
+                    "text": "/home",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": ")"
+                  }
+                ],
+                "attrs": {
+                  "localId": "ab0ec518c947"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Expected Result:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Admin is logged in and redirected to the home dashboard without errors."
+          }
+        ],
+        "attrs": {
+          "localId": "36acde4f4260"
+        }
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "4a951029e9ae"
+        }
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 4,
+          "localId": "097a93d9b8fc"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "TC-SEED-02 — Navigate to Staff Management Page"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Preconditions:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Logged in as admin"
+          },
+          {
+            "type": "hardBreak"
+          },
+          {
+            "type": "text",
+            "text": "Steps:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "3e5bc5b1a08f"
+        }
+      },
+      {
+        "type": "orderedList",
+        "attrs": {
+          "order": 1,
+          "localId": "b8b81898a876"
+        },
+        "content": [
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "e720211ef026"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Navigate to "
+                  },
+                  {
+                    "type": "text",
+                    "text": "/manage/employees",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "localId": "f93a8649e0fa"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "55a5d07242c2"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Verify the staff table loads with all existing staff rows"
+                  }
+                ],
+                "attrs": {
+                  "localId": "799479b25d1a"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "596e64a9965a"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Verify the protected admin ("
+                  },
+                  {
+                    "type": "text",
+                    "text": "adminzx@maillinator.com",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": ") is visible in the list"
+                  }
+                ],
+                "attrs": {
+                  "localId": "191911780f78"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Expected Result:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Staff management page loads, showing all staff members including the protected admin row."
+          }
+        ],
+        "attrs": {
+          "localId": "478f323f4e07"
+        }
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "e7846ff3d2d2"
+        }
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 4,
+          "localId": "4baea2a9a604"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "TC-SEED-03 — Delete All Non-Protected Staff (UI Flow)"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Preconditions:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " On "
+          },
+          {
+            "type": "text",
+            "text": "/manage/employees",
+            "marks": [
+              {
+                "type": "code"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ", at least 1 non-protected staff member exists"
+          },
+          {
+            "type": "hardBreak"
+          },
+          {
+            "type": "text",
+            "text": "Steps:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "18b690356acb"
+        }
+      },
+      {
+        "type": "orderedList",
+        "attrs": {
+          "order": 1,
+          "localId": "91ee9251e052"
+        },
+        "content": [
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "72f7469e35f1"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "For each staff row in the table:"
+                  },
+                  {
+                    "type": "hardBreak"
+                  },
+                  {
+                    "type": "text",
+                    "text": "a. Check if the email matches "
+                  },
+                  {
+                    "type": "text",
+                    "text": "adminzx@maillinator.com",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " — if yes, "
+                  },
+                  {
+                    "type": "text",
+                    "text": "skip",
+                    "marks": [
+                      {
+                        "type": "strong"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "hardBreak"
+                  },
+                  {
+                    "type": "text",
+                    "text": "b. If not protected, click the "
+                  },
+                  {
+                    "type": "text",
+                    "text": "Delete",
+                    "marks": [
+                      {
+                        "type": "strong"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " icon/button on that row"
+                  },
+                  {
+                    "type": "hardBreak"
+                  },
+                  {
+                    "type": "text",
+                    "text": "c. Wait for the confirmation dialog to appear"
+                  },
+                  {
+                    "type": "hardBreak"
+                  },
+                  {
+                    "type": "text",
+                    "text": "d. Click "
+                  },
+                  {
+                    "type": "text",
+                    "text": "Confirm / Yes",
+                    "marks": [
+                      {
+                        "type": "strong"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " in the dialog"
+                  },
+                  {
+                    "type": "hardBreak"
+                  },
+                  {
+                    "type": "text",
+                    "text": "e. Wait for success toast / row removal"
+                  }
+                ],
+                "attrs": {
+                  "localId": "b01d0d5d77d1"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "3ecef79eaf7b"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Repeat until all non-protected staff are deleted"
+                  }
+                ],
+                "attrs": {
+                  "localId": "88260b0cf5fd"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "1f7aa214778e"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Verify only the protected admin row remains"
+                  }
+                ],
+                "attrs": {
+                  "localId": "c933b390ccc1"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Expected Result:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " All 6 non-protected staff members are deleted. Protected admin row is untouched and still visible."
+          }
+        ],
+        "attrs": {
+          "localId": "a2e6663c8435"
         }
       },
       {
@@ -30,11 +2274,1806 @@
         "content": [
           {
             "type": "text",
-            "text": "h2. Test Scope"
+            "text": "Critical Constraint:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Under no circumstances should the script delete "
+          },
+          {
+            "type": "text",
+            "text": "adminzx@maillinator.com",
+            "marks": [
+              {
+                "type": "code"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": "."
           }
         ],
         "attrs": {
-          "localId": "2f93a0879274"
+          "localId": "44245dab2748"
+        }
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "65df18437895"
+        }
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 4,
+          "localId": "e97953e901c3"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "TC-SEED-04 — Protected Admin is Never Deleted"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Preconditions:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Script is executing the deletion loop"
+          },
+          {
+            "type": "hardBreak"
+          },
+          {
+            "type": "text",
+            "text": "Steps:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "d73644363997"
+        }
+      },
+      {
+        "type": "orderedList",
+        "attrs": {
+          "order": 1,
+          "localId": "042be0c7bdf1"
+        },
+        "content": [
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "10856ca93e43"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Script evaluates each row's email against the protected list"
+                  }
+                ],
+                "attrs": {
+                  "localId": "f0ba1a8dd13c"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "24d65f09e305"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "When the protected admin email is found, the delete action is "
+                  },
+                  {
+                    "type": "text",
+                    "text": "skipped entirely",
+                    "marks": [
+                      {
+                        "type": "strong"
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "localId": "0af56df626b0"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "0433dfae2ddd"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "After full deletion loop completes, confirm protected admin still appears in staff table"
+                  }
+                ],
+                "attrs": {
+                  "localId": "2384d67eed23"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Expected Result:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Protected admin account remains intact throughout and after the full deletion loop. No delete action is triggered for this account."
+          }
+        ],
+        "attrs": {
+          "localId": "0581bbeb22a8"
+        }
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "b6a2f6766fa0"
+        }
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 4,
+          "localId": "5e066f28be4e"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "TC-SEED-05 — Re-create Staff via Add Staff Button (Per User)"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Preconditions:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Non-protected staff have been deleted; on "
+          },
+          {
+            "type": "text",
+            "text": "/manage/employees",
+            "marks": [
+              {
+                "type": "code"
+              }
+            ]
+          },
+          {
+            "type": "hardBreak"
+          },
+          {
+            "type": "text",
+            "text": "Steps (repeat for each of the 6 staff members):",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "0e81325d6fe3"
+        }
+      },
+      {
+        "type": "orderedList",
+        "attrs": {
+          "order": 1,
+          "localId": "898a6d9d6627"
+        },
+        "content": [
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "d703d965cf64"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Click the "
+                  },
+                  {
+                    "type": "text",
+                    "text": "Add Staff",
+                    "marks": [
+                      {
+                        "type": "strong"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " button on the staff management page"
+                  }
+                ],
+                "attrs": {
+                  "localId": "90158644909e"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "cb97af869e20"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "In the Add Staff modal/form, fill in:"
+                  }
+                ],
+                "attrs": {
+                  "localId": "f06cf63e8511"
+                }
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "localId": "f445fc07fd4f"
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "First Name",
+                            "marks": [
+                              {
+                                "type": "strong"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "text": " and "
+                          },
+                          {
+                            "type": "text",
+                            "text": "Last Name",
+                            "marks": [
+                              {
+                                "type": "strong"
+                              }
+                            ]
+                          }
+                        ],
+                        "attrs": {
+                          "localId": "cabf06fed036"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "localId": "4bd8139c4c1b"
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Email",
+                            "marks": [
+                              {
+                                "type": "strong"
+                              }
+                            ]
+                          }
+                        ],
+                        "attrs": {
+                          "localId": "04319d9fc28b"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "localId": "9aa0ee868265"
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Phone",
+                            "marks": [
+                              {
+                                "type": "strong"
+                              }
+                            ]
+                          }
+                        ],
+                        "attrs": {
+                          "localId": "2a592c4aa7f1"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "localId": "2841fff66d20"
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Location / School",
+                            "marks": [
+                              {
+                                "type": "strong"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "text": " (select from dropdown)"
+                          }
+                        ],
+                        "attrs": {
+                          "localId": "c88a6dfcbca6"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "localId": "99d4a73797c4"
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Role",
+                            "marks": [
+                              {
+                                "type": "strong"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "text": " (District Admin / School Admin / Employee)"
+                          }
+                        ],
+                        "attrs": {
+                          "localId": "3d377f09164a"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "localId": "846efe358ba9"
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Type",
+                            "marks": [
+                              {
+                                "type": "strong"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "text": " (Teacher)"
+                          }
+                        ],
+                        "attrs": {
+                          "localId": "cacaeabbb8b0"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "localId": "9651ee1706f3"
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Certified",
+                            "marks": [
+                              {
+                                "type": "strong"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "text": " (Yes)"
+                          }
+                        ],
+                        "attrs": {
+                          "localId": "88203c189065"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "localId": "ec296e0645fb"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "d576e53415c9"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Submit / Save the form"
+                  }
+                ],
+                "attrs": {
+                  "localId": "dc726b417b60"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "11f9a7bf8032"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Verify success toast appears"
+                  }
+                ],
+                "attrs": {
+                  "localId": "1c11b7c2b67a"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "fbf8afcb56bb"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Verify the new staff member row appears in the staff table"
+                  }
+                ],
+                "attrs": {
+                  "localId": "f44dd2c8018a"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Expected Result:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Each of the 6 staff members is successfully re-created with all correct field values. Success toast confirms creation. Staff table reflects updated count."
+          }
+        ],
+        "attrs": {
+          "localId": "b99f843dbbb2"
+        }
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "7a49705b642f"
+        }
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 4,
+          "localId": "c5eb0c314610"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "TC-SEED-06 — Verify Full Staff State After Seeding"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Preconditions:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " All 6 staff have been re-created"
+          },
+          {
+            "type": "hardBreak"
+          },
+          {
+            "type": "text",
+            "text": "Steps:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "1ba240a8a0dd"
+        }
+      },
+      {
+        "type": "orderedList",
+        "attrs": {
+          "order": 1,
+          "localId": "fe2a87b6c5d5"
+        },
+        "content": [
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "c2293f9e4fae"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Reload "
+                  },
+                  {
+                    "type": "text",
+                    "text": "/manage/employees",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "localId": "dcd20109fc67"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "accf8c458e6e"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Count total staff rows — expect "
+                  },
+                  {
+                    "type": "text",
+                    "text": "7",
+                    "marks": [
+                      {
+                        "type": "strong"
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "localId": "a03d0f4177cc"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "8e13dc66d4ef"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "For each expected staff member, verify:"
+                  }
+                ],
+                "attrs": {
+                  "localId": "61bbcff458eb"
+                }
+              },
+              {
+                "type": "bulletList",
+                "content": [
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "localId": "62bc7e99acc8"
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Name"
+                          }
+                        ],
+                        "attrs": {
+                          "localId": "3498ef73077e"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "localId": "b0a8b2655e0f"
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Email"
+                          }
+                        ],
+                        "attrs": {
+                          "localId": "0368e4a13085"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "localId": "53ec93e514b2"
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Role"
+                          }
+                        ],
+                        "attrs": {
+                          "localId": "1c947c8b34b2"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "listItem",
+                    "attrs": {
+                      "localId": "5226195bbea3"
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Location"
+                          }
+                        ],
+                        "attrs": {
+                          "localId": "6a6ed987b31c"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "localId": "9c974d0b593d"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "c3e3906742f3"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Confirm protected admin is present and unchanged"
+                  }
+                ],
+                "attrs": {
+                  "localId": "a74bd298a4eb"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Expected Result:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Staff table shows exactly 7 members with all correct data matching the seed dataset. No duplicate or missing entries."
+          }
+        ],
+        "attrs": {
+          "localId": "4bf0837449f4"
+        }
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "93690e1c1e0d"
+        }
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 4,
+          "localId": "7766d07bd30c"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "TC-SEED-07 — Idempotency — Re-run Script on Already-Seeded State"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Preconditions:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Script has already been run once; all 7 staff exist"
+          },
+          {
+            "type": "hardBreak"
+          },
+          {
+            "type": "text",
+            "text": "Steps:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "f2059fa249ee"
+        }
+      },
+      {
+        "type": "orderedList",
+        "attrs": {
+          "order": 1,
+          "localId": "9976cc61fe71"
+        },
+        "content": [
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "1cf6ad48e0c6"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Run the seed script again"
+                  }
+                ],
+                "attrs": {
+                  "localId": "db371ab19bf5"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "8a7ea6de3dce"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Script detects existing non-protected users and deletes them"
+                  }
+                ],
+                "attrs": {
+                  "localId": "d698d2529548"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "17fb59ea1209"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Script re-creates all 6 staff again"
+                  }
+                ],
+                "attrs": {
+                  "localId": "db9475140f79"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "009d5b137e1b"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Verify final state is 7 staff (1 protected + 6 re-created)"
+                  }
+                ],
+                "attrs": {
+                  "localId": "531702241ea0"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "Expected Result:",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Script is idempotent — running it multiple times always results in the same clean 7-user state without errors or duplicates."
+          }
+        ],
+        "attrs": {
+          "localId": "5c39fb8fcc0c"
+        }
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "b3e9a0dbd0de"
+        }
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 3,
+          "localId": "76ad77cb6e4c"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "⚙️ Automation Details"
+          }
+        ]
+      },
+      {
+        "type": "table",
+        "attrs": {
+          "isNumberColumnEnabled": false,
+          "layout": "default",
+          "localId": "bb83ba1c-c874-4f11-8892-90d71deed33f"
+        },
+        "content": [
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "3851f6cfd597"
+            },
+            "content": [
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "a3153152d91b"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Field"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "37bef635edde"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableHeader",
+                "attrs": {
+                  "localId": "728085c9fc64"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Value"
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "cf486afe6c96"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "ead85c84572d"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "5c184a670d31"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Framework "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "6c98c4316675"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "d18a8704ab66"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Playwright (Node.js) "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "09bcf29948a6"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "3330b2c25492"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "6d589da075a1"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Script file "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "810d248ae0a9"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "622bb0c00dc6"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "seed-staff.js",
+                        "marks": [
+                          {
+                            "type": "code"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f2736f377053"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "1bdb8851021b"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "e4da323d88b7"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Run command "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "197572010120"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "b3920680bdaa"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "node seed-staff.js",
+                        "marks": [
+                          {
+                            "type": "code"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": " "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "67c1bd655c28"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "aeda8088d2fa"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "126215da48c4"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Script type "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "a00db896d0f6"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "9367417dc5e9"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "One-time / on-demand seed script "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "b515349c75e1"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "60e61b5f1c2c"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "0a944977f48c"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Login method "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "3ec2dd5d63de"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "6922befe688f"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "UI (email + password) "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "d79c481c7dcc"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "8d4bbd5c7961"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "1ed0d0708e10"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Delete method "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "943a0974ba18"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "51a6d30bb16e"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "UI delete button + confirmation dialog "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "6b7def7c0b76"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "7c8e72a96c43"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "1ef0ba68f6f8"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Create method "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "1766af401126"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "da80a020d284"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "UI Add Staff button + form fill "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "f80648d488d7"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "localId": "219efa449659"
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "54aef42d311f"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Environment "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "a7cd25b16b02"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "localId": "806d58bd8a6f"
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "<https://instasublogin.tcpsoftware.com",
+                        "marks": [
+                          {
+                            "type": "code"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "text",
+                        "text": "> "
+                      }
+                    ],
+                    "attrs": {
+                      "localId": "a70b0c506047"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "2190972c0e59"
+        }
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 3,
+          "localId": "b5f9e085f6ac"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "✅ Acceptance Criteria"
+          }
+        ]
+      },
+      {
+        "type": "bulletList",
+        "content": [
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "b5829e7e999c"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "[ ] Script logs in successfully as the protected admin"
+                  }
+                ],
+                "attrs": {
+                  "localId": "40305c8cdd8f"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "7b2e61b40355"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "[ ] All 6 non-protected staff are deleted via UI delete flow"
+                  }
+                ],
+                "attrs": {
+                  "localId": "a73cf70d79d5"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "d41b9400fa24"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "[ ] Protected admin ("
+                  },
+                  {
+                    "type": "text",
+                    "text": "adminzx@maillinator.com",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": ") is never deleted under any circumstances"
+                  }
+                ],
+                "attrs": {
+                  "localId": "996feb2de374"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "c8a48051961a"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "[ ] All 6 staff are re-created via Add Staff UI button with correct field data"
+                  }
+                ],
+                "attrs": {
+                  "localId": "a4697288b8c6"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "42af1db42dfe"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "[ ] Final staff table shows exactly 7 members matching the seed dataset"
+                  }
+                ],
+                "attrs": {
+                  "localId": "94a6c4c3b244"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "0c3035d922c4"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "[ ] Script can be re-run multiple times (idempotent)"
+                  }
+                ],
+                "attrs": {
+                  "localId": "79b07c6348ac"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "ac265fb9ef61"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "[ ] No hardcoded passwords — "
+                  },
+                  {
+                    "type": "text",
+                    "text": "LOGIN_PASSWORD",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": " is passed via environment variable"
+                  }
+                ],
+                "attrs": {
+                  "localId": "ccbbf5cdac78"
+                }
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "3cf2c3f0ad02"
+        }
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "2ae4732cc1cb"
+        }
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 3,
+          "localId": "34b3eaf68b0f"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "🔗 Related"
+          }
+        ]
+      },
+      {
+        "type": "bulletList",
+        "content": [
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "c362f56ffd8b"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Playwright seeding script: "
+                  },
+                  {
+                    "type": "text",
+                    "text": "seed-staff.js",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "localId": "d1a47d54d519"
+                }
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "attrs": {
+              "localId": "ecc38091c72f"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Application URL: "
+                  },
+                  {
+                    "type": "text",
+                    "text": "<https://instasublogin.tcpsoftware.com/manage/employees",
+                    "marks": [
+                      {
+                        "type": "code"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "text": ">"
+                  }
+                ],
+                "attrs": {
+                  "localId": "493b51dd8d18"
+                }
+              }
+            ]
+          }
+        ],
+        "attrs": {
+          "localId": "1bf1144aca7c"
+        }
+      },
+      {
+        "type": "rule",
+        "attrs": {
+          "localId": "424df8c3d1d5"
         }
       },
       {
@@ -42,500 +4081,24 @@
         "content": [
           {
             "type": "text",
-            "text": "Environment: InstaSub Live — InstaSub"
+            "text": "This ticket is structured to serve as both a QA test plan and a "
+          },
+          {
+            "type": "text",
+            "text": "prompt for code generation",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " — each test case maps directly to a function or step in the Playwright script. Let me know if you'd like to adjust any test cases, add edge cases (e.g. network failure handling, missing fields), or split this into sub-tasks!"
           }
         ],
         "attrs": {
-          "localId": "f59b80973aeb"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "Login: school-level admin account — username [schooladmin@mailinator.com|mailto:schooladmin@mailinator.com], password [redacted]"
-          }
-        ],
-        "attrs": {
-          "localId": "954e22349cd0"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "Flow: Find a Sub absence creation (/absence/createAbsence), type: Find a Sub"
-          }
-        ],
-        "attrs": {
-          "localId": "d5f426cd89ea"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "Sub selected (Assign a specific sub): Sub 1"
-          }
-        ],
-        "attrs": {
-          "localId": "2284dd530da9"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "h2. Pairwise Matrix"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "Coverage dimensions"
-          }
-        ],
-        "attrs": {
-          "localId": "bf8846f12b01"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "6 reasons: Sick, Personal, Vacation, Illness-Family Member, Educational Leave, Professional Development"
-          }
-        ],
-        "attrs": {
-          "localId": "d705deebc000"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "5 duration types: Full Day, Half Day AM, Half Day PM, Enter Time Manually (09:00–15:00), Add Class"
-          }
-        ],
-        "attrs": {
-          "localId": "996eaabcedbe"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "2 sub preferences: Notify all subs, Assign a specific sub"
-          }
-        ],
-        "attrs": {
-          "localId": "21c94e42b992"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "h3. Part A — Duration Tests (T1–T16)"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "||#||Date||Reason||Duration||Sub Preference||Sub Selected||Result||"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T1|Jan 1, 2027|Sick|Full Day|Notify all subs|—|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T2|Jan 2, 2027|Personal|Full Day|Assign a specific sub|Sub 1|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T3|Jan 3, 2027|Vacation|Full Day|Notify all subs|—|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T4|Jan 4, 2027|Illness-Family Member|Full Day|Assign a specific sub|Sub 1|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T5|Jan 5, 2027|Educational Leave|Half Day AM|Notify all subs|—|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T6|Jan 6, 2027|Professional Development|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T7|Jan 7, 2027|Sick|Half Day AM|Notify all subs|—|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T8|Jan 8, 2027|Personal|Half Day AM|Assign a specific sub|Sub 1|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T9|Jan 9, 2027|Vacation|Half Day PM|Notify all subs|—|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T10|Jan 10, 2027|Illness-Family Member|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T11|Jan 11, 2027|Educational Leave|Half Day PM|Notify all subs|—|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T12|Jan 12, 2027|Professional Development|Half Day PM|Assign a specific sub|Sub 1|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T13|Jan 13, 2027|Sick|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T14|Jan 14, 2027|Personal|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T15|Jan 15, 2027|Vacation|Enter Time Manually (09:00–15:00)|Notify all subs|—|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T16|Jan 18, 2027|Illness-Family Member|Enter Time Manually (09:00–15:00)|Assign a specific sub|Sub 1|(/) PASS|"
-          }
-        ],
-        "attrs": {
-          "localId": "ea3a3e07d6c6"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "h3. Part B — Add Class Tests (T17–T22)"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "Add Class replaces the Duration dropdown. The class time inputs define the absence window."
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "||#||Date||Reason||Class Time||Sub Preference||Sub Selected||Result||"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T17|Jan 25, 2027|Educational Leave|08:00–12:00|Notify all subs|—|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T18|Jan 26, 2027|Professional Development|10:00–14:00|Assign a specific sub|Sub 1|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T19|Jan 27, 2027|Sick|09:00–11:00|Notify all subs|—|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T20|Feb 8, 2027|Personal|12:00–16:00|Assign a specific sub|Sub 1|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T21|Feb 9, 2027|Vacation|08:00–10:00|Notify all subs|—|(/) PASS|"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "|T22|Feb 10, 2027|Illness-Family Member|13:00–17:00|Assign a specific sub|Sub 1|(/) PASS|"
-          }
-        ],
-        "attrs": {
-          "localId": "5dd1854db2ac"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "h2. Result"
-          },
-          {
-            "type": "hardBreak"
-          },
-          {
-            "type": "text",
-            "text": "22/22 tests passed. All 6 reasons, all 5 duration types (including Add Class), and both available sub preferences exercised. Sub 1 was successfully selected for all Assign a specific sub cases. The substitute search panel correctly required a date to be entered before listing available subs, and the submit button changed to \"Create And Assign\" when Assign a specific sub was selected."
-          }
-        ],
-        "attrs": {
-          "localId": "659b868c19dd"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "h2. Acceptance Criteria"
-          }
-        ],
-        "attrs": {
-          "localId": "a2933ace468e"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "Login succeeds with the school-level admin account ([schooladmin@mailinator.com|mailto:schooladmin@mailinator.com])"
-          }
-        ],
-        "attrs": {
-          "localId": "d19360e3aa55"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "All 6 absence reasons selectable via the Find a Sub flow"
-          }
-        ],
-        "attrs": {
-          "localId": "c2dc5023ad00"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "Selecting Find a Sub reveals additional fields: School Location, Position, Grade, Subject, Subbing For, Add Class, Add Location"
-          }
-        ],
-        "attrs": {
-          "localId": "ed5c6196f0f1"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "Only 2 sub preferences are available in Find a Sub mode: Notify all subs and Assign a specific sub"
-          }
-        ],
-        "attrs": {
-          "localId": "27e8aac910c1"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "All 4 standard duration types (Full Day, Half Day AM, Half Day PM, Enter Time Manually) work in Find a Sub mode"
-          }
-        ],
-        "attrs": {
-          "localId": "607c634599b1"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "Half Day AM auto-sets times to 08:00 AM – 12:00 PM (read-only)"
-          }
-        ],
-        "attrs": {
-          "localId": "359e768e048d"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "Half Day PM auto-sets times to 12:00 PM – 05:00 PM (read-only)"
-          }
-        ],
-        "attrs": {
-          "localId": "9e8281150973"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "Enter Time Manually renders editable Start/End time fields"
-          }
-        ],
-        "attrs": {
-          "localId": "8cc97c022f6f"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "Add Class flow works for all 6 reasons in Find a Sub mode"
-          }
-        ],
-        "attrs": {
-          "localId": "d08ce13611b1"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "Selecting Assign a specific sub triggers a date-gated substitute search panel listing available subs"
-          }
-        ],
-        "attrs": {
-          "localId": "33a021977e9b"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "Sub 1 selectable via Assign a specific sub"
-          }
-        ],
-        "attrs": {
-          "localId": "6f8f32b5fdea"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "Submit button changes to \"Create And Assign\" when Assign a specific sub is selected"
-          }
-        ],
-        "attrs": {
-          "localId": "469a8b69a341"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "A toast notification confirms successful absence creation with a unique confirmation number"
-          }
-        ],
-        "attrs": {
-          "localId": "ea87a4c7c979"
-        }
-      },
-      {
-        "type": "paragraph",
-        "content": [
-          {
-            "type": "text",
-            "text": "No blocking errors or UI failures across the 22-test run"
-          }
-        ],
-        "attrs": {
-          "localId": "e69716c852c4"
+          "localId": "8827a207da30"
         }
       }
     ]

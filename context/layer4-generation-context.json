@@ -1,44 +1,33 @@
 {
   "layer": 4,
-  "generatedAt": "2026-06-24T11:18:13.317Z",
-  "workItemId": "ISE-1564",
-  "testCases": 22,
+  "generatedAt": "2026-06-24T14:09:32.922Z",
+  "workItemId": "ISE-1565",
+  "testCases": 7,
   "vectorDatabase": {
     "searchedBeforeGeneration": true,
     "status": "matched",
     "error": null,
     "queries": [
-      "Sick absence with Full Day and Notify all subs",
-      "Personal absence with Full Day and Assign a specific sub",
-      "Vacation absence with Full Day and Notify all subs",
-      "Illness-Family Member absence with Full Day and Assign a specific sub",
-      "Educational Leave absence with Half Day AM and Notify all subs",
-      "Professional Development absence with Half Day AM and Assign a specific sub",
-      "Sick absence with Half Day AM and Notify all subs",
-      "Personal absence with Half Day AM and Assign a specific sub",
-      "Vacation absence with Half Day PM and Notify all subs",
-      "Illness-Family Member absence with Half Day PM and Assign a specific sub",
-      "Educational Leave absence with Half Day PM and Notify all subs",
-      "Professional Development absence with Half Day PM and Assign a specific sub",
-      "Sick absence with Enter Time Manually (09:00–15:00) and Notify all subs",
-      "Personal absence with Enter Time Manually (09:00–15:00) and Assign a specific sub",
-      "Vacation absence with Enter Time Manually (09:00–15:00) and Notify all subs",
-      "Illness-Family Member absence with Enter Time Manually (09:00–15:00) and Assign a specific sub",
-      "Educational Leave absence with 08:00–12:00 and Notify all subs",
-      "Professional Development absence with 10:00–14:00 and Assign a specific sub",
-      "Sick absence with 09:00–11:00 and Notify all subs",
-      "Personal absence with 12:00–16:00 and Assign a specific sub",
-      "Vacation absence with 08:00–10:00 and Notify all subs",
-      "Illness-Family Member absence with 13:00–17:00 and Assign a specific sub",
-      "22/22 pairwise regression tests passed for the Find a Sub absence creation flow on the live InstaSub instance, using the school-level admin account (schooladmin@mailinator.com) across all 6 reasons, 5 duration types, and 2 sub preferences.",
+      "Login as Protected Admin",
+      "Navigate to Staff Management Page",
+      "Delete All Non-Protected Staff (UI Flow)",
+      "Protected Admin is Never Deleted",
+      "Re-create Staff via Add Staff Button (Per User)",
+      "Verify Full Staff State After Seeding",
+      "Idempotency — Re-run Script on Already-Seeded State",
+      "Playwright Automation — Staff Seeding & Deletion Flow (UI-Based)",
       "playwright page object model selectors",
       "explorer accessibility snapshot buttons inputs tables",
       "login username password button selectors",
-      "absence create employee duration substitute preference",
-      "leave balance verification deduction",
-      "Review step shows selected reason and date before submit",
-      "Successful submit is detected by response or accepted UI state",
-      "Leave balance is captured before suite execution and is lower after all successful submissions",
+      "existing Playwright workflow implementation",
+      "reusable form table dialog and notification helpers",
+      "[ ] Script logs in successfully as the protected admin",
+      "[ ] All 6 non-protected staff are deleted via UI delete flow",
+      "[ ] Protected admin ( adminzx@maillinator.com ) is never deleted under any circumstances",
+      "[ ] All 6 staff are re-created via Add Staff UI button with correct field data",
+      "[ ] Final staff table shows exactly 7 members matching the seed dataset",
+      "[ ] Script can be re-run multiple times (idempotent)",
+      "[ ] No hardcoded passwords — LOGIN_PASSWORD is passed via environment variable",
       "auth.setup.ts:67:1 › authenticate",
       "ISE-1551.spec.ts:25:7 › ISE-1551 — Generated Playwright Suite › TC-01: Execute main workflow successfully",
       "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T1: Sick absence with Full Day and Notify all subs",
@@ -47,37 +36,48 @@
       "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub",
       "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required",
       "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs",
-      "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub"
+      "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub",
+      "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites",
+      "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub",
+      "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required",
+      "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs",
+      "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub",
+      "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites",
+      "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub",
+      "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required",
+      "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs",
+      "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub",
+      "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites"
     ],
-    "candidateCount": 12,
+    "candidateCount": 13,
     "reuseThreshold": 0.55
   },
   "reuseDecisions": [
     {
       "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/ISE1551Page.page.ts",
       "type": "POM",
-      "similarity": 0.3489876985549927,
+      "similarity": 0.33419644832611084,
       "decision": "adapted",
       "reason": "Similarity is below the 0.55 reuse threshold."
     },
     {
-      "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/AbsenceCreationPage.ts",
+      "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/StaffManagementPage.ts",
       "type": "POM",
-      "similarity": 0.3928413391113281,
+      "similarity": 0.3483794927597046,
       "decision": "rejected",
-      "reason": "Missing required methods: isConfirmationNumberVisible."
+      "reason": "Missing required methods: isElement1Visible."
     },
     {
       "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/AbsencePage.page.ts",
       "type": "POM",
-      "similarity": 0.34689271450042725,
+      "similarity": 0.29301053285598755,
       "decision": "rejected",
       "reason": "Missing required methods: isElement1Visible."
     },
     {
       "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/pom/AbsenceFormPage.page.ts",
       "type": "POM",
-      "similarity": 0.31345129013061523,
+      "similarity": 0.29199373722076416,
       "decision": "rejected",
       "reason": "Missing required methods: isElement1Visible."
     },
@@ -89,6 +89,13 @@
       "reason": "Asset is useful context but is not a Page Object."
     },
     {
+      "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-1565.spec.ts",
+      "type": "Spec",
+      "similarity": 0.4862203598022461,
+      "decision": "rejected",
+      "reason": "Asset is useful context but is not a Page Object."
+    },
+    {
       "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-1551.spec.ts",
       "type": "Spec",
       "similarity": 0.48365163803100586,
@@ -96,44 +103,44 @@
       "reason": "Asset is useful context but is not a Page Object."
     },
     {
-      "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-1559.spec.ts",
+      "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-1564.spec.ts",
       "type": "Spec",
-      "similarity": 0.39371633529663086,
-      "decision": "rejected",
-      "reason": "Asset is useful context but is not a Page Object."
-    },
-    {
-      "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-1558.spec.ts",
-      "type": "Spec",
-      "similarity": 0.389560341835022,
+      "similarity": 0.37549567222595215,
       "decision": "rejected",
       "reason": "Asset is useful context but is not a Page Object."
     },
     {
       "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-1562.spec.ts",
       "type": "Spec",
-      "similarity": 0.3888193368911743,
+      "similarity": 0.3494534492492676,
       "decision": "rejected",
       "reason": "Asset is useful context but is not a Page Object."
     },
     {
-      "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-1556.spec.ts",
+      "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-1559.spec.ts",
       "type": "Spec",
-      "similarity": 0.363018274307251,
-      "decision": "rejected",
-      "reason": "Asset is useful context but is not a Page Object."
-    },
-    {
-      "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-452-absence-creation.spec.ts",
-      "type": "Spec",
-      "similarity": 0.317000150680542,
+      "similarity": 0.3472752571105957,
       "decision": "rejected",
       "reason": "Asset is useful context but is not a Page Object."
     },
     {
       "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/utilities/DatabaseHelper.ts",
       "type": "Utility",
-      "similarity": 0.21541869640350342,
+      "similarity": 0.21156924962997437,
+      "decision": "rejected",
+      "reason": "Asset is useful context but is not a Page Object."
+    },
+    {
+      "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-1558.spec.ts",
+      "type": "Spec",
+      "similarity": 0.2914297580718994,
+      "decision": "rejected",
+      "reason": "Asset is useful context but is not a Page Object."
+    },
+    {
+      "path": "/Users/omerbakhtiar/Claude/Projects/instasub-web-automation/tests/ISE-452-absence-creation.spec.ts",
+      "type": "Spec",
+      "similarity": 0.2421148419380188,
       "decision": "rejected",
       "reason": "Asset is useful context but is not a Page Object."
     }
@@ -143,10 +150,10 @@
     "path": "pom/ISE1551Page.page.ts",
     "fileName": "ISE1551Page.page.ts",
     "className": "ISE1551Page",
-    "similarity": 0.3489876985549927
+    "similarity": 0.33419644832611084
   },
   "files": [
-    "tests/ISE-1564.spec.ts"
+    "tests/ISE-1565.spec.ts"
   ],
   "warnings": [
     "No asset met the direct-reuse contract; selectors from the best compatible reference were adapted."

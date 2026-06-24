@@ -1,38 +1,23 @@
 {
   "status": "skipped",
   "mode": "list",
-  "ticket": "ISE-1564",
-  "spec": "tests/ISE-1564.spec.ts",
+  "ticket": "ISE-1565",
+  "spec": "tests/ISE-1565.spec.ts",
   "command": null,
   "discoveredTests": [],
   "matchedTestCases": [],
   "missingTestCases": [
-    "T1",
-    "T2",
-    "T3",
-    "T4",
-    "T5",
-    "T6",
-    "T7",
-    "T8",
-    "T9",
-    "T10",
-    "T11",
-    "T12",
-    "T13",
-    "T14",
-    "T15",
-    "T16",
-    "T17",
-    "T18",
-    "T19",
-    "T20",
-    "T21",
-    "T22"
+    "TC-SEED-01",
+    "TC-SEED-02",
+    "TC-SEED-03",
+    "TC-SEED-04",
+    "TC-SEED-05",
+    "TC-SEED-06",
+    "TC-SEED-07"
   ],
   "exitCode": null,
   "notes": [
-    "No existing spec found at tests/ISE-1564.spec.ts; generated strategy context for downstream codegen."
+    "No existing spec found at tests/ISE-1565.spec.ts; generated strategy context for downstream codegen."
   ],
-  "verifiedAt": "2026-06-24T11:02:32.508Z"
+  "verifiedAt": "2026-06-24T13:55:23.785Z"
 }

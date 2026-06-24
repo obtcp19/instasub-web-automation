@@ -474,6 +474,21 @@ class Layer2Agent {
       }));
     }
 
+    const namedTestCases = (requirements.testableItems || [])
+      .map((item) => {
+        const match = String(item || '').match(/^(TC-[A-Z0-9-]+)\s*[—:-]\s*([^:]+)(?::\s*(.*))?$/i);
+        if (!match) return null;
+        return {
+          id: match[1].toUpperCase(),
+          category: 'REQUIREMENT',
+          description: match[2].trim(),
+          priority: 'HIGH',
+          sourceSteps: match[3]?.trim() || '',
+        };
+      })
+      .filter(Boolean);
+    if (namedTestCases.length > 0) return namedTestCases;
+
     // Positive path tests
     testPlan.push({
       id: 'TC-01',
@@ -645,8 +660,9 @@ class Layer2Agent {
       'playwright page object model selectors',
       'explorer accessibility snapshot buttons inputs tables',
       'login username password button selectors',
-      'absence create employee duration substitute preference',
-      'leave balance verification deduction',
+      'existing Playwright workflow implementation',
+      'reusable form table dialog and notification helpers',
+      ...(requirements.acceptanceCriteria || []),
       ...testPlan.map((testCase) => testCase.description),
     ];
 
@@ -654,15 +670,17 @@ class Layer2Agent {
   }
 
   _buildCodegenHints(requirements, testPlan, playwrightVerification) {
+    const mutatesSharedState = /seed|delete|reset|re-create|idempotent/i.test([
+      requirements.title,
+      ...(requirements.testableItems || []),
+    ].filter(Boolean).join(' '));
     return {
       targetSpec: this._specForTicket(this._ticketFrom(requirements)),
       preferExistingPom: true,
-      requiredAssertions: [
-        'Review step shows selected reason and date before submit',
-        'Successful submit is detected by response or accepted UI state',
-        'Leave balance is captured before suite execution and is lower after all successful submissions',
-      ],
-      executionMode: 'serial when tests mutate a shared employee leave balance',
+      requiredAssertions: (requirements.acceptanceCriteria || []).slice(0, 10),
+      executionMode: mutatesSharedState
+        ? 'serial because the workflow mutates shared application state'
+        : 'independent tests unless the workflow context requires serialization',
       strategyCoverage: {
         planned: testPlan.length,
         matchedInCurrentSpec: playwrightVerification.matchedTestCases.length,

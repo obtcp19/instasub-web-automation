@@ -86,7 +86,7 @@ class Layer1Agent {
       detailedContent,
       businessRequirements: this._extractBusinessReqs(description),
       acceptanceCriteria: this._extractAcceptanceCriteria(descriptionDoc, description),
-      testableItems: this._extractTestableItems(description, pairwiseScenarios),
+      testableItems: this._extractTestableItems(description, pairwiseScenarios, detailedContent.sections),
       pairwiseScenarios,
       riskFactors: this._detectRiskFactors(description),
     };
@@ -427,6 +427,7 @@ class Layer1Agent {
     if (rows.length < 2) return [];
 
     const headers = this._tableCells(rows[0]).map(cell => this._nodeText(cell).trim());
+    if (!this._isPairwiseScenarioHeaders(headers)) return [];
 
     // Find headers by flexible matching (case-insensitive, partial match)
     const findHeader = (patterns) => {
@@ -503,6 +504,7 @@ class Layer1Agent {
   _extractScenarioRowsFromSerializedTable(table) {
     const headers = table.headers || [];
     if (headers.length === 0 || !Array.isArray(table.rows)) return [];
+    if (!this._isPairwiseScenarioHeaders(headers)) return [];
 
     const findHeader = (patterns) => {
       return headers.find(h => patterns.some(p => h.toLowerCase().includes(p.toLowerCase())));
@@ -530,6 +532,22 @@ class Layer1Agent {
         };
       })
       .filter(scenario => /^T\d+/i.test(scenario.id || ''));
+  }
+
+  _isPairwiseScenarioHeaders(headers) {
+    const normalized = (headers || []).map(header => String(header || '').trim().toLowerCase());
+    const has = (...patterns) => normalized.some(header => patterns.some(pattern => header.includes(pattern)));
+    const hasId = has('#', 'id', 'test case', 'test');
+    const dimensions = [
+      has('date'),
+      has('reason', 'scenario', 'description'),
+      has('duration', 'class time'),
+      has('sub preference', 'preference'),
+      has('sub selected', 'selected'),
+      has('result', 'expected'),
+    ].filter(Boolean).length;
+
+    return hasId && dimensions >= 3;
   }
 
   _walkDoc(node, visitor) {
@@ -579,7 +597,7 @@ class Layer1Agent {
     ];
   }
 
-  _extractTestableItems(description, pairwiseScenarios = []) {
+  _extractTestableItems(description, pairwiseScenarios = [], sections = []) {
     if (pairwiseScenarios.length > 0) {
       return pairwiseScenarios.map(scenario => {
         const parts = [scenario.id, scenario.reason, scenario.duration, scenario.subPreference, scenario.date]
@@ -588,6 +606,14 @@ class Layer1Agent {
         return parts || scenario.id;
       });
     }
+
+    const namedCases = (sections || [])
+      .filter(section => /^TC-[A-Z0-9-]+\b/i.test(section.title || ''))
+      .map(section => {
+        const summary = String(section.text || '').replace(/\s+/g, ' ').trim();
+        return summary ? `${section.title}: ${summary}` : section.title;
+      });
+    if (namedCases.length > 0) return namedCases;
 
     return [
       'Create absence with valid data',
@@ -604,7 +630,9 @@ class Layer1Agent {
 
     const blocks = descObj.content;
     const headingIndex = blocks.findIndex(
-      block => block.type === 'heading' && this._nodeText(block).toLowerCase() === headingText.toLowerCase()
+      block =>
+        block.type === 'heading' &&
+        this._normalizeHeading(this._nodeText(block)) === this._normalizeHeading(headingText)
     );
     if (headingIndex === -1) return [];
 
@@ -628,7 +656,7 @@ class Layer1Agent {
     const lines = text.split('\n');
     const headingIndex = lines.findIndex(line => {
       const match = line.trim().match(/^h[1-6]\.\s+(.+)$/i);
-      return match && match[1].trim().toLowerCase() === headingText.toLowerCase();
+      return match && this._normalizeHeading(match[1]) === this._normalizeHeading(headingText);
     });
     if (headingIndex === -1) return [];
 
@@ -641,6 +669,14 @@ class Layer1Agent {
     }
 
     return values;
+  }
+
+  _normalizeHeading(value) {
+    return String(value || '')
+      .replace(/^[^A-Za-z0-9]+/, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
   }
 
   _detectRiskFactors(description) {

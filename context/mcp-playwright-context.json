@@ -1,9 +1,9 @@
 {
   "layer": 3,
-  "generatedAt": "2026-06-24T11:10:04.262Z",
+  "generatedAt": "2026-06-24T13:57:38.690Z",
   "status": "captured",
   "purpose": "Manual Playwright MCP context handoff for Layer 4 code generation.",
-  "ticket": "ISE-1564",
+  "ticket": "ISE-1565",
   "mcp": {
     "protocol": "MCP",
     "server": "mcp://playwright",
@@ -28,13 +28,13 @@
   },
   "testPlan": {
     "source": "context/layer2-test-plan.json",
-    "cases": 22
+    "cases": 7
   },
   "verification": {
     "status": "verified",
     "mode": "list",
-    "ticket": "ISE-1564",
-    "spec": "tests/ISE-1564.spec.ts",
+    "ticket": "ISE-1565",
+    "spec": "tests/ISE-1565.spec.ts",
     "specs": [
       "tests/ISE-1551.spec.ts",
       "tests/ISE-1556.spec.ts",
@@ -42,9 +42,10 @@
       "tests/ISE-1559.spec.ts",
       "tests/ISE-1562.spec.ts",
       "tests/ISE-1563.spec.ts",
+      "tests/ISE-1564.spec.ts",
       "tests/ISE-452-absence-creation.spec.ts"
     ],
-    "command": "npx playwright test tests/ISE-1551.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1556.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1558.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1559.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1562.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1563.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-452-absence-creation.spec.ts --project=chromium --workers=1 --list",
+    "command": "npx playwright test tests/ISE-1551.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1556.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1558.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1559.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1562.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1563.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1564.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-452-absence-creation.spec.ts --project=chromium --workers=1 --list",
     "discoveredTests": [
       "auth.setup.ts:67:1 › authenticate",
       "ISE-1551.spec.ts:25:7 › ISE-1551 — Generated Playwright Suite › TC-01: Execute main workflow successfully",
@@ -178,6 +179,28 @@
       "ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub",
       "ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required",
       "ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T1: Sick",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T2: Personal",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T3: Vacation",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T4: Illness-Family Member",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T5: Educational Leave",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T6: Professional Development",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T7: Sick",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T8: Personal",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T9: Vacation",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T10: Illness-Family Member",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T11: Educational Leave",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T12: Professional Development",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T13: Sick",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T14: Personal",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T15: Vacation",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T16: Illness-Family Member",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T17: Educational Leave",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T18: Professional Development",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T19: Sick",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T20: Personal",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T21: Vacation",
+      "ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T22: Illness-Family Member",
       "ISE-452-absence-creation.spec.ts:35:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Teacher creates valid absence and receives confirmation number",
       "ISE-452-absence-creation.spec.ts:65:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Multiple consecutive absence creations generate unique confirmation numbers",
       "ISE-452-absence-creation.spec.ts:105:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Missing leave reason shows validation error",
@@ -186,103 +209,22 @@
       "ISE-452-absence-creation.spec.ts:185:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Confirmation number persists after page refresh",
       "ISE-452-absence-creation.spec.ts:210:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Confirmation number generated reliably (5 retry test)"
     ],
-    "matchedTestCases": [
-      {
-        "id": "T1",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T1: Sick absence with Full Day and Notify all subs"
-      },
-      {
-        "id": "T2",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T2: Personal absence with Full Day and Notify 1 Sub"
-      },
-      {
-        "id": "T3",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T3: Vacation absence with Full Day and Notify my favorites"
-      },
-      {
-        "id": "T4",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub"
-      },
-      {
-        "id": "T5",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required"
-      },
-      {
-        "id": "T6",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs"
-      },
-      {
-        "id": "T7",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub"
-      },
-      {
-        "id": "T8",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites"
-      },
-      {
-        "id": "T9",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub"
-      },
-      {
-        "id": "T10",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required"
-      },
-      {
-        "id": "T11",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs"
-      },
-      {
-        "id": "T12",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub"
-      },
-      {
-        "id": "T13",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites"
-      },
-      {
-        "id": "T14",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub"
-      },
-      {
-        "id": "T15",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required"
-      },
-      {
-        "id": "T16",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs"
-      },
-      {
-        "id": "T17",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub"
-      },
-      {
-        "id": "T18",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites"
-      },
-      {
-        "id": "T19",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub"
-      },
-      {
-        "id": "T20",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required"
-      },
-      {
-        "id": "T21",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs"
-      },
-      {
-        "id": "T22",
-        "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub"
-      }
+    "matchedTestCases": [],
+    "missingTestCases": [
+      "TC-SEED-01",
+      "TC-SEED-02",
+      "TC-SEED-03",
+      "TC-SEED-04",
+      "TC-SEED-05",
+      "TC-SEED-06",
+      "TC-SEED-07"
     ],
-    "missingTestCases": [],
     "exitCode": 0,
-    "outputTail": " [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T23: Educational Leave absence with 09:00-11:00 and Notify my favorites\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs\nTotal: 27 tests in 2 files\n\nListing tests:\n  [setup] › auth.setup.ts:67:1 › authenticate\n  [chromium] › ISE-452-absence-creation.spec.ts:35:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Teacher creates valid absence and receives confirmation number\n  [chromium] › ISE-452-absence-creation.spec.ts:65:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Multiple consecutive absence creations generate unique confirmation numbers\n  [chromium] › ISE-452-absence-creation.spec.ts:105:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Missing leave reason shows validation error\n  [chromium] › ISE-452-absence-creation.spec.ts:130:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Past date submission is rejected\n  [chromium] › ISE-452-absence-creation.spec.ts:157:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Absence created near system boundary (late date) persists confirmation\n  [chromium] › ISE-452-absence-creation.spec.ts:185:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Confirmation number persists after page refresh\n  [chromium] › ISE-452-absence-creation.spec.ts:210:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Confirmation number generated reliably (5 retry test)\nTotal: 8 tests in 2 files",
+    "outputTail": "ession › T23: Educational Leave absence with 09:00-11:00 and Notify my favorites\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T24: Professional Development absence with 12:00-16:00 and Assign a specific sub\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T25: Sick absence with 08:00-10:00 and No sub required\n  [chromium] › ISE-1563.spec.ts:216:9 › ISE-1563: Self absence pairwise regression › T26: Personal absence with 13:00-17:00 and Notify all subs\nTotal: 27 tests in 2 files\n\nListing tests:\n  [setup] › auth.setup.ts:67:1 › authenticate\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T1: Sick\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T2: Personal\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T3: Vacation\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T4: Illness-Family Member\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T5: Educational Leave\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T6: Professional Development\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T7: Sick\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T8: Personal\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T9: Vacation\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T10: Illness-Family Member\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T11: Educational Leave\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T12: Professional Development\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T13: Sick\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T14: Personal\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T15: Vacation\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T16: Illness-Family Member\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T17: Educational Leave\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T18: Professional Development\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T19: Sick\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T20: Personal\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T21: Vacation\n  [chromium] › ISE-1564.spec.ts:187:9 › ISE-1564: data-driven regression › T22: Illness-Family Member\nTotal: 23 tests in 2 files\n\nListing tests:\n  [setup] › auth.setup.ts:67:1 › authenticate\n  [chromium] › ISE-452-absence-creation.spec.ts:35:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Teacher creates valid absence and receives confirmation number\n  [chromium] › ISE-452-absence-creation.spec.ts:65:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Multiple consecutive absence creations generate unique confirmation numbers\n  [chromium] › ISE-452-absence-creation.spec.ts:105:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Missing leave reason shows validation error\n  [chromium] › ISE-452-absence-creation.spec.ts:130:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Past date submission is rejected\n  [chromium] › ISE-452-absence-creation.spec.ts:157:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Absence created near system boundary (late date) persists confirmation\n  [chromium] › ISE-452-absence-creation.spec.ts:185:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Confirmation number persists after page refresh\n  [chromium] › ISE-452-absence-creation.spec.ts:210:7 › ISE-452: Teacher Absence Creation with Confirmation Number › Confirmation number generated reliably (5 retry test)\nTotal: 8 tests in 2 files",
     "notes": [
-      "Skipped missing spec(s): tests/ISE-1564.spec.ts"
+      "Skipped missing spec(s): tests/ISE-1565.spec.ts"
     ],
-    "verifiedAt": "2026-06-24T11:09:40.061Z"
+    "verifiedAt": "2026-06-24T13:57:20.369Z"
   },
   "explorerContext": {
     "layer": 3,
@@ -290,20 +232,70 @@
     "status": "captured",
     "mode": "browser",
     "url": "https://instasublogin.tcpsoftware.com/",
-    "ticket": "ISE-1564",
-    "generatedAt": "2026-06-24T11:09:46.021Z",
+    "ticket": "ISE-1565",
+    "generatedAt": "2026-06-24T13:57:27.910Z",
     "mcp": {
       "protocol": "MCP",
       "server": "mcp://playwright",
       "endpoint": "mcp://playwright/explore"
     },
     "why": "Layer 3 captures authoritative selectors and flow docs for downstream Layer 4 codegen.",
+    "workflow": {
+      "kind": "staff-management",
+      "name": "Staff management",
+      "route": "/manage/employees",
+      "testCases": [
+        {
+          "id": "TC-SEED-01",
+          "title": "TC-SEED-01 — Login as Protected Admin",
+          "steps": "Preconditions:\n App is running at\n<https://instasublogin.tcpsoftware.com\n>\n\nSteps:\nNavigate to the login page\nEnter email:\nadminuserxadminzx@mailinator.com\nEnter the admin password\nClick Login / Submit\nVerify redirect to Dashboard/Home (\n/home\n)\nExpected Result:\n Admin is logged in and redirected to the home dashboard without errors."
+        },
+        {
+          "id": "TC-SEED-02",
+          "title": "TC-SEED-02 — Navigate to Staff Management Page",
+          "steps": "Preconditions:\n Logged in as admin\n\nSteps:\nNavigate to\n/manage/employees\nVerify the staff table loads with all existing staff rows\nVerify the protected admin (\nadminzx@maillinator.com\n) is visible in the list\nExpected Result:\n Staff management page loads, showing all staff members including the protected admin row."
+        },
+        {
+          "id": "TC-SEED-03",
+          "title": "TC-SEED-03 — Delete All Non-Protected Staff (UI Flow)",
+          "steps": "Preconditions:\n On\n/manage/employees\n, at least 1 non-protected staff member exists\n\nSteps:\nFor each staff row in the table:\n\na. Check if the email matches\nadminzx@maillinator.com\n — if yes,\nskip\n\nb. If not protected, click the\nDelete\n icon/button on that row\n\nc. Wait for the confirmation dialog to appear\n\nd. Click\nConfirm / Yes\n in the dialog\n\ne. Wait for success toast / row removal\nRepeat until all non-protected staff are deleted\nVerify only the protected admin row remains\nExpected Result:\n All 6 non-protected staff members are deleted. Protected admin row is untouched and still visible.\nCritical Constraint:\n Under no circumstances should the script delete\nadminzx@maillinator.com\n."
+        },
+        {
+          "id": "TC-SEED-04",
+          "title": "TC-SEED-04 — Protected Admin is Never Deleted",
+          "steps": "Preconditions:\n Script is executing the deletion loop\n\nSteps:\nScript evaluates each row's email against the protected list\nWhen the protected admin email is found, the delete action is\nskipped entirely\nAfter full deletion loop completes, confirm protected admin still appears in staff table\nExpected Result:\n Protected admin account remains intact throughout and after the full deletion loop. No delete action is triggered for this account."
+        },
+        {
+          "id": "TC-SEED-05",
+          "title": "TC-SEED-05 — Re-create Staff via Add Staff Button (Per User)",
+          "steps": "Preconditions:\n Non-protected staff have been deleted; on\n/manage/employees\n\nSteps (repeat for each of the 6 staff members):\nClick the\nAdd Staff\n button on the staff management page\nIn the Add Staff modal/form, fill in:\nFirst Name\n and\nLast Name\nEmail\nPhone\nLocation / School\n (select from dropdown)\nRole\n (District Admin / School Admin / Employee)\nType\n (Teacher)\nCertified\n (Yes)\nSubmit / Save the form\nVerify success toast appears\nVerify the new staff member row appears in the staff table\nExpected Result:\n Each of the 6 staff members is successfully re-created with all correct field values. Success toast confirms creation. Staff table reflects updated count."
+        },
+        {
+          "id": "TC-SEED-06",
+          "title": "TC-SEED-06 — Verify Full Staff State After Seeding",
+          "steps": "Preconditions:\n All 6 staff have been re-created\n\nSteps:\nReload\n/manage/employees\nCount total staff rows — expect\n7\nFor each expected staff member, verify:\nName\nEmail\nRole\nLocation\nConfirm protected admin is present and unchanged\nExpected Result:\n Staff table shows exactly 7 members with all correct data matching the seed dataset. No duplicate or missing entries."
+        },
+        {
+          "id": "TC-SEED-07",
+          "title": "TC-SEED-07 — Idempotency — Re-run Script on Already-Seeded State",
+          "steps": "Preconditions:\n Script has already been run once; all 7 staff exist\n\nSteps:\nRun the seed script again\nScript detects existing non-protected users and deletes them\nScript re-creates all 6 staff again\nVerify final state is 7 staff (1 protected + 6 re-created)\nExpected Result:\n Script is idempotent — running it multiple times always results in the same clean 7-user state without errors or duplicates."
+        }
+      ]
+    },
     "coverage": {
-      "plannedCases": 22,
-      "coveredCases": 22,
-      "missingCases": [],
+      "plannedCases": 7,
+      "coveredCases": 0,
+      "missingCases": [
+        "TC-SEED-01",
+        "TC-SEED-02",
+        "TC-SEED-03",
+        "TC-SEED-04",
+        "TC-SEED-05",
+        "TC-SEED-06",
+        "TC-SEED-07"
+      ],
       "coveredByOtherLayer": {
-        "layer3PlaywrightMcp": 22,
+        "layer3PlaywrightMcp": 0,
         "layer5Execution": "covered when agent-layer5-execution.js runs the generated/current spec"
       }
     },
@@ -311,7 +303,7 @@
       "accessibility": {
         "role": "document",
         "name": "InstaSub",
-        "textPreview": "Loading...\nmenu\nkeyboard_arrow_down Administrator\nAbsences Overview\nShortcuts\n\n \nsearch\nsettings\nHelp arrow_drop_down\nnotification_important\nDashboard\nReset\nToday's Absences\nPrevious Day\nNaN %\nView\nFilled\nPrevious Day\nNaN %\nView\nUnfilled\nPrevious Day\nNaN %\nView\nNo Sub Required\nPrevious Day\nNaN %\nView\nAbsence Summary(Total YTD)\nTop 4 Absence Reasons\nPending Time Off Requests (0)\nNo pending requests.\nFilled / Unfilled 10 Day Trend\nFill Rate(Total YTD)\nAbsences By Subjects\nAbsences By Day of Week\nTop Absences By Grade Level\nTop 10 Teachers by Absences (Annually)\nName\nAbsences\n\nCopyright © 2026 InstaSub All Rights Reserved\n\nPlease Agree To Our Terms And Conditions\nclear\nInstaSub Terms Of Service\nI have read and agree to the terms of use detailed in the link above.\nCancel\n  Agree"
+        "textPreview": "Loading...\nmenu\nkeyboard_arrow_down Administrator\nAbsences Overview\nShortcuts\n\n \nsearch\nsettings\nHelp arrow_drop_down\nnotification_important\nDashboard\nReset\nToday's Absences\nPrevious Day\nNaN %\nView\nFilled\nPrevious Day\nNaN %\nView\nUnfilled\nPrevious Day\nNaN %\nView\nNo Sub Required\nPrevious Day\nNaN %\nView\nAbsence Summary(Total YTD)\nTop 4 Absence Reasons\nPending Time Off Requests (0)\nNo pending requests.\nFilled / Unfilled 10 Day Trend\nFill Rate(Total YTD)\nAbsences By Subjects\nAbsences By Day of Week\nTop Absences By Grade Level\nTop 10 Teachers by Absences (Annually)\nName\nAbsences\n\nCopyright © 2026 InstaSub All Rights Reserved"
       },
       "elements": {
         "buttons": [
@@ -363,32 +355,9 @@
             "selector": "button",
             "recommendedLocator": "getByRole('button', { name: \"Reset\" })",
             "disabled": false
-          },
-          {
-            "text": "Cancel",
-            "role": "button",
-            "selector": "button:nth-of-type(1)",
-            "recommendedLocator": "getByRole('button', { name: \"Cancel\" })",
-            "disabled": false
-          },
-          {
-            "text": "Agree",
-            "role": "button",
-            "selector": "button:nth-of-type(2)",
-            "recommendedLocator": "getByRole('button', { name: \"Agree\" })",
-            "disabled": false
           }
         ],
-        "inputs": [
-          {
-            "label": "on",
-            "type": "checkbox",
-            "selector": "#mat-checkbox-1-input",
-            "recommendedLocator": "#mat-checkbox-1-input",
-            "formControlName": null,
-            "required": false
-          }
-        ],
+        "inputs": [],
         "tables": [
           {
             "label": "Name Absences",
@@ -454,32 +423,9 @@
                 "selector": "button",
                 "recommendedLocator": "getByRole('button', { name: \"Reset\" })",
                 "disabled": false
-              },
-              {
-                "text": "Cancel",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "getByRole('button', { name: \"Cancel\" })",
-                "disabled": false
-              },
-              {
-                "text": "Agree",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "getByRole('button', { name: \"Agree\" })",
-                "disabled": false
               }
             ],
-            "inputs": [
-              {
-                "label": "on",
-                "type": "checkbox",
-                "selector": "#mat-checkbox-1-input",
-                "recommendedLocator": "#mat-checkbox-1-input",
-                "formControlName": null,
-                "required": false
-              }
-            ],
+            "inputs": [],
             "tables": [
               {
                 "label": "Name Absences",
@@ -491,10 +437,10 @@
           }
         },
         {
-          "label": "create-absence-empty",
-          "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+          "label": "staff-management-page",
+          "url": "https://instasublogin.tcpsoftware.com/manage/employees",
           "title": "InstaSub",
-          "activeStep": "Create Absence",
+          "activeStep": "Absences Overview",
           "elements": {
             "buttons": [
               {
@@ -540,155 +486,98 @@
                 "disabled": false
               },
               {
-                "text": "Open calendar",
+                "text": "Add staff",
                 "role": "button",
                 "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "recommendedLocator": "getByRole('button', { name: \"Add staff\" })",
                 "disabled": false
               },
               {
-                "text": "Open calendar",
+                "text": "Change sorting for FirstName",
                 "role": "button",
                 "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "recommendedLocator": "getByRole('button', { name: \"Change sorting for FirstName\" })",
                 "disabled": false
               },
               {
-                "text": "add_circle_outline Add Class",
+                "text": "Change sorting for LastName",
                 "role": "button",
                 "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"add_circle_outline Add Class\" })",
+                "recommendedLocator": "getByRole('button', { name: \"Change sorting for LastName\" })",
                 "disabled": false
               },
               {
-                "text": "NEXT",
+                "text": "Change sorting for DistrictName",
                 "role": "button",
                 "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"NEXT\" })",
+                "recommendedLocator": "getByRole('button', { name: \"Change sorting for DistrictName\" })",
                 "disabled": false
               },
               {
-                "text": "",
+                "text": "Change sorting for RoleName",
                 "role": "button",
                 "selector": "button",
-                "recommendedLocator": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Change sorting for RoleName\" })",
                 "disabled": false
               },
               {
-                "text": "",
+                "text": "Change sorting for isVerified",
+                "role": "button",
+                "selector": "button",
+                "recommendedLocator": "getByRole('button', { name: \"Change sorting for isVerified\" })",
+                "disabled": false
+              },
+              {
+                "text": "First page",
                 "role": "button",
                 "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "button:nth-of-type(1)",
-                "disabled": false
+                "recommendedLocator": "getByRole('button', { name: \"First page\" })",
+                "disabled": true
               },
               {
-                "text": "",
+                "text": "Previous page",
                 "role": "button",
                 "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "button:nth-of-type(2)",
-                "disabled": false
+                "recommendedLocator": "getByRole('button', { name: \"Previous page\" })",
+                "disabled": true
               },
               {
-                "text": "",
+                "text": "Next page",
                 "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "button:nth-of-type(1)",
-                "disabled": false
+                "selector": "button:nth-of-type(3)",
+                "recommendedLocator": "getByRole('button', { name: \"Next page\" })",
+                "disabled": true
               },
               {
-                "text": "",
+                "text": "Last page",
                 "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "button:nth-of-type(2)",
-                "disabled": false
+                "selector": "button:nth-of-type(4)",
+                "recommendedLocator": "getByRole('button', { name: \"Last page\" })",
+                "disabled": true
               }
             ],
             "inputs": [
               {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-2-input",
-                "recommendedLocator": "#mat-radio-2-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-3-input",
-                "recommendedLocator": "#mat-radio-3-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-4-input",
-                "recommendedLocator": "#mat-radio-4-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "Start Date",
-                "type": "input",
-                "selector": "#mat-input-0",
-                "recommendedLocator": "#mat-input-0",
-                "formControlName": "AbsenceStartDate",
-                "required": false
-              },
-              {
-                "label": "End Date",
-                "type": "input",
-                "selector": "#mat-input-1",
-                "recommendedLocator": "#mat-input-1",
-                "formControlName": "AbsenceEndDate",
-                "required": false
-              },
-              {
-                "label": "Reason",
+                "label": "Search by Employee",
                 "type": "listbox",
                 "selector": "#mat-select-0",
                 "recommendedLocator": "#mat-select-0",
-                "formControlName": "Reason",
+                "formControlName": null,
                 "required": false
               },
               {
-                "label": "Duration",
-                "type": "listbox",
-                "selector": "#mat-select-3",
-                "recommendedLocator": "#mat-select-3",
-                "formControlName": "Duration",
+                "label": "Search By Name",
+                "type": "text",
+                "selector": "#mat-input-0",
+                "recommendedLocator": "#mat-input-0",
+                "formControlName": null,
                 "required": false
               },
               {
-                "label": "Start Time",
-                "type": "time",
-                "selector": "#mat-input-4",
-                "recommendedLocator": "#mat-input-4",
-                "formControlName": "StartTime",
-                "required": false
-              },
-              {
-                "label": "End Time",
-                "type": "time",
-                "selector": "#mat-input-5",
-                "recommendedLocator": "#mat-input-5",
-                "formControlName": "EndTime",
-                "required": false
-              },
-              {
-                "label": "Select Substitute Preference",
+                "label": "Send To All",
                 "type": "listbox",
                 "selector": "#mat-select-1",
                 "recommendedLocator": "#mat-select-1",
-                "formControlName": "AbsenceType",
-                "required": false
-              },
-              {
-                "label": "Contact Substitutes",
-                "type": "listbox",
-                "selector": "#mat-select-2",
-                "recommendedLocator": "#mat-select-2",
                 "formControlName": null,
                 "required": false
               },
@@ -701,38 +590,69 @@
                 "required": false
               },
               {
-                "label": "Payroll Notes",
-                "type": "textarea",
-                "selector": "#mat-input-2",
-                "recommendedLocator": "#mat-input-2",
-                "formControlName": "PayRollNotes",
+                "label": "on",
+                "type": "checkbox",
+                "selector": "#mat-slide-toggle-2-input",
+                "recommendedLocator": "#mat-slide-toggle-2-input",
+                "formControlName": null,
                 "required": false
               },
               {
-                "label": "Notes to substitute",
-                "type": "textarea",
-                "selector": "#mat-input-3",
-                "recommendedLocator": "#mat-input-3",
-                "formControlName": "NotesToSubstitute",
+                "label": "on",
+                "type": "checkbox",
+                "selector": "#mat-slide-toggle-3-input",
+                "recommendedLocator": "#mat-slide-toggle-3-input",
+                "formControlName": null,
                 "required": false
               },
               {
-                "label": "",
-                "type": "file",
-                "selector": "#UploadButton",
-                "recommendedLocator": "#UploadButton",
+                "label": "on",
+                "type": "checkbox",
+                "selector": "#mat-slide-toggle-4-input",
+                "recommendedLocator": "#mat-slide-toggle-4-input",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "on",
+                "type": "checkbox",
+                "selector": "#mat-slide-toggle-5-input",
+                "recommendedLocator": "#mat-slide-toggle-5-input",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "on",
+                "type": "checkbox",
+                "selector": "#mat-slide-toggle-6-input",
+                "recommendedLocator": "#mat-slide-toggle-6-input",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "on",
+                "type": "checkbox",
+                "selector": "#mat-slide-toggle-7-input",
+                "recommendedLocator": "#mat-slide-toggle-7-input",
                 "formControlName": null,
                 "required": false
               }
             ],
-            "tables": []
+            "tables": [
+              {
+                "label": "First Name swap_vert Last Name swap_vert Email Phone No Location swap_vert Role swap_vert Classification Action Send To All admin userx adminzx@maillinator.com +1541332156112551 regscus District Admin Certified how_to_reg Verified phone_iphone regs admin regsadmin@mailinator.com +144516515651365 regscus District Admin Certified how_to_reg Verified phone_iphone school admin schooladmin@mailinator.com +16516532123 SchoolAcademyTest2345 School Admin Certified how_to_reg Verified phone_iphone user third thirdezce@mailinator.com +1564332151322215 regscus Employee Certified how_to_reg Verified phone_iphone user one schoolruser670@mailinator.com +119199899 SchoolAcademyTest5646 Employee Certified how_to_reg Verified phone_iphone user automation staffuser210@mailinator.com +1415611515311353 SchoolAcademyTest2345 Employee Certified how_to_reg Verified phone_iphone user two schoolteacher890@mailinator.com +1456645345456 SchoolAcademyTest2345 Employee Certified how_to_reg Verified phone_iphone",
+                "selector": "mat-table",
+                "rows": 8,
+                "columns": 8
+              }
+            ]
           }
         },
         {
-          "label": "create-absence-filled",
-          "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
+          "label": "add-staff-form",
+          "url": "https://instasublogin.tcpsoftware.com/manage/employees/addemployee",
           "title": "InstaSub",
-          "activeStep": "Create Absence",
+          "activeStep": "Absences Overview",
           "elements": {
             "buttons": [
               {
@@ -778,77 +698,59 @@
                 "disabled": false
               },
               {
-                "text": "Open calendar",
+                "text": "file_uploadUpload photo",
                 "role": "button",
                 "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "recommendedLocator": "getByRole('button', { name: \"file_uploadUpload photo\" })",
                 "disabled": false
               },
               {
-                "text": "Open calendar",
+                "text": "chevron_left Back",
                 "role": "button",
                 "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
+                "recommendedLocator": "getByRole('button', { name: \"chevron_left Back\" })",
                 "disabled": false
               },
               {
-                "text": "add_circle_outline Add Class",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"add_circle_outline Add Class\" })",
-                "disabled": false
-              },
-              {
-                "text": "location_on Add Location",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"location_on Add Location\" })",
-                "disabled": false
-              },
-              {
-                "text": "NEXT",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"NEXT\" })",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "",
+                "text": "Add Staff",
                 "role": "button",
                 "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "button:nth-of-type(1)",
+                "recommendedLocator": "getByRole('button', { name: \"Add Staff\" })",
                 "disabled": false
               },
               {
-                "text": "",
+                "text": "Add & Send Welcome Email",
                 "role": "button",
                 "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "button:nth-of-type(2)",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "button:nth-of-type(1)",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "button:nth-of-type(2)",
+                "recommendedLocator": "getByRole('button', { name: \"Add & Send Welcome Email\" })",
                 "disabled": false
               }
             ],
             "inputs": [
+              {
+                "label": "First Name",
+                "type": "input",
+                "selector": "#mat-input-1",
+                "recommendedLocator": "#mat-input-1",
+                "formControlName": "FirstName",
+                "required": false
+              },
+              {
+                "label": "Last Name",
+                "type": "input",
+                "selector": "#mat-input-2",
+                "recommendedLocator": "#mat-input-2",
+                "formControlName": "LastName",
+                "required": false
+              },
+              {
+                "label": "District",
+                "type": "listbox",
+                "selector": "#mat-select-4",
+                "recommendedLocator": "#mat-select-4",
+                "formControlName": "District",
+                "required": false
+              },
               {
                 "label": "on",
                 "type": "radio",
@@ -863,427 +765,78 @@
                 "selector": "#mat-radio-3-input",
                 "recommendedLocator": "#mat-radio-3-input",
                 "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-4-input",
-                "recommendedLocator": "#mat-radio-4-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "Start Date",
-                "type": "input",
-                "selector": "#mat-input-0",
-                "recommendedLocator": "#mat-input-0",
-                "formControlName": "AbsenceStartDate",
-                "required": false
-              },
-              {
-                "label": "End Date",
-                "type": "input",
-                "selector": "#mat-input-1",
-                "recommendedLocator": "#mat-input-1",
-                "formControlName": "AbsenceEndDate",
-                "required": false
-              },
-              {
-                "label": "Reason",
-                "type": "listbox",
-                "selector": "#mat-select-0",
-                "recommendedLocator": "#mat-select-0",
-                "formControlName": "Reason",
-                "required": false
-              },
-              {
-                "label": "Duration",
-                "type": "listbox",
-                "selector": "#mat-select-3",
-                "recommendedLocator": "#mat-select-3",
-                "formControlName": "Duration",
-                "required": false
-              },
-              {
-                "label": "Start Time",
-                "type": "time",
-                "selector": "#mat-input-4",
-                "recommendedLocator": "#mat-input-4",
-                "formControlName": "StartTime",
-                "required": false
-              },
-              {
-                "label": "End Time",
-                "type": "time",
-                "selector": "#mat-input-5",
-                "recommendedLocator": "#mat-input-5",
-                "formControlName": "EndTime",
-                "required": false
-              },
-              {
-                "label": "School Location",
-                "type": "listbox",
-                "selector": "#mat-select-4",
-                "recommendedLocator": "#mat-select-4",
-                "formControlName": "OrganizationId",
                 "required": false
               },
               {
                 "label": "Position",
                 "type": "listbox",
-                "selector": "#mat-select-5",
-                "recommendedLocator": "#mat-select-5",
-                "formControlName": "PositionId",
-                "required": false
-              },
-              {
-                "label": "Grade",
-                "type": "listbox",
-                "selector": "#mat-select-6",
-                "recommendedLocator": "#mat-select-6",
-                "formControlName": "Grade",
-                "required": false
-              },
-              {
-                "label": "Subject",
-                "type": "listbox",
-                "selector": "#mat-select-7",
-                "recommendedLocator": "#mat-select-7",
-                "formControlName": "Subject",
-                "required": false
-              },
-              {
-                "label": "Select Substitute Preference",
-                "type": "listbox",
-                "selector": "#mat-select-1",
-                "recommendedLocator": "#mat-select-1",
-                "formControlName": "AbsenceType",
-                "required": false
-              },
-              {
-                "label": "Enter Persons Name",
-                "type": "input",
-                "selector": "#mat-input-6",
-                "recommendedLocator": "#mat-input-6",
-                "formControlName": "SubbingFor",
-                "required": false
-              },
-              {
-                "label": "Contact Substitutes",
-                "type": "listbox",
                 "selector": "#mat-select-2",
                 "recommendedLocator": "#mat-select-2",
-                "formControlName": null,
+                "formControlName": "UserTypeId",
                 "required": false
               },
               {
-                "label": "on",
-                "type": "checkbox",
-                "selector": "#mat-slide-toggle-1-input",
-                "recommendedLocator": "#mat-slide-toggle-1-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "Payroll Notes",
-                "type": "textarea",
-                "selector": "#mat-input-2",
-                "recommendedLocator": "#mat-input-2",
-                "formControlName": "PayRollNotes",
-                "required": false
-              },
-              {
-                "label": "Notes to substitute",
-                "type": "textarea",
-                "selector": "#mat-input-3",
-                "recommendedLocator": "#mat-input-3",
-                "formControlName": "NotesToSubstitute",
-                "required": false
-              },
-              {
-                "label": "",
-                "type": "file",
-                "selector": "#UploadButton",
-                "recommendedLocator": "#UploadButton",
-                "formControlName": null,
-                "required": false
-              }
-            ],
-            "tables": []
-          }
-        },
-        {
-          "label": "after-first-next-Additional Information",
-          "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
-          "title": "InstaSub",
-          "activeStep": "Additional Information",
-          "elements": {
-            "buttons": [
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "menu",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "getByRole('button', { name: \"menu\" })",
-                "disabled": false
-              },
-              {
-                "text": "keyboard_arrow_down Administrator",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "getByRole('button', { name: \"keyboard_arrow_down Administrator\" })",
-                "disabled": false
-              },
-              {
-                "text": "search",
-                "role": "button",
-                "selector": "button:nth-of-type(3)",
-                "recommendedLocator": "getByRole('button', { name: \"search\" })",
-                "disabled": false
-              },
-              {
-                "text": "settings",
-                "role": "button",
-                "selector": "button:nth-of-type(4)",
-                "recommendedLocator": "getByRole('button', { name: \"settings\" })",
-                "disabled": false
-              },
-              {
-                "text": "notification_important",
-                "role": "button",
-                "selector": "button:nth-of-type(5)",
-                "recommendedLocator": "getByRole('button', { name: \"notification_important\" })",
-                "disabled": false
-              },
-              {
-                "text": "Open calendar",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
-                "disabled": false
-              },
-              {
-                "text": "Open calendar",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "file_uploadUpload attachment",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"file_uploadUpload attachment\" })",
-                "disabled": false
-              },
-              {
-                "text": "Back",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "getByRole('button', { name: \"Back\" })",
-                "disabled": false
-              },
-              {
-                "text": "Next",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "getByRole('button', { name: \"Next\" })",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "button:nth-of-type(1)",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "button:nth-of-type(2)",
-                "disabled": false
-              }
-            ],
-            "inputs": [
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-2-input",
-                "recommendedLocator": "#mat-radio-2-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-3-input",
-                "recommendedLocator": "#mat-radio-3-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-4-input",
-                "recommendedLocator": "#mat-radio-4-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "Start Date",
-                "type": "input",
-                "selector": "#mat-input-0",
-                "recommendedLocator": "#mat-input-0",
-                "formControlName": "AbsenceStartDate",
-                "required": false
-              },
-              {
-                "label": "End Date",
-                "type": "input",
-                "selector": "#mat-input-1",
-                "recommendedLocator": "#mat-input-1",
-                "formControlName": "AbsenceEndDate",
-                "required": false
-              },
-              {
-                "label": "Reason",
-                "type": "listbox",
-                "selector": "#mat-select-0",
-                "recommendedLocator": "#mat-select-0",
-                "formControlName": "Reason",
-                "required": false
-              },
-              {
-                "label": "Duration",
+                "label": "Contract",
                 "type": "listbox",
                 "selector": "#mat-select-3",
                 "recommendedLocator": "#mat-select-3",
-                "formControlName": "Duration",
+                "formControlName": "ContractId",
                 "required": false
               },
               {
-                "label": "Start Time",
-                "type": "time",
-                "selector": "#mat-input-4",
-                "recommendedLocator": "#mat-input-4",
-                "formControlName": "StartTime",
-                "required": false
-              },
-              {
-                "label": "End Time",
-                "type": "time",
-                "selector": "#mat-input-5",
-                "recommendedLocator": "#mat-input-5",
-                "formControlName": "EndTime",
-                "required": false
-              },
-              {
-                "label": "School Location",
-                "type": "listbox",
-                "selector": "#mat-select-4",
-                "recommendedLocator": "#mat-select-4",
-                "formControlName": "OrganizationId",
-                "required": false
-              },
-              {
-                "label": "Position",
-                "type": "listbox",
-                "selector": "#mat-select-5",
-                "recommendedLocator": "#mat-select-5",
-                "formControlName": "PositionId",
-                "required": false
-              },
-              {
-                "label": "Grade",
-                "type": "listbox",
-                "selector": "#mat-select-6",
-                "recommendedLocator": "#mat-select-6",
-                "formControlName": "Grade",
-                "required": false
-              },
-              {
-                "label": "Subject",
-                "type": "listbox",
-                "selector": "#mat-select-7",
-                "recommendedLocator": "#mat-select-7",
-                "formControlName": "Subject",
-                "required": false
-              },
-              {
-                "label": "Select Substitute Preference",
-                "type": "listbox",
-                "selector": "#mat-select-1",
-                "recommendedLocator": "#mat-select-1",
-                "formControlName": "AbsenceType",
-                "required": false
-              },
-              {
-                "label": "Enter Persons Name",
-                "type": "input",
-                "selector": "#mat-input-6",
-                "recommendedLocator": "#mat-input-6",
-                "formControlName": "SubbingFor",
-                "required": false
-              },
-              {
-                "label": "Contact Substitutes",
-                "type": "listbox",
-                "selector": "#mat-select-2",
-                "recommendedLocator": "#mat-select-2",
+                "label": "on",
+                "type": "radio",
+                "selector": "#mat-radio-8-input",
+                "recommendedLocator": "#mat-radio-8-input",
                 "formControlName": null,
                 "required": false
               },
               {
                 "label": "on",
-                "type": "checkbox",
-                "selector": "#mat-slide-toggle-1-input",
-                "recommendedLocator": "#mat-slide-toggle-1-input",
+                "type": "radio",
+                "selector": "#mat-radio-9-input",
+                "recommendedLocator": "#mat-radio-9-input",
                 "formControlName": null,
                 "required": false
               },
               {
-                "label": "Payroll Notes",
-                "type": "textarea",
-                "selector": "#mat-input-2",
-                "recommendedLocator": "#mat-input-2",
-                "formControlName": "PayRollNotes",
+                "label": "InstaSub Role",
+                "type": "listbox",
+                "selector": "#mat-select-5",
+                "recommendedLocator": "#mat-select-5",
+                "formControlName": "role",
+                "required": true
+              },
+              {
+                "label": "Mobile Number",
+                "type": "input",
+                "selector": "#mat-input-3",
+                "recommendedLocator": "#mat-input-3",
+                "formControlName": "PhoneNumber",
                 "required": false
               },
               {
-                "label": "Notes to substitute",
-                "type": "textarea",
-                "selector": "#mat-input-3",
-                "recommendedLocator": "#mat-input-3",
-                "formControlName": "NotesToSubstitute",
+                "label": "Email",
+                "type": "email",
+                "selector": "#mat-input-4",
+                "recommendedLocator": "#mat-input-4",
+                "formControlName": "EmailId",
+                "required": false
+              },
+              {
+                "label": "on",
+                "type": "radio",
+                "selector": "#mat-radio-5-input",
+                "recommendedLocator": "#mat-radio-5-input",
+                "formControlName": null,
+                "required": false
+              },
+              {
+                "label": "on",
+                "type": "radio",
+                "selector": "#mat-radio-6-input",
+                "recommendedLocator": "#mat-radio-6-input",
+                "formControlName": null,
                 "required": false
               },
               {
@@ -1295,1186 +848,152 @@
                 "required": false
               }
             ],
-            "tables": []
-          }
-        },
-        {
-          "label": "additional-information-filled",
-          "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
-          "title": "InstaSub",
-          "activeStep": "Additional Information",
-          "elements": {
-            "buttons": [
+            "tables": [
               {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "menu",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "getByRole('button', { name: \"menu\" })",
-                "disabled": false
-              },
-              {
-                "text": "keyboard_arrow_down Administrator",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "getByRole('button', { name: \"keyboard_arrow_down Administrator\" })",
-                "disabled": false
-              },
-              {
-                "text": "search",
-                "role": "button",
-                "selector": "button:nth-of-type(3)",
-                "recommendedLocator": "getByRole('button', { name: \"search\" })",
-                "disabled": false
-              },
-              {
-                "text": "settings",
-                "role": "button",
-                "selector": "button:nth-of-type(4)",
-                "recommendedLocator": "getByRole('button', { name: \"settings\" })",
-                "disabled": false
-              },
-              {
-                "text": "notification_important",
-                "role": "button",
-                "selector": "button:nth-of-type(5)",
-                "recommendedLocator": "getByRole('button', { name: \"notification_important\" })",
-                "disabled": false
-              },
-              {
-                "text": "Open calendar",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
-                "disabled": false
-              },
-              {
-                "text": "Open calendar",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "file_uploadUpload attachment",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"file_uploadUpload attachment\" })",
-                "disabled": false
-              },
-              {
-                "text": "Back",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "getByRole('button', { name: \"Back\" })",
-                "disabled": false
-              },
-              {
-                "text": "Next",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "getByRole('button', { name: \"Next\" })",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "button:nth-of-type(1)",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "button:nth-of-type(2)",
-                "disabled": false
+                "label": "First Name Last Name District District Classification Certified Classified Position Position Contract -- Work Location District Level Campus/Building InstaSub Role InstaSub Role Mobile Number Min 7 and Max 15 characters 0/15 Work Email Address Email Alerts Yes No",
+                "selector": "table",
+                "rows": 11,
+                "columns": 2
               }
-            ],
-            "inputs": [
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-2-input",
-                "recommendedLocator": "#mat-radio-2-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-3-input",
-                "recommendedLocator": "#mat-radio-3-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-4-input",
-                "recommendedLocator": "#mat-radio-4-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "Start Date",
-                "type": "input",
-                "selector": "#mat-input-0",
-                "recommendedLocator": "#mat-input-0",
-                "formControlName": "AbsenceStartDate",
-                "required": false
-              },
-              {
-                "label": "End Date",
-                "type": "input",
-                "selector": "#mat-input-1",
-                "recommendedLocator": "#mat-input-1",
-                "formControlName": "AbsenceEndDate",
-                "required": false
-              },
-              {
-                "label": "Reason",
-                "type": "listbox",
-                "selector": "#mat-select-0",
-                "recommendedLocator": "#mat-select-0",
-                "formControlName": "Reason",
-                "required": false
-              },
-              {
-                "label": "Duration",
-                "type": "listbox",
-                "selector": "#mat-select-3",
-                "recommendedLocator": "#mat-select-3",
-                "formControlName": "Duration",
-                "required": false
-              },
-              {
-                "label": "Start Time",
-                "type": "time",
-                "selector": "#mat-input-4",
-                "recommendedLocator": "#mat-input-4",
-                "formControlName": "StartTime",
-                "required": false
-              },
-              {
-                "label": "End Time",
-                "type": "time",
-                "selector": "#mat-input-5",
-                "recommendedLocator": "#mat-input-5",
-                "formControlName": "EndTime",
-                "required": false
-              },
-              {
-                "label": "School Location",
-                "type": "listbox",
-                "selector": "#mat-select-4",
-                "recommendedLocator": "#mat-select-4",
-                "formControlName": "OrganizationId",
-                "required": false
-              },
-              {
-                "label": "Position",
-                "type": "listbox",
-                "selector": "#mat-select-5",
-                "recommendedLocator": "#mat-select-5",
-                "formControlName": "PositionId",
-                "required": false
-              },
-              {
-                "label": "Grade",
-                "type": "listbox",
-                "selector": "#mat-select-6",
-                "recommendedLocator": "#mat-select-6",
-                "formControlName": "Grade",
-                "required": false
-              },
-              {
-                "label": "Subject",
-                "type": "listbox",
-                "selector": "#mat-select-7",
-                "recommendedLocator": "#mat-select-7",
-                "formControlName": "Subject",
-                "required": false
-              },
-              {
-                "label": "Select Substitute Preference",
-                "type": "listbox",
-                "selector": "#mat-select-1",
-                "recommendedLocator": "#mat-select-1",
-                "formControlName": "AbsenceType",
-                "required": false
-              },
-              {
-                "label": "Enter Persons Name",
-                "type": "input",
-                "selector": "#mat-input-6",
-                "recommendedLocator": "#mat-input-6",
-                "formControlName": "SubbingFor",
-                "required": false
-              },
-              {
-                "label": "Contact Substitutes",
-                "type": "listbox",
-                "selector": "#mat-select-2",
-                "recommendedLocator": "#mat-select-2",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "checkbox",
-                "selector": "#mat-slide-toggle-1-input",
-                "recommendedLocator": "#mat-slide-toggle-1-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "Payroll Notes",
-                "type": "textarea",
-                "selector": "#mat-input-2",
-                "recommendedLocator": "#mat-input-2",
-                "formControlName": "PayRollNotes",
-                "required": false
-              },
-              {
-                "label": "Notes to substitute",
-                "type": "textarea",
-                "selector": "#mat-input-3",
-                "recommendedLocator": "#mat-input-3",
-                "formControlName": "NotesToSubstitute",
-                "required": false
-              },
-              {
-                "label": "",
-                "type": "file",
-                "selector": "#UploadButton",
-                "recommendedLocator": "#UploadButton",
-                "formControlName": null,
-                "required": false
-              }
-            ],
-            "tables": []
-          }
-        },
-        {
-          "label": "after-second-next-Done",
-          "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
-          "title": "InstaSub",
-          "activeStep": "Done",
-          "elements": {
-            "buttons": [
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "menu",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "getByRole('button', { name: \"menu\" })",
-                "disabled": false
-              },
-              {
-                "text": "keyboard_arrow_down Administrator",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "getByRole('button', { name: \"keyboard_arrow_down Administrator\" })",
-                "disabled": false
-              },
-              {
-                "text": "search",
-                "role": "button",
-                "selector": "button:nth-of-type(3)",
-                "recommendedLocator": "getByRole('button', { name: \"search\" })",
-                "disabled": false
-              },
-              {
-                "text": "settings",
-                "role": "button",
-                "selector": "button:nth-of-type(4)",
-                "recommendedLocator": "getByRole('button', { name: \"settings\" })",
-                "disabled": false
-              },
-              {
-                "text": "notification_important",
-                "role": "button",
-                "selector": "button:nth-of-type(5)",
-                "recommendedLocator": "getByRole('button', { name: \"notification_important\" })",
-                "disabled": false
-              },
-              {
-                "text": "Open calendar",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
-                "disabled": false
-              },
-              {
-                "text": "Open calendar",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "button:nth-of-type(1)",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "button:nth-of-type(2)",
-                "disabled": false
-              },
-              {
-                "text": "Back",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "getByRole('button', { name: \"Back\" })",
-                "disabled": false
-              },
-              {
-                "text": "Create Absence",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "getByRole('button', { name: \"Create Absence\" })",
-                "disabled": false
-              }
-            ],
-            "inputs": [
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-2-input",
-                "recommendedLocator": "#mat-radio-2-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-3-input",
-                "recommendedLocator": "#mat-radio-3-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-4-input",
-                "recommendedLocator": "#mat-radio-4-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "Start Date",
-                "type": "input",
-                "selector": "#mat-input-0",
-                "recommendedLocator": "#mat-input-0",
-                "formControlName": "AbsenceStartDate",
-                "required": false
-              },
-              {
-                "label": "End Date",
-                "type": "input",
-                "selector": "#mat-input-1",
-                "recommendedLocator": "#mat-input-1",
-                "formControlName": "AbsenceEndDate",
-                "required": false
-              },
-              {
-                "label": "Reason",
-                "type": "listbox",
-                "selector": "#mat-select-0",
-                "recommendedLocator": "#mat-select-0",
-                "formControlName": "Reason",
-                "required": false
-              },
-              {
-                "label": "Duration",
-                "type": "listbox",
-                "selector": "#mat-select-3",
-                "recommendedLocator": "#mat-select-3",
-                "formControlName": "Duration",
-                "required": false
-              },
-              {
-                "label": "Start Time",
-                "type": "time",
-                "selector": "#mat-input-4",
-                "recommendedLocator": "#mat-input-4",
-                "formControlName": "StartTime",
-                "required": false
-              },
-              {
-                "label": "End Time",
-                "type": "time",
-                "selector": "#mat-input-5",
-                "recommendedLocator": "#mat-input-5",
-                "formControlName": "EndTime",
-                "required": false
-              },
-              {
-                "label": "School Location",
-                "type": "listbox",
-                "selector": "#mat-select-4",
-                "recommendedLocator": "#mat-select-4",
-                "formControlName": "OrganizationId",
-                "required": false
-              },
-              {
-                "label": "Position",
-                "type": "listbox",
-                "selector": "#mat-select-5",
-                "recommendedLocator": "#mat-select-5",
-                "formControlName": "PositionId",
-                "required": false
-              },
-              {
-                "label": "Grade",
-                "type": "listbox",
-                "selector": "#mat-select-6",
-                "recommendedLocator": "#mat-select-6",
-                "formControlName": "Grade",
-                "required": false
-              },
-              {
-                "label": "Subject",
-                "type": "listbox",
-                "selector": "#mat-select-7",
-                "recommendedLocator": "#mat-select-7",
-                "formControlName": "Subject",
-                "required": false
-              },
-              {
-                "label": "Select Substitute Preference",
-                "type": "listbox",
-                "selector": "#mat-select-1",
-                "recommendedLocator": "#mat-select-1",
-                "formControlName": "AbsenceType",
-                "required": false
-              },
-              {
-                "label": "Enter Persons Name",
-                "type": "input",
-                "selector": "#mat-input-6",
-                "recommendedLocator": "#mat-input-6",
-                "formControlName": "SubbingFor",
-                "required": false
-              },
-              {
-                "label": "Contact Substitutes",
-                "type": "listbox",
-                "selector": "#mat-select-2",
-                "recommendedLocator": "#mat-select-2",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "checkbox",
-                "selector": "#mat-slide-toggle-1-input",
-                "recommendedLocator": "#mat-slide-toggle-1-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "Payroll Notes",
-                "type": "textarea",
-                "selector": "#mat-input-2",
-                "recommendedLocator": "#mat-input-2",
-                "formControlName": "PayRollNotes",
-                "required": false
-              },
-              {
-                "label": "Notes to substitute",
-                "type": "textarea",
-                "selector": "#mat-input-3",
-                "recommendedLocator": "#mat-input-3",
-                "formControlName": "NotesToSubstitute",
-                "required": false
-              },
-              {
-                "label": "",
-                "type": "file",
-                "selector": "#UploadButton",
-                "recommendedLocator": "#UploadButton",
-                "formControlName": null,
-                "required": false
-              }
-            ],
-            "tables": []
-          }
-        },
-        {
-          "label": "done-review",
-          "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
-          "title": "InstaSub",
-          "activeStep": "Done",
-          "elements": {
-            "buttons": [
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "menu",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "getByRole('button', { name: \"menu\" })",
-                "disabled": false
-              },
-              {
-                "text": "keyboard_arrow_down Administrator",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "getByRole('button', { name: \"keyboard_arrow_down Administrator\" })",
-                "disabled": false
-              },
-              {
-                "text": "search",
-                "role": "button",
-                "selector": "button:nth-of-type(3)",
-                "recommendedLocator": "getByRole('button', { name: \"search\" })",
-                "disabled": false
-              },
-              {
-                "text": "settings",
-                "role": "button",
-                "selector": "button:nth-of-type(4)",
-                "recommendedLocator": "getByRole('button', { name: \"settings\" })",
-                "disabled": false
-              },
-              {
-                "text": "notification_important",
-                "role": "button",
-                "selector": "button:nth-of-type(5)",
-                "recommendedLocator": "getByRole('button', { name: \"notification_important\" })",
-                "disabled": false
-              },
-              {
-                "text": "Open calendar",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
-                "disabled": false
-              },
-              {
-                "text": "Open calendar",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "getByRole('button', { name: \"Open calendar\" })",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button",
-                "recommendedLocator": "button",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "button:nth-of-type(1)",
-                "disabled": false
-              },
-              {
-                "text": "",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "button:nth-of-type(2)",
-                "disabled": false
-              },
-              {
-                "text": "Back",
-                "role": "button",
-                "selector": "button:nth-of-type(1)",
-                "recommendedLocator": "getByRole('button', { name: \"Back\" })",
-                "disabled": false
-              },
-              {
-                "text": "Create Absence",
-                "role": "button",
-                "selector": "button:nth-of-type(2)",
-                "recommendedLocator": "getByRole('button', { name: \"Create Absence\" })",
-                "disabled": false
-              }
-            ],
-            "inputs": [
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-2-input",
-                "recommendedLocator": "#mat-radio-2-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-3-input",
-                "recommendedLocator": "#mat-radio-3-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "radio",
-                "selector": "#mat-radio-4-input",
-                "recommendedLocator": "#mat-radio-4-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "Start Date",
-                "type": "input",
-                "selector": "#mat-input-0",
-                "recommendedLocator": "#mat-input-0",
-                "formControlName": "AbsenceStartDate",
-                "required": false
-              },
-              {
-                "label": "End Date",
-                "type": "input",
-                "selector": "#mat-input-1",
-                "recommendedLocator": "#mat-input-1",
-                "formControlName": "AbsenceEndDate",
-                "required": false
-              },
-              {
-                "label": "Reason",
-                "type": "listbox",
-                "selector": "#mat-select-0",
-                "recommendedLocator": "#mat-select-0",
-                "formControlName": "Reason",
-                "required": false
-              },
-              {
-                "label": "Duration",
-                "type": "listbox",
-                "selector": "#mat-select-3",
-                "recommendedLocator": "#mat-select-3",
-                "formControlName": "Duration",
-                "required": false
-              },
-              {
-                "label": "Start Time",
-                "type": "time",
-                "selector": "#mat-input-4",
-                "recommendedLocator": "#mat-input-4",
-                "formControlName": "StartTime",
-                "required": false
-              },
-              {
-                "label": "End Time",
-                "type": "time",
-                "selector": "#mat-input-5",
-                "recommendedLocator": "#mat-input-5",
-                "formControlName": "EndTime",
-                "required": false
-              },
-              {
-                "label": "School Location",
-                "type": "listbox",
-                "selector": "#mat-select-4",
-                "recommendedLocator": "#mat-select-4",
-                "formControlName": "OrganizationId",
-                "required": false
-              },
-              {
-                "label": "Position",
-                "type": "listbox",
-                "selector": "#mat-select-5",
-                "recommendedLocator": "#mat-select-5",
-                "formControlName": "PositionId",
-                "required": false
-              },
-              {
-                "label": "Grade",
-                "type": "listbox",
-                "selector": "#mat-select-6",
-                "recommendedLocator": "#mat-select-6",
-                "formControlName": "Grade",
-                "required": false
-              },
-              {
-                "label": "Subject",
-                "type": "listbox",
-                "selector": "#mat-select-7",
-                "recommendedLocator": "#mat-select-7",
-                "formControlName": "Subject",
-                "required": false
-              },
-              {
-                "label": "Select Substitute Preference",
-                "type": "listbox",
-                "selector": "#mat-select-1",
-                "recommendedLocator": "#mat-select-1",
-                "formControlName": "AbsenceType",
-                "required": false
-              },
-              {
-                "label": "Enter Persons Name",
-                "type": "input",
-                "selector": "#mat-input-6",
-                "recommendedLocator": "#mat-input-6",
-                "formControlName": "SubbingFor",
-                "required": false
-              },
-              {
-                "label": "Contact Substitutes",
-                "type": "listbox",
-                "selector": "#mat-select-2",
-                "recommendedLocator": "#mat-select-2",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "on",
-                "type": "checkbox",
-                "selector": "#mat-slide-toggle-1-input",
-                "recommendedLocator": "#mat-slide-toggle-1-input",
-                "formControlName": null,
-                "required": false
-              },
-              {
-                "label": "Payroll Notes",
-                "type": "textarea",
-                "selector": "#mat-input-2",
-                "recommendedLocator": "#mat-input-2",
-                "formControlName": "PayRollNotes",
-                "required": false
-              },
-              {
-                "label": "Notes to substitute",
-                "type": "textarea",
-                "selector": "#mat-input-3",
-                "recommendedLocator": "#mat-input-3",
-                "formControlName": "NotesToSubstitute",
-                "required": false
-              },
-              {
-                "label": "",
-                "type": "file",
-                "selector": "#UploadButton",
-                "recommendedLocator": "#UploadButton",
-                "formControlName": null,
-                "required": false
-              }
-            ],
-            "tables": []
+            ]
           }
         }
       ]
     },
     "flowVerification": {
       "mode": "mapped-from-current-spec",
-      "command": "npx playwright test tests/ISE-1551.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1556.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1558.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1559.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1562.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1563.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-452-absence-creation.spec.ts --project=chromium --workers=1 --list",
+      "command": "npx playwright test tests/ISE-1551.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1556.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1558.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1559.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1562.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1563.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-1564.spec.ts --project=chromium --workers=1 --list && npx playwright test tests/ISE-452-absence-creation.spec.ts --project=chromium --workers=1 --list",
       "status": "verified",
-      "matchedTestCases": [
-        {
-          "id": "T1",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T1: Sick absence with Full Day and Notify all subs"
-        },
-        {
-          "id": "T2",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T2: Personal absence with Full Day and Notify 1 Sub"
-        },
-        {
-          "id": "T3",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T3: Vacation absence with Full Day and Notify my favorites"
-        },
-        {
-          "id": "T4",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T4: Illness-Family Member absence with Full Day and Assign a specific sub"
-        },
-        {
-          "id": "T5",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T5: Educational Leave absence with Full Day and No sub required"
-        },
-        {
-          "id": "T6",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T6: Professional Development absence with Half Day AM and Notify all subs"
-        },
-        {
-          "id": "T7",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T7: Sick absence with Half Day AM and Notify 1 Sub"
-        },
-        {
-          "id": "T8",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T8: Personal absence with Half Day AM and Notify my favorites"
-        },
-        {
-          "id": "T9",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T9: Vacation absence with Half Day AM and Assign a specific sub"
-        },
-        {
-          "id": "T10",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T10: Illness-Family Member absence with Half Day AM and No sub required"
-        },
-        {
-          "id": "T11",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T11: Educational Leave absence with Half Day PM and Notify all subs"
-        },
-        {
-          "id": "T12",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T12: Professional Development absence with Half Day PM and Notify 1 Sub"
-        },
-        {
-          "id": "T13",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T13: Sick absence with Half Day PM and Notify my favorites"
-        },
-        {
-          "id": "T14",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T14: Personal absence with Half Day PM and Assign a specific sub"
-        },
-        {
-          "id": "T15",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T15: Vacation absence with Half Day PM and No sub required"
-        },
-        {
-          "id": "T16",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T16: Illness-Family Member absence with Enter Time Manually (10:00-15:00) and Notify all subs"
-        },
-        {
-          "id": "T17",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T17: Educational Leave absence with Enter Time Manually (10:00-15:00) and Notify 1 Sub"
-        },
-        {
-          "id": "T18",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T18: Professional Development absence with Enter Time Manually (10:00-15:00) and Notify my favorites"
-        },
-        {
-          "id": "T19",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T19: Sick absence with Enter Time Manually (10:00-15:00) and Assign a specific sub"
-        },
-        {
-          "id": "T20",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T20: Personal absence with Enter Time Manually (10:00-15:00) and No sub required"
-        },
-        {
-          "id": "T21",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T21: Vacation absence with 08:00-12:00 and Notify all subs"
-        },
-        {
-          "id": "T22",
-          "title": "ISE-1556.spec.ts:253:5 › ISE-1556: Employee absence pairwise regression › T22: Illness-Family Member absence with 10:00-14:00 and Notify 1 Sub"
-        }
-      ],
-      "missingTestCases": []
+      "matchedTestCases": [],
+      "missingTestCases": [
+        "TC-SEED-01",
+        "TC-SEED-02",
+        "TC-SEED-03",
+        "TC-SEED-04",
+        "TC-SEED-05",
+        "TC-SEED-06",
+        "TC-SEED-07"
+      ]
     },
     "notes": [],
     "finalUrl": "https://instasublogin.tcpsoftware.com/home?announcement=true",
     "title": "InstaSub",
     "flowDocs": {
-      "login": {
-        "url": "https://instasublogin.tcpsoftware.com/",
-        "selectors": {
-          "username": "input[formcontrolname=\"userName\"]",
-          "password": "input[formcontrolname=\"password\"]",
-          "loginButton": "getByRole(\"button\", { name: \"Login\" })"
-        },
-        "steps": [
-          "Open login URL",
-          "Fill username",
-          "Fill password",
-          "Click Login",
-          "Verify Login button disappears or app navigates away"
-        ]
-      },
-      "wizardExploration": {
-        "scenario": {
-          "id": "T1",
-          "requestType": "Find a Sub",
-          "date": "10/22/2026",
-          "reason": "Sick",
-          "duration": "Full Day",
-          "subPreference": "Notify all subs",
-          "school": "",
-          "notes": "Layer 3 MCP selector exploration only"
-        },
+      "workflow": {
+        "kind": "staff-management",
+        "name": "Staff management",
+        "route": "/manage/employees",
+        "requirements": [
+          {
+            "id": "TC-SEED-01",
+            "title": "TC-SEED-01 — Login as Protected Admin",
+            "steps": "Preconditions:\n App is running at\n<https://instasublogin.tcpsoftware.com\n>\n\nSteps:\nNavigate to the login page\nEnter email:\nadminuserxadminzx@mailinator.com\nEnter the admin password\nClick Login / Submit\nVerify redirect to Dashboard/Home (\n/home\n)\nExpected Result:\n Admin is logged in and redirected to the home dashboard without errors."
+          },
+          {
+            "id": "TC-SEED-02",
+            "title": "TC-SEED-02 — Navigate to Staff Management Page",
+            "steps": "Preconditions:\n Logged in as admin\n\nSteps:\nNavigate to\n/manage/employees\nVerify the staff table loads with all existing staff rows\nVerify the protected admin (\nadminzx@maillinator.com\n) is visible in the list\nExpected Result:\n Staff management page loads, showing all staff members including the protected admin row."
+          },
+          {
+            "id": "TC-SEED-03",
+            "title": "TC-SEED-03 — Delete All Non-Protected Staff (UI Flow)",
+            "steps": "Preconditions:\n On\n/manage/employees\n, at least 1 non-protected staff member exists\n\nSteps:\nFor each staff row in the table:\n\na. Check if the email matches\nadminzx@maillinator.com\n — if yes,\nskip\n\nb. If not protected, click the\nDelete\n icon/button on that row\n\nc. Wait for the confirmation dialog to appear\n\nd. Click\nConfirm / Yes\n in the dialog\n\ne. Wait for success toast / row removal\nRepeat until all non-protected staff are deleted\nVerify only the protected admin row remains\nExpected Result:\n All 6 non-protected staff members are deleted. Protected admin row is untouched and still visible.\nCritical Constraint:\n Under no circumstances should the script delete\nadminzx@maillinator.com\n."
+          },
+          {
+            "id": "TC-SEED-04",
+            "title": "TC-SEED-04 — Protected Admin is Never Deleted",
+            "steps": "Preconditions:\n Script is executing the deletion loop\n\nSteps:\nScript evaluates each row's email against the protected list\nWhen the protected admin email is found, the delete action is\nskipped entirely\nAfter full deletion loop completes, confirm protected admin still appears in staff table\nExpected Result:\n Protected admin account remains intact throughout and after the full deletion loop. No delete action is triggered for this account."
+          },
+          {
+            "id": "TC-SEED-05",
+            "title": "TC-SEED-05 — Re-create Staff via Add Staff Button (Per User)",
+            "steps": "Preconditions:\n Non-protected staff have been deleted; on\n/manage/employees\n\nSteps (repeat for each of the 6 staff members):\nClick the\nAdd Staff\n button on the staff management page\nIn the Add Staff modal/form, fill in:\nFirst Name\n and\nLast Name\nEmail\nPhone\nLocation / School\n (select from dropdown)\nRole\n (District Admin / School Admin / Employee)\nType\n (Teacher)\nCertified\n (Yes)\nSubmit / Save the form\nVerify success toast appears\nVerify the new staff member row appears in the staff table\nExpected Result:\n Each of the 6 staff members is successfully re-created with all correct field values. Success toast confirms creation. Staff table reflects updated count."
+          },
+          {
+            "id": "TC-SEED-06",
+            "title": "TC-SEED-06 — Verify Full Staff State After Seeding",
+            "steps": "Preconditions:\n All 6 staff have been re-created\n\nSteps:\nReload\n/manage/employees\nCount total staff rows — expect\n7\nFor each expected staff member, verify:\nName\nEmail\nRole\nLocation\nConfirm protected admin is present and unchanged\nExpected Result:\n Staff table shows exactly 7 members with all correct data matching the seed dataset. No duplicate or missing entries."
+          },
+          {
+            "id": "TC-SEED-07",
+            "title": "TC-SEED-07 — Idempotency — Re-run Script on Already-Seeded State",
+            "steps": "Preconditions:\n Script has already been run once; all 7 staff exist\n\nSteps:\nRun the seed script again\nScript detects existing non-protected users and deletes them\nScript re-creates all 6 staff again\nVerify final state is 7 staff (1 protected + 6 re-created)\nExpected Result:\n Script is idempotent — running it multiple times always results in the same clean 7-user state without errors or duplicates."
+          }
+        ],
         "actions": [
-          "Selected request type \"Find a Sub\"",
-          "Filled start date via input[formcontrolname=\"AbsenceStartDate\"]",
-          "Filled end date via input[formcontrolname=\"AbsenceEndDate\"]",
-          "Selected reason \"Sick\" via mat-select[formcontrolname=\"Reason\"]",
-          "Selected duration \"Full Day\" via mat-select[formcontrolname=\"Duration\"]",
-          "Selected substitute preference \"Notify all subs\" via mat-select[formcontrolname=\"AbsenceType\"]",
-          "Skipped school; no visible school selector found",
-          "Clicked NEXT from Create Absence to Additional Information",
-          "Filled 2 additional information textarea(s)",
-          "Clicked NEXT from Additional Information to Done"
+          "Navigated to /manage/employees",
+          "Opened Add Staff form for non-destructive selector capture"
         ],
         "capturedPages": [
           {
-            "label": "create-absence-empty",
-            "activeStep": "Create Absence",
-            "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
-            "buttons": 15,
+            "label": "staff-management-page",
+            "url": "https://instasublogin.tcpsoftware.com/manage/employees",
+            "buttons": 16,
+            "inputs": 10,
+            "tables": 1
+          },
+          {
+            "label": "add-staff-form",
+            "url": "https://instasublogin.tcpsoftware.com/manage/employees/addemployee",
+            "buttons": 10,
             "inputs": 15,
-            "tables": 0
-          },
-          {
-            "label": "create-absence-filled",
-            "activeStep": "Create Absence",
-            "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
-            "buttons": 16,
-            "inputs": 20,
-            "tables": 0
-          },
-          {
-            "label": "after-first-next-Additional Information",
-            "activeStep": "Additional Information",
-            "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
-            "buttons": 16,
-            "inputs": 20,
-            "tables": 0
-          },
-          {
-            "label": "additional-information-filled",
-            "activeStep": "Additional Information",
-            "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
-            "buttons": 16,
-            "inputs": 20,
-            "tables": 0
-          },
-          {
-            "label": "after-second-next-Done",
-            "activeStep": "Done",
-            "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
-            "buttons": 16,
-            "inputs": 20,
-            "tables": 0
-          },
-          {
-            "label": "done-review",
-            "activeStep": "Done",
-            "url": "https://instasublogin.tcpsoftware.com/absence/createAbsence",
-            "buttons": 16,
-            "inputs": 20,
-            "tables": 0
+            "tables": 1
           }
         ]
       },
+      "discoveredElements": {
+        "buttons": 7,
+        "inputs": 0,
+        "tables": 1
+      },
       "generatedCases": [
         {
-          "id": "T1",
-          "title": "Sick absence with Full Day and Notify all subs",
+          "id": "TC-SEED-01",
+          "title": "Login as Protected Admin",
           "verification": "requires-codegen-or-manual-exploration"
         },
         {
-          "id": "T2",
-          "title": "Personal absence with Full Day and Assign a specific sub",
+          "id": "TC-SEED-02",
+          "title": "Navigate to Staff Management Page",
           "verification": "requires-codegen-or-manual-exploration"
         },
         {
-          "id": "T3",
-          "title": "Vacation absence with Full Day and Notify all subs",
+          "id": "TC-SEED-03",
+          "title": "Delete All Non-Protected Staff (UI Flow)",
           "verification": "requires-codegen-or-manual-exploration"
         },
         {
-          "id": "T4",
-          "title": "Illness-Family Member absence with Full Day and Assign a specific sub",
+          "id": "TC-SEED-04",
+          "title": "Protected Admin is Never Deleted",
           "verification": "requires-codegen-or-manual-exploration"
         },
         {
-          "id": "T5",
-          "title": "Educational Leave absence with Half Day AM and Notify all subs",
+          "id": "TC-SEED-05",
+          "title": "Re-create Staff via Add Staff Button (Per User)",
           "verification": "requires-codegen-or-manual-exploration"
         },
         {
-          "id": "T6",
-          "title": "Professional Development absence with Half Day AM and Assign a specific sub",
+          "id": "TC-SEED-06",
+          "title": "Verify Full Staff State After Seeding",
           "verification": "requires-codegen-or-manual-exploration"
         },
         {
-          "id": "T7",
-          "title": "Sick absence with Half Day AM and Notify all subs",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T8",
-          "title": "Personal absence with Half Day AM and Assign a specific sub",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T9",
-          "title": "Vacation absence with Half Day PM and Notify all subs",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T10",
-          "title": "Illness-Family Member absence with Half Day PM and Assign a specific sub",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T11",
-          "title": "Educational Leave absence with Half Day PM and Notify all subs",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T12",
-          "title": "Professional Development absence with Half Day PM and Assign a specific sub",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T13",
-          "title": "Sick absence with Enter Time Manually (09:00–15:00) and Notify all subs",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T14",
-          "title": "Personal absence with Enter Time Manually (09:00–15:00) and Assign a specific sub",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T15",
-          "title": "Vacation absence with Enter Time Manually (09:00–15:00) and Notify all subs",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T16",
-          "title": "Illness-Family Member absence with Enter Time Manually (09:00–15:00) and Assign a specific sub",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T17",
-          "title": "Educational Leave absence with 08:00–12:00 and Notify all subs",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T18",
-          "title": "Professional Development absence with 10:00–14:00 and Assign a specific sub",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T19",
-          "title": "Sick absence with 09:00–11:00 and Notify all subs",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T20",
-          "title": "Personal absence with 12:00–16:00 and Assign a specific sub",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T21",
-          "title": "Vacation absence with 08:00–10:00 and Notify all subs",
-          "verification": "requires-codegen-or-manual-exploration"
-        },
-        {
-          "id": "T22",
-          "title": "Illness-Family Member absence with 13:00–17:00 and Assign a specific sub",
+          "id": "TC-SEED-07",
+          "title": "Idempotency — Re-run Script on Already-Seeded State",
           "verification": "requires-codegen-or-manual-exploration"
         }
       ]
     },
     "explorerActions": [
-      "Selected request type \"Find a Sub\"",
-      "Filled start date via input[formcontrolname=\"AbsenceStartDate\"]",
-      "Filled end date via input[formcontrolname=\"AbsenceEndDate\"]",
-      "Selected reason \"Sick\" via mat-select[formcontrolname=\"Reason\"]",
-      "Selected duration \"Full Day\" via mat-select[formcontrolname=\"Duration\"]",
-      "Selected substitute preference \"Notify all subs\" via mat-select[formcontrolname=\"AbsenceType\"]",
-      "Skipped school; no visible school selector found",
-      "Clicked NEXT from Create Absence to Additional Information",
-      "Filled 2 additional information textarea(s)",
-      "Clicked NEXT from Additional Information to Done"
+      "Navigated to /manage/employees",
+      "Opened Add Staff form for non-destructive selector capture"
     ]
   },
   "codegenHints": {
     "consumeInLayer4": true,
     "preferExplorerSelectors": true,
     "preferExecutedSpecTitles": false,
-    "targetSpec": "tests/ISE-1564.spec.ts",
+    "targetSpec": "tests/ISE-1565.spec.ts",
     "comparedSpecs": [
       "tests/ISE-1551.spec.ts",
       "tests/ISE-1556.spec.ts",
@@ -2482,6 +1001,7 @@
       "tests/ISE-1559.spec.ts",
       "tests/ISE-1562.spec.ts",
       "tests/ISE-1563.spec.ts",
+      "tests/ISE-1564.spec.ts",
       "tests/ISE-452-absence-creation.spec.ts"
     ]
   }

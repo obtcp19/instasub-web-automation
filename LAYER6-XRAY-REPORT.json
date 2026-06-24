@@ -1,11 +1,60 @@
 {
-  "testExecutionName": "ISE-1564 Playwright Execution - 6/24/2026",
-  "testPlan": "ISE-1564-PLAYWRIGHT-FLOW",
+  "testExecutionName": "ISE-1565 Playwright Execution - 6/24/2026",
+  "testPlan": "ISE-1565-PLAYWRIGHT-FLOW",
   "results": [
     {
-      "testKey": "ISE-1564-TC-01",
-      "testName": "ISE-1564 automated test 1",
-      "status": "FAILED",
+      "testKey": "ISE-1565-TC-01",
+      "testName": "ISE-1565 automated test 1",
+      "status": "PASSED",
+      "duration": 0,
+      "evidenceLink": "playwright-report/index.html"
+    },
+    {
+      "testKey": "ISE-1565-TC-02",
+      "testName": "ISE-1565 automated test 2",
+      "status": "PASSED",
+      "duration": 0,
+      "evidenceLink": "playwright-report/index.html"
+    },
+    {
+      "testKey": "ISE-1565-TC-03",
+      "testName": "ISE-1565 automated test 3",
+      "status": "PASSED",
+      "duration": 0,
+      "evidenceLink": "playwright-report/index.html"
+    },
+    {
+      "testKey": "ISE-1565-TC-04",
+      "testName": "ISE-1565 automated test 4",
+      "status": "PASSED",
+      "duration": 0,
+      "evidenceLink": "playwright-report/index.html"
+    },
+    {
+      "testKey": "ISE-1565-TC-05",
+      "testName": "ISE-1565 automated test 5",
+      "status": "PASSED",
+      "duration": 0,
+      "evidenceLink": "playwright-report/index.html"
+    },
+    {
+      "testKey": "ISE-1565-TC-06",
+      "testName": "ISE-1565 automated test 6",
+      "status": "PASSED",
+      "duration": 0,
+      "evidenceLink": "playwright-report/index.html"
+    },
+    {
+      "testKey": "ISE-1565-TC-07",
+      "testName": "ISE-1565 automated test 7",
+      "status": "PASSED",
+      "duration": 0,
+      "evidenceLink": "playwright-report/index.html"
+    },
+    {
+      "testKey": "ISE-1565-TC-08",
+      "testName": "ISE-1565 automated test 8",
+      "status": "PASSED",
       "duration": 0,
       "evidenceLink": "playwright-report/index.html"
     }

@@ -1,0 +1,91 @@
+{
+  "ticket": "ISE-1565",
+  "spec": "tests/ISE-1565.spec.ts",
+  "generatedAt": "2026-06-24T14:20:03.722Z",
+  "targets": [
+    {
+      "test": "TC-SEED-02: staff seeding step",
+      "target": "ISE-1565.spec.ts",
+      "lineTarget": "ISE-1565.spec.ts:50:9",
+      "source": "playwright-json",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('table, [role=\"table\"]').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('table, [role=\"table\"]').first()\u001b[22m\n"
+    },
+    {
+      "test": "TC-SEED-03: staff seeding step",
+      "target": "ISE-1565.spec.ts",
+      "lineTarget": "ISE-1565.spec.ts:50:9",
+      "source": "playwright-json",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('table, [role=\"table\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('table, [role=\"table\"]').first()\u001b[22m\n"
+    },
+    {
+      "test": "TC-SEED-04: staff seeding step",
+      "target": "ISE-1565.spec.ts",
+      "lineTarget": "ISE-1565.spec.ts:50:9",
+      "source": "playwright-json",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('table, [role=\"table\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('table, [role=\"table\"]').first()\u001b[22m\n"
+    },
+    {
+      "test": "TC-SEED-05: staff seeding step",
+      "target": "ISE-1565.spec.ts",
+      "lineTarget": "ISE-1565.spec.ts:50:9",
+      "source": "playwright-json",
+      "error": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+    },
+    {
+      "test": "TC-SEED-06: staff seeding step",
+      "target": "ISE-1565.spec.ts",
+      "lineTarget": "ISE-1565.spec.ts:50:9",
+      "source": "playwright-json",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('table, [role=\"table\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('table, [role=\"table\"]').first()\u001b[22m\n"
+    },
+    {
+      "test": "TC-SEED-07: staff seeding step",
+      "target": "ISE-1565.spec.ts",
+      "lineTarget": "ISE-1565.spec.ts:50:9",
+      "source": "playwright-json",
+      "error": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+    },
+    {
+      "target": "tests/ISE-1565.spec.ts",
+      "lineTarget": "tests/ISE-1565.spec.ts:50",
+      "test": "ISE-1565.spec.ts >> ISE-1565: staff seeding and management >> TC-SEED-06: staff seeding step",
+      "source": "test-results/ISE-1565-ISE-1565-staff-se-15fb1--SEED-06-staff-seeding-step-chromium/error-context.md",
+      "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('table, [role=\"table\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for locator('table, [role=\"table\"]').first()"
+    },
+    {
+      "target": "tests/ISE-1565.spec.ts",
+      "lineTarget": "tests/ISE-1565.spec.ts:50",
+      "test": "ISE-1565.spec.ts >> ISE-1565: staff seeding and management >> TC-SEED-05: staff seeding step",
+      "source": "test-results/ISE-1565-ISE-1565-staff-se-576a5--SEED-05-staff-seeding-step-chromium/error-context.md",
+      "error": "Test timeout of 90000ms exceeded."
+    },
+    {
+      "target": "tests/ISE-1565.spec.ts",
+      "lineTarget": "tests/ISE-1565.spec.ts:50",
+      "test": "ISE-1565.spec.ts >> ISE-1565: staff seeding and management >> TC-SEED-03: staff seeding step",
+      "source": "test-results/ISE-1565-ISE-1565-staff-se-8343d--SEED-03-staff-seeding-step-chromium/error-context.md",
+      "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('table, [role=\"table\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for locator('table, [role=\"table\"]').first()"
+    },
+    {
+      "target": "tests/ISE-1565.spec.ts",
+      "lineTarget": "tests/ISE-1565.spec.ts:50",
+      "test": "ISE-1565.spec.ts >> ISE-1565: staff seeding and management >> TC-SEED-04: staff seeding step",
+      "source": "test-results/ISE-1565-ISE-1565-staff-se-9c56a--SEED-04-staff-seeding-step-chromium/error-context.md",
+      "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('table, [role=\"table\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for locator('table, [role=\"table\"]').first()"
+    },
+    {
+      "target": "tests/ISE-1565.spec.ts",
+      "lineTarget": "tests/ISE-1565.spec.ts:50",
+      "test": "ISE-1565.spec.ts >> ISE-1565: staff seeding and management >> TC-SEED-02: staff seeding step",
+      "source": "test-results/ISE-1565-ISE-1565-staff-se-a8b4e--SEED-02-staff-seeding-step-chromium/error-context.md",
+      "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('table, [role=\"table\"]').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for locator('table, [role=\"table\"]').first()"
+    },
+    {
+      "target": "tests/ISE-1565.spec.ts",
+      "lineTarget": "tests/ISE-1565.spec.ts:50",
+      "test": "ISE-1565.spec.ts >> ISE-1565: staff seeding and management >> TC-SEED-07: staff seeding step",
+      "source": "test-results/ISE-1565-ISE-1565-staff-se-c27bc--SEED-07-staff-seeding-step-chromium/error-context.md",
+      "error": "Test timeout of 90000ms exceeded."
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 {
-  "ticket": "ISE-1564",
+  "ticket": "ISE-1565",
   "executionStatus": "PASSED",
   "testSummary": {
-    "total": 0,
-    "passed": 0,
+    "total": 8,
+    "passed": 8,
     "failed": 0,
     "flaky": 0
   },
@@ -16,6 +16,6 @@
     "autoHealed": 0,
     "manualReview": 0
   },
-  "timestamp": "2026-06-24T11:49:30.110Z",
-  "nextSteps": "All tests passed. Mark ISE-1564 as RESOLVED in Jira."
+  "timestamp": "2026-06-24T15:26:08.391Z",
+  "nextSteps": "All tests passed. Mark ISE-1565 as RESOLVED in Jira."
 }
