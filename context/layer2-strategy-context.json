@@ -1,14 +1,14 @@
 {
   "layer": 2,
-  "ticket": "ISE-1563",
-  "generatedAt": "2026-06-23T13:19:23.075Z",
+  "ticket": "ISE-1564",
+  "generatedAt": "2026-06-24T11:02:32.509Z",
   "sourceRequirements": {
     "path": "context/layer1-requirements.json",
     "found": true,
-    "title": "Completed 26 pairwise regression tests for the Self absence creation flow using the school administrator account (schooladmin@mailinator.com). All 26 tests passed.",
+    "title": "22/22 pairwise regression tests passed for the Find a Sub absence creation flow on the live InstaSub instance, using the school-level admin account (schooladmin@mailinator.com) across all 6 reasons, 5 duration types, and 2 sub preferences.",
     "priority": "Medium",
-    "acceptanceCriteriaCount": 4,
-    "testableItemsCount": 26
+    "acceptanceCriteriaCount": 14,
+    "testableItemsCount": 22
   },
   "artifacts": {
     "gherkin": "test-results/LAYER2-TEST-STRATEGY.feature",
@@ -40,39 +40,37 @@
     }
   },
   "retrievalQueries": [
-    "Completed 26 pairwise regression tests for the Self absence creation flow using the school administrator account (schooladmin@mailinator.com). All 26 tests passed.",
+    "22/22 pairwise regression tests passed for the Find a Sub absence creation flow on the live InstaSub instance, using the school-level admin account (schooladmin@mailinator.com) across all 6 reasons, 5 duration types, and 2 sub preferences.",
     "playwright page object model selectors",
     "explorer accessibility snapshot buttons inputs tables",
     "login username password button selectors",
     "absence create employee duration substitute preference",
     "leave balance verification deduction",
     "Sick absence with Full Day and Notify all subs",
-    "Personal absence with Full Day and Notify 1 Sub",
-    "Vacation absence with Full Day and Notify my favorites",
+    "Personal absence with Full Day and Assign a specific sub",
+    "Vacation absence with Full Day and Notify all subs",
     "Illness-Family Member absence with Full Day and Assign a specific sub",
-    "Educational Leave absence with Full Day and No sub required",
-    "Professional Development absence with Half Day AM and Notify all subs",
-    "Sick absence with Half Day AM and Notify 1 Sub",
-    "Personal absence with Half Day AM and Notify my favorites",
-    "Vacation absence with Half Day AM and Assign a specific sub",
-    "Illness-Family Member absence with Half Day AM and No sub required",
+    "Educational Leave absence with Half Day AM and Notify all subs",
+    "Professional Development absence with Half Day AM and Assign a specific sub",
+    "Sick absence with Half Day AM and Notify all subs",
+    "Personal absence with Half Day AM and Assign a specific sub",
+    "Vacation absence with Half Day PM and Notify all subs",
+    "Illness-Family Member absence with Half Day PM and Assign a specific sub",
     "Educational Leave absence with Half Day PM and Notify all subs",
-    "Professional Development absence with Half Day PM and Notify 1 Sub",
-    "Sick absence with Half Day PM and Notify my favorites",
-    "Personal absence with Half Day PM and Assign a specific sub",
-    "Vacation absence with Half Day PM and No sub required",
-    "Illness-Family Member absence with Enter Time Manually (10:00–15:00) and Notify all subs",
-    "Educational Leave absence with Enter Time Manually (10:00–15:00) and Notify 1 Sub",
-    "Professional Development absence with Enter Time Manually (10:00–15:00) and Notify my favorites",
-    "Sick absence with Enter Time Manually (10:00–15:00) and Assign a specific sub",
-    "Personal absence with Enter Time Manually (10:00–15:00) and No sub required",
-    "Vacation absence with 08:00–12:00 and Notify all subs",
-    "Illness-Family Member absence with 10:00–14:00 and Notify 1 Sub",
-    "Educational Leave absence with 09:00–11:00 and Notify my favorites",
-    "Professional Development absence with 12:00–16:00 and Assign a specific sub"
+    "Professional Development absence with Half Day PM and Assign a specific sub",
+    "Sick absence with Enter Time Manually (09:00–15:00) and Notify all subs",
+    "Personal absence with Enter Time Manually (09:00–15:00) and Assign a specific sub",
+    "Vacation absence with Enter Time Manually (09:00–15:00) and Notify all subs",
+    "Illness-Family Member absence with Enter Time Manually (09:00–15:00) and Assign a specific sub",
+    "Educational Leave absence with 08:00–12:00 and Notify all subs",
+    "Professional Development absence with 10:00–14:00 and Assign a specific sub",
+    "Sick absence with 09:00–11:00 and Notify all subs",
+    "Personal absence with 12:00–16:00 and Assign a specific sub",
+    "Vacation absence with 08:00–10:00 and Notify all subs",
+    "Illness-Family Member absence with 13:00–17:00 and Assign a specific sub"
   ],
   "codegenHints": {
-    "targetSpec": "tests/ISE-1563.spec.ts",
+    "targetSpec": "tests/ISE-1564.spec.ts",
     "preferExistingPom": true,
     "requiredAssertions": [
       "Review step shows selected reason and date before submit",
@@ -81,7 +79,7 @@
     ],
     "executionMode": "serial when tests mutate a shared employee leave balance",
     "strategyCoverage": {
-      "planned": 26,
+      "planned": 22,
       "matchedInCurrentSpec": 0,
       "missingInCurrentSpec": [
         "T1",
@@ -105,15 +103,11 @@
         "T19",
         "T20",
         "T21",
-        "T22",
-        "T23",
-        "T24",
-        "T25",
-        "T26"
+        "T22"
       ]
     }
   },
-  "gherkinPreview": "Feature: Completed 26 pairwise regression tests for the Self absence creation flow using the school administrator account (schooladmin@mailinator.com). All 26 tests passed.\n  Ticket: ISE-1563\n  Priority: Medium\n\n  Background:\n    Given the administrator is on the Employee absence creation flow\n    And the target employee is selected\n\n  Scenario: T1 - Employee absence Sick / Full Day / Notify all subs\n    Given the absence date is \"Jan 1, 2027\"\n    And the absence reason is \"Sick\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify all subs\"\n    When the employee absence is submitted\n    Then the test result should be \"✅ PASS\"\n\n  Scenario: T2 - Employee absence Personal / Full Day / Notify 1 Sub\n    Given the absence date is \"Jan 2, 2027\"\n    And the absence reason is \"Personal\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify 1 Sub\"\n    And the substitute selected is \"Sub 2\"\n    When the employee absence is submitted\n    Then the test result should be \"✅ PASS\"\n\n  Scenario: T3 - Employee absence Vacation / Full Day / Notify my favorites\n    Given the absence date is \"Jan 3, 2027\"\n    And the absence reason is \"Vacation\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify my favorites\"\n    When the employee absence is submitted\n    Then the test result should be \"✅ PASS\"\n\n  Scenario: T4 - Employee absence Illness-Family Member / Full Day / Assign a specific sub\n    Given the absence date is \"Jan 4, 2027\"\n    And the absence reason is \"Illness-Family Member\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Assign a specific sub\"\n    And the substitute selected is \"Sub 2\"\n    When the employee absence is submitted",
+  "gherkinPreview": "Feature: 22/22 pairwise regression tests passed for the Find a Sub absence creation flow on the live InstaSub instance, using the school-level admin account (schooladmin@mailinator.com) across all 6 reasons, 5 duration types, and 2 sub preferences.\n  Ticket: ISE-1564\n  Priority: Medium\n\n  Background:\n    Given the administrator is on the Employee absence creation flow\n    And the target employee is selected\n\n  Scenario: T1 - Employee absence Sick / Full Day / Notify all subs\n    Given the absence date is \"Jan 1, 2027\"\n    And the absence reason is \"Sick\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify all subs\"\n    When the employee absence is submitted\n    Then the test result should be \"(/) PASS\"\n\n  Scenario: T2 - Employee absence Personal / Full Day / Assign a specific sub\n    Given the absence date is \"Jan 2, 2027\"\n    And the absence reason is \"Personal\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Assign a specific sub\"\n    And the substitute selected is \"Sub 1\"\n    When the employee absence is submitted\n    Then the test result should be \"(/) PASS\"\n\n  Scenario: T3 - Employee absence Vacation / Full Day / Notify all subs\n    Given the absence date is \"Jan 3, 2027\"\n    And the absence reason is \"Vacation\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Notify all subs\"\n    When the employee absence is submitted\n    Then the test result should be \"(/) PASS\"\n\n  Scenario: T4 - Employee absence Illness-Family Member / Full Day / Assign a specific sub\n    Given the absence date is \"Jan 4, 2027\"\n    And the absence reason is \"Illness-Family Member\"\n    And the duration is \"Full Day\"\n    And the substitute preference is \"Assign a specific sub\"\n    And the substitute selected is \"Sub 1\"\n    When the employee absence is submitted",
   "riskMatrix": [
     {
       "risk": "Async/Promise timeout on confirmation generation",
@@ -134,31 +128,31 @@
       "duration": "Full Day",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T2",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Personal absence with Full Day and Notify 1 Sub",
+      "description": "Personal absence with Full Day and Assign a specific sub",
       "priority": "HIGH",
       "date": "Jan 2, 2027",
       "reason": "Personal",
       "duration": "Full Day",
-      "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T3",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Vacation absence with Full Day and Notify my favorites",
+      "description": "Vacation absence with Full Day and Notify all subs",
       "priority": "HIGH",
       "date": "Jan 3, 2027",
       "reason": "Vacation",
       "duration": "Full Day",
-      "subPreference": "Notify my favorites",
+      "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T4",
@@ -169,80 +163,80 @@
       "reason": "Illness-Family Member",
       "duration": "Full Day",
       "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "subSelected": "Sub 1",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T5",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Educational Leave absence with Full Day and No sub required",
+      "description": "Educational Leave absence with Half Day AM and Notify all subs",
       "priority": "HIGH",
       "date": "Jan 5, 2027",
       "reason": "Educational Leave",
-      "duration": "Full Day",
-      "subPreference": "No sub required",
+      "duration": "Half Day AM",
+      "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T6",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Professional Development absence with Half Day AM and Notify all subs",
+      "description": "Professional Development absence with Half Day AM and Assign a specific sub",
       "priority": "HIGH",
       "date": "Jan 6, 2027",
       "reason": "Professional Development",
       "duration": "Half Day AM",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T7",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Sick absence with Half Day AM and Notify 1 Sub",
+      "description": "Sick absence with Half Day AM and Notify all subs",
       "priority": "HIGH",
       "date": "Jan 7, 2027",
       "reason": "Sick",
       "duration": "Half Day AM",
-      "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T8",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Personal absence with Half Day AM and Notify my favorites",
+      "description": "Personal absence with Half Day AM and Assign a specific sub",
       "priority": "HIGH",
       "date": "Jan 8, 2027",
       "reason": "Personal",
       "duration": "Half Day AM",
-      "subPreference": "Notify my favorites",
-      "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T9",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Vacation absence with Half Day AM and Assign a specific sub",
+      "description": "Vacation absence with Half Day PM and Notify all subs",
       "priority": "HIGH",
       "date": "Jan 9, 2027",
       "reason": "Vacation",
-      "duration": "Half Day AM",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "duration": "Half Day PM",
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T10",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Illness-Family Member absence with Half Day AM and No sub required",
+      "description": "Illness-Family Member absence with Half Day PM and Assign a specific sub",
       "priority": "HIGH",
       "date": "Jan 10, 2027",
       "reason": "Illness-Family Member",
-      "duration": "Half Day AM",
-      "subPreference": "No sub required",
-      "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "duration": "Half Day PM",
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T11",
@@ -254,194 +248,146 @@
       "duration": "Half Day PM",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T12",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Professional Development absence with Half Day PM and Notify 1 Sub",
+      "description": "Professional Development absence with Half Day PM and Assign a specific sub",
       "priority": "HIGH",
       "date": "Jan 12, 2027",
       "reason": "Professional Development",
       "duration": "Half Day PM",
-      "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T13",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Sick absence with Half Day PM and Notify my favorites",
+      "description": "Sick absence with Enter Time Manually (09:00–15:00) and Notify all subs",
       "priority": "HIGH",
       "date": "Jan 13, 2027",
       "reason": "Sick",
-      "duration": "Half Day PM",
-      "subPreference": "Notify my favorites",
+      "duration": "Enter Time Manually (09:00–15:00)",
+      "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T14",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Personal absence with Half Day PM and Assign a specific sub",
+      "description": "Personal absence with Enter Time Manually (09:00–15:00) and Assign a specific sub",
       "priority": "HIGH",
       "date": "Jan 14, 2027",
       "reason": "Personal",
-      "duration": "Half Day PM",
+      "duration": "Enter Time Manually (09:00–15:00)",
       "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "subSelected": "Sub 1",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T15",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Vacation absence with Half Day PM and No sub required",
+      "description": "Vacation absence with Enter Time Manually (09:00–15:00) and Notify all subs",
       "priority": "HIGH",
       "date": "Jan 15, 2027",
       "reason": "Vacation",
-      "duration": "Half Day PM",
-      "subPreference": "No sub required",
+      "duration": "Enter Time Manually (09:00–15:00)",
+      "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T16",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Illness-Family Member absence with Enter Time Manually (10:00–15:00) and Notify all subs",
+      "description": "Illness-Family Member absence with Enter Time Manually (09:00–15:00) and Assign a specific sub",
       "priority": "HIGH",
       "date": "Jan 18, 2027",
       "reason": "Illness-Family Member",
-      "duration": "Enter Time Manually (10:00–15:00)",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "duration": "Enter Time Manually (09:00–15:00)",
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T17",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Educational Leave absence with Enter Time Manually (10:00–15:00) and Notify 1 Sub",
+      "description": "Educational Leave absence with 08:00–12:00 and Notify all subs",
       "priority": "HIGH",
-      "date": "Jan 19, 2027",
+      "date": "Jan 25, 2027",
       "reason": "Educational Leave",
-      "duration": "Enter Time Manually (10:00–15:00)",
-      "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "duration": "08:00–12:00",
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T18",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Professional Development absence with Enter Time Manually (10:00–15:00) and Notify my favorites",
+      "description": "Professional Development absence with 10:00–14:00 and Assign a specific sub",
       "priority": "HIGH",
-      "date": "Jan 20, 2027",
+      "date": "Jan 26, 2027",
       "reason": "Professional Development",
-      "duration": "Enter Time Manually (10:00–15:00)",
-      "subPreference": "Notify my favorites",
-      "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "duration": "10:00–14:00",
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T19",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Sick absence with Enter Time Manually (10:00–15:00) and Assign a specific sub",
+      "description": "Sick absence with 09:00–11:00 and Notify all subs",
       "priority": "HIGH",
-      "date": "Jan 21, 2027",
+      "date": "Jan 27, 2027",
       "reason": "Sick",
-      "duration": "Enter Time Manually (10:00–15:00)",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
+      "duration": "09:00–11:00",
+      "subPreference": "Notify all subs",
+      "subSelected": "—",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T20",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Personal absence with Enter Time Manually (10:00–15:00) and No sub required",
+      "description": "Personal absence with 12:00–16:00 and Assign a specific sub",
       "priority": "HIGH",
-      "date": "Jan 22, 2027",
+      "date": "Feb 8, 2027",
       "reason": "Personal",
-      "duration": "Enter Time Manually (10:00–15:00)",
-      "subPreference": "No sub required",
-      "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "duration": "12:00–16:00",
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T21",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Vacation absence with 08:00–12:00 and Notify all subs",
+      "description": "Vacation absence with 08:00–10:00 and Notify all subs",
       "priority": "HIGH",
-      "date": "Jan 25, 2027",
+      "date": "Feb 9, 2027",
       "reason": "Vacation",
-      "duration": "08:00–12:00",
+      "duration": "08:00–10:00",
       "subPreference": "Notify all subs",
       "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "expectedResult": "(/) PASS"
     },
     {
       "id": "T22",
       "category": "PAIRWISE-REGRESSION",
-      "description": "Illness-Family Member absence with 10:00–14:00 and Notify 1 Sub",
-      "priority": "HIGH",
-      "date": "Jan 26, 2027",
-      "reason": "Illness-Family Member",
-      "duration": "10:00–14:00",
-      "subPreference": "Notify 1 Sub",
-      "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
-    },
-    {
-      "id": "T23",
-      "category": "PAIRWISE-REGRESSION",
-      "description": "Educational Leave absence with 09:00–11:00 and Notify my favorites",
-      "priority": "HIGH",
-      "date": "Jan 27, 2027",
-      "reason": "Educational Leave",
-      "duration": "09:00–11:00",
-      "subPreference": "Notify my favorites",
-      "subSelected": "—",
-      "expectedResult": "✅ PASS"
-    },
-    {
-      "id": "T24",
-      "category": "PAIRWISE-REGRESSION",
-      "description": "Professional Development absence with 12:00–16:00 and Assign a specific sub",
-      "priority": "HIGH",
-      "date": "Feb 8, 2027",
-      "reason": "Professional Development",
-      "duration": "12:00–16:00",
-      "subPreference": "Assign a specific sub",
-      "subSelected": "Sub 2",
-      "expectedResult": "✅ PASS"
-    },
-    {
-      "id": "T25",
-      "category": "PAIRWISE-REGRESSION",
-      "description": "Sick absence with 08:00–10:00 and No sub required",
-      "priority": "HIGH",
-      "date": "Feb 9, 2027",
-      "reason": "Sick",
-      "duration": "08:00–10:00",
-      "subPreference": "No sub required",
-      "subSelected": "—",
-      "expectedResult": "✅ PASS"
-    },
-    {
-      "id": "T26",
-      "category": "PAIRWISE-REGRESSION",
-      "description": "Personal absence with 13:00–17:00 and Notify all subs",
+      "description": "Illness-Family Member absence with 13:00–17:00 and Assign a specific sub",
       "priority": "HIGH",
       "date": "Feb 10, 2027",
-      "reason": "Personal",
+      "reason": "Illness-Family Member",
       "duration": "13:00–17:00",
-      "subPreference": "Notify all subs",
-      "subSelected": "—",
-      "expectedResult": "✅ PASS"
+      "subPreference": "Assign a specific sub",
+      "subSelected": "Sub 1",
+      "expectedResult": "(/) PASS"
     }
   ],
   "playwrightVerification": {
     "status": "skipped",
     "mode": "list",
-    "ticket": "ISE-1563",
-    "spec": "tests/ISE-1563.spec.ts",
+    "ticket": "ISE-1564",
+    "spec": "tests/ISE-1564.spec.ts",
     "command": null,
     "discoveredTests": [],
     "matchedTestCases": [],
@@ -467,25 +413,21 @@
       "T19",
       "T20",
       "T21",
-      "T22",
-      "T23",
-      "T24",
-      "T25",
-      "T26"
+      "T22"
     ],
     "exitCode": null,
     "notes": [
-      "No existing spec found at tests/ISE-1563.spec.ts; generated strategy context for downstream codegen."
+      "No existing spec found at tests/ISE-1564.spec.ts; generated strategy context for downstream codegen."
     ],
-    "verifiedAt": "2026-06-23T13:19:23.074Z"
+    "verifiedAt": "2026-06-24T11:02:32.508Z"
   },
   "explorerContext": {
     "layer": "Explorer",
     "status": "skipped",
     "mode": "planned",
     "url": "https://instasublogin.tcpsoftware.com/",
-    "ticket": "ISE-1563",
-    "generatedAt": "2026-06-23T13:19:23.075Z",
+    "ticket": "ISE-1564",
+    "generatedAt": "2026-06-24T11:02:32.509Z",
     "mcp": {
       "protocol": "MCP",
       "server": "mcp://playwright",
@@ -493,7 +435,7 @@
     },
     "why": "Generates authoritative selectors and flow docs for downstream Layer 3 context retrieval and Layer 4 codegen.",
     "coverage": {
-      "plannedCases": 26,
+      "plannedCases": 22,
       "coveredCases": 0,
       "missingCases": [
         "T1",
@@ -517,11 +459,7 @@
         "T19",
         "T20",
         "T21",
-        "T22",
-        "T23",
-        "T24",
-        "T25",
-        "T26"
+        "T22"
       ],
       "coveredByOtherLayer": {
         "layer2PlaywrightVerification": 0,
@@ -563,11 +501,7 @@
         "T19",
         "T20",
         "T21",
-        "T22",
-        "T23",
-        "T24",
-        "T25",
-        "T26"
+        "T22"
       ]
     },
     "notes": [

@@ -166,10 +166,16 @@ class Layer3Agent {
 
     const testPlan = options.testPlan || this.loadTestPlan();
     const ticket = this.ticketFrom(options.layer1Data, options.layer2Context, options.ticket);
+    const requestType = options.requestType ||
+      this.requestTypeFromContext(options.layer1Data, options.layer2Context, testPlan);
     const specs = options.spec ? [options.spec] : this.specsForVerification(ticket);
     const spec = options.spec || this.specForTicket(ticket);
     const verification = this.verifyWithPlaywrightMCP(testPlan, { ...options, ticket, spec, specs });
-    const explorerContext = await this.captureExplorerContext(testPlan, verification, { ...options, ticket });
+    const explorerContext = await this.captureExplorerContext(testPlan, verification, {
+      ...options,
+      ticket,
+      requestType,
+    });
 
     const payload = {
       layer: 3,
@@ -391,8 +397,30 @@ class Layer3Agent {
       env.EXPLORER_SCHOOL = credentials.school;
       env.SCHOOL_NAME = credentials.school;
     }
+    if (credentials.requestType) {
+      env.EXPLORER_REQUEST_TYPE = credentials.requestType;
+    }
 
     return env;
+  }
+
+  requestTypeFromContext(layer1Data = null, layer2Context = null, testPlan = []) {
+    const searchable = [
+      layer1Data?.title,
+      layer1Data?.description,
+      ...(layer1Data?.acceptanceCriteria || []),
+      layer2Context?.sourceRequirements?.title,
+      ...(layer2Context?.retrievalQueries || []),
+      ...(testPlan || []).map((testCase) => testCase?.description),
+    ]
+      .flat()
+      .filter(Boolean)
+      .join(' ');
+
+    if (/\bfind\s+a\s+sub\b/i.test(searchable)) return 'Find a Sub';
+    if (/\bself\b/i.test(searchable)) return 'Self';
+    if (/\bemployee\b/i.test(searchable)) return 'Employee';
+    return '';
   }
 
   async captureExplorerContext(testPlan, verification, options = {}) {
@@ -673,6 +701,7 @@ class Layer3Agent {
   explorerScenario(plannedCase = {}, env = {}) {
     return {
       id: plannedCase.id || 'L3-EXPLORE',
+      requestType: env.EXPLORER_REQUEST_TYPE || plannedCase.requestType || '',
       date: AbsenceDate.next(),
       reason: plannedCase.reason || 'Sick',
       duration: plannedCase.duration || 'Full Day',
@@ -683,6 +712,10 @@ class Layer3Agent {
   }
 
   async fillAbsenceCreateStep(page, scenario, actions) {
+    if (scenario.requestType) {
+      await this.selectExplorerRequestType(page, scenario.requestType, actions);
+    }
+
     await this.fillFirstVisible(page, [
       'input[formcontrolname="AbsenceStartDate"]',
       'input[placeholder="Start Date"]',
@@ -712,6 +745,43 @@ class Layer3Agent {
     ], [scenario.subPreference, 'No sub required', 'Notify all subs'], actions, 'substitute preference');
 
     await this.chooseSchoolInAbsenceForm(page, scenario, actions);
+  }
+
+  async selectExplorerRequestType(page, requestType, actions) {
+    const namePattern = new RegExp(`^\\s*${this.escapeRegex(requestType)}\\s*$`, 'i');
+    const radio = page.getByRole('radio', { name: namePattern }).first();
+    const radioContainer = page.locator('mat-radio-button', { hasText: namePattern }).first();
+
+    if (
+      !(await radio.isVisible({ timeout: 3000 }).catch(() => false)) &&
+      !(await radioContainer.isVisible({ timeout: 1000 }).catch(() => false))
+    ) {
+      actions.push(`Skipped request type "${requestType}"; matching radio was not visible`);
+      return false;
+    }
+
+    if (await radio.isChecked().catch(() => false)) {
+      actions.push(`Request type "${requestType}" was already selected`);
+      return true;
+    }
+
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      await radioContainer.click({ force: true }).catch(async () => {
+        await radio.check({ force: true }).catch(() => {});
+      });
+
+      if (await radio.isChecked().catch(() => false)) {
+        actions.push(`Selected request type "${requestType}"`);
+        await page
+          .locator('.block-ui-wrapper.active, .block-ui-spinner')
+          .first()
+          .waitFor({ state: 'hidden', timeout: 10000 })
+          .catch(() => {});
+        return true;
+      }
+    }
+
+    throw new Error(`Could not select request type "${requestType}"`);
   }
 
   async chooseSchoolInAbsenceForm(page, scenario, actions) {
@@ -1132,6 +1202,12 @@ async function main() {
     for (const prefix of prefixes) {
       const hit = args.find((arg) => arg.startsWith(prefix));
       if (hit) return hit.slice(prefix.length);
+
+      const flagName = prefix.endsWith('=') ? prefix.slice(0, -1) : prefix;
+      const index = args.indexOf(flagName);
+      if (index !== -1 && args[index + 1] && !args[index + 1].startsWith('--')) {
+        return args[index + 1];
+      }
     }
     return undefined;
   };
@@ -1139,6 +1215,7 @@ async function main() {
   const passwordArg = getFlagValue('--password=', '--pass=');
   const employeeArg = getFlagValue('--employee=');
   const schoolArg = getFlagValue('--school=', '--school-name=');
+  const requestTypeArg = getFlagValue('--request-type=', '--flow-type=');
   const searchArgs = args.filter((arg) =>
     !flagArgs.has(arg) &&
     !arg.startsWith('--') &&
@@ -1171,6 +1248,7 @@ async function main() {
         password: passwordArg,
         employee: employeeArg,
         school: schoolArg,
+        requestType: requestTypeArg,
         runPlaywright: args.includes('--run-playwright'),
         headed: args.includes('--headed'),
         explore: args.includes('--explore'),

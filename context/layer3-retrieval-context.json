@@ -1,42 +1,40 @@
 {
   "layer": 3,
-  "generatedAt": "2026-06-23T13:21:05.241Z",
+  "generatedAt": "2026-06-24T11:10:04.772Z",
   "source": "context/layer2-strategy-context.json",
   "explorerCovered": true,
   "explorerContext": "context/explorer-context.json",
   "manualMcpContext": "context/mcp-playwright-context.json",
   "indexed": 12,
   "queries": [
-    "Completed 26 pairwise regression tests for the Self absence creation flow using the school administrator account (schooladmin@mailinator.com). All 26 tests passed.",
+    "22/22 pairwise regression tests passed for the Find a Sub absence creation flow on the live InstaSub instance, using the school-level admin account (schooladmin@mailinator.com) across all 6 reasons, 5 duration types, and 2 sub preferences.",
     "playwright page object model selectors",
     "explorer accessibility snapshot buttons inputs tables",
     "login username password button selectors",
     "absence create employee duration substitute preference",
     "leave balance verification deduction",
     "Sick absence with Full Day and Notify all subs",
-    "Personal absence with Full Day and Notify 1 Sub",
-    "Vacation absence with Full Day and Notify my favorites",
+    "Personal absence with Full Day and Assign a specific sub",
+    "Vacation absence with Full Day and Notify all subs",
     "Illness-Family Member absence with Full Day and Assign a specific sub",
-    "Educational Leave absence with Full Day and No sub required",
-    "Professional Development absence with Half Day AM and Notify all subs",
-    "Sick absence with Half Day AM and Notify 1 Sub",
-    "Personal absence with Half Day AM and Notify my favorites",
-    "Vacation absence with Half Day AM and Assign a specific sub",
-    "Illness-Family Member absence with Half Day AM and No sub required",
+    "Educational Leave absence with Half Day AM and Notify all subs",
+    "Professional Development absence with Half Day AM and Assign a specific sub",
+    "Sick absence with Half Day AM and Notify all subs",
+    "Personal absence with Half Day AM and Assign a specific sub",
+    "Vacation absence with Half Day PM and Notify all subs",
+    "Illness-Family Member absence with Half Day PM and Assign a specific sub",
     "Educational Leave absence with Half Day PM and Notify all subs",
-    "Professional Development absence with Half Day PM and Notify 1 Sub",
-    "Sick absence with Half Day PM and Notify my favorites",
-    "Personal absence with Half Day PM and Assign a specific sub",
-    "Vacation absence with Half Day PM and No sub required",
-    "Illness-Family Member absence with Enter Time Manually (10:00–15:00) and Notify all subs",
-    "Educational Leave absence with Enter Time Manually (10:00–15:00) and Notify 1 Sub",
-    "Professional Development absence with Enter Time Manually (10:00–15:00) and Notify my favorites",
-    "Sick absence with Enter Time Manually (10:00–15:00) and Assign a specific sub",
-    "Personal absence with Enter Time Manually (10:00–15:00) and No sub required",
-    "Vacation absence with 08:00–12:00 and Notify all subs",
-    "Illness-Family Member absence with 10:00–14:00 and Notify 1 Sub",
-    "Educational Leave absence with 09:00–11:00 and Notify my favorites",
-    "Professional Development absence with 12:00–16:00 and Assign a specific sub",
+    "Professional Development absence with Half Day PM and Assign a specific sub",
+    "Sick absence with Enter Time Manually (09:00–15:00) and Notify all subs",
+    "Personal absence with Enter Time Manually (09:00–15:00) and Assign a specific sub",
+    "Vacation absence with Enter Time Manually (09:00–15:00) and Notify all subs",
+    "Illness-Family Member absence with Enter Time Manually (09:00–15:00) and Assign a specific sub",
+    "Educational Leave absence with 08:00–12:00 and Notify all subs",
+    "Professional Development absence with 10:00–14:00 and Assign a specific sub",
+    "Sick absence with 09:00–11:00 and Notify all subs",
+    "Personal absence with 12:00–16:00 and Assign a specific sub",
+    "Vacation absence with 08:00–10:00 and Notify all subs",
+    "Illness-Family Member absence with 13:00–17:00 and Assign a specific sub",
     "Review step shows selected reason and date before submit",
     "Successful submit is detected by response or accepted UI state",
     "Leave balance is captured before suite execution and is lower after all successful submissions",
@@ -51,29 +49,27 @@
     "button Cancel button:nth-of-type(1)",
     "button Agree button:nth-of-type(2)",
     "input on #mat-checkbox-1-input",
-    "table Name Absences table",
-    "Sick absence with 08:00–10:00 and No sub required",
-    "Personal absence with 13:00–17:00 and Notify all subs"
+    "table Name Absences table"
   ],
-  "testScenarios": 26,
+  "testScenarios": 22,
   "assets": [
-    {
-      "path": "tests/ISE-452-absence-creation.spec.ts",
-      "fileName": "ISE-452-absence-creation.spec.ts",
-      "type": "Spec",
-      "similarity": 0.16047191619873047
-    },
     {
       "path": "tests/ISE-1562.spec.ts",
       "fileName": "ISE-1562.spec.ts",
       "type": "Spec",
-      "similarity": 0.2757468819618225
+      "similarity": 0.36879265308380127
     },
     {
-      "path": "utilities/DatabaseHelper.ts",
-      "fileName": "DatabaseHelper.ts",
-      "type": "Utility",
-      "similarity": 0.23366612195968628
+      "path": "tests/ISE-1559.spec.ts",
+      "fileName": "ISE-1559.spec.ts",
+      "type": "Spec",
+      "similarity": 0.1182088851928711
+    },
+    {
+      "path": "tests/ISE-1558.spec.ts",
+      "fileName": "ISE-1558.spec.ts",
+      "type": "Spec",
+      "similarity": 0.1163794994354248
     },
     {
       "path": "tests/ISE-1551.spec.ts",
@@ -106,16 +102,16 @@
       "similarity": 0.040672361850738525
     },
     {
-      "path": "tests/ISE-1559.spec.ts",
-      "fileName": "ISE-1559.spec.ts",
+      "path": "tests/ISE-452-absence-creation.spec.ts",
+      "fileName": "ISE-452-absence-creation.spec.ts",
       "type": "Spec",
-      "similarity": 0.31046879291534424
+      "similarity": 0.16047191619873047
     },
     {
-      "path": "tests/ISE-1558.spec.ts",
-      "fileName": "ISE-1558.spec.ts",
-      "type": "Spec",
-      "similarity": 0.30936574935913086
+      "path": "utilities/DatabaseHelper.ts",
+      "fileName": "DatabaseHelper.ts",
+      "type": "Utility",
+      "similarity": 0.23366612195968628
     },
     {
       "path": "pom/AbsenceCreationPage.ts",
@@ -127,7 +123,7 @@
       "path": "tests/ISE-1556.spec.ts",
       "fileName": "ISE-1556.spec.ts",
       "type": "Spec",
-      "similarity": 0.2965824604034424
+      "similarity": 0.34687066078186035
     }
   ]
 }

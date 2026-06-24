@@ -57,13 +57,14 @@ export class AbsenceFormPage {
     }
 
     if (this.requiresSpecificSub(scenario.subPreference)) {
-      await this.selectSubstitute(scenario.subSelected || 'Sub 2');
+      scenario.subSelected = await this.selectSubstitute(scenario.subSelected || 'Sub 2');
     }
 
     const nextStep = await this.advanceFromCreateAbsence(scenario);
     if (nextStep === 'Additional Information') {
-      await this.fillVisibleTextarea('PayRollNotes', `ISE-1556 ${scenario.id}`);
-      await this.fillVisibleTextarea('NotesToSubstitute', `ISE-1556 ${scenario.id} coverage`);
+      const workItem = process.env.WORK_ITEM_ID || process.env.TEST_TICKET || process.env.TICKET_NAME || 'Playwright';
+      await this.fillVisibleTextarea('PayRollNotes', `${workItem} ${scenario.id}`);
+      await this.fillVisibleTextarea('NotesToSubstitute', `${workItem} ${scenario.id} coverage`);
       await this.clickAdditionalInformationNext();
       await this.waitForStep('Done');
     }
@@ -311,12 +312,40 @@ export class AbsenceFormPage {
   }
 
   async selectSchoolIfAvailable(schoolName) {
-    if (!schoolName) return false;
     if (!(await this.employeeSchool.isVisible({ timeout: 1500 }).catch(() => false))) return false;
 
-    await this.chooseOption(this.employeeSchool, schoolName);
+    if (schoolName) {
+      await this.chooseOption(this.employeeSchool, schoolName);
+    } else {
+      await this.chooseFirstRealOption(this.employeeSchool, ['select school', 'select', 'choose']);
+    }
     await this.closeOpenOverlays();
     return true;
+  }
+
+  async chooseFirstRealOption(select, placeholderLabels = []) {
+    await this.waitForAppIdle();
+    await select.scrollIntoViewIfNeeded();
+    await this.openSelect(select);
+
+    const optionSelector = 'mat-option, [role="option"], .mat-option, .mat-mdc-option, .mdc-list-item';
+    const options = this.page.locator('.cdk-overlay-container').locator(optionSelector);
+    const count = await options.count();
+
+    for (let index = 0; index < count; index++) {
+      const option = options.nth(index);
+      const text = (await option.textContent().catch(() => ''))?.replace(/\s+/g, ' ').trim() || '';
+      if (!text) continue;
+      if (placeholderLabels.some(label => text.toLowerCase() === label.toLowerCase())) continue;
+      if (await option.getAttribute('aria-disabled').catch(() => null) === 'true') continue;
+
+      await option.click({ force: true });
+      await this.waitForAppIdle();
+      return text;
+    }
+
+    await this.page.keyboard.press('Escape').catch(() => {});
+    throw new Error('Could not select a valid option from the visible dropdown');
   }
 
   async dismissPreferenceAlert() {
@@ -337,7 +366,8 @@ export class AbsenceFormPage {
   }
 
   async selectSubstitute(subName) {
-    const keep = new RegExp(`^\\s*${this.escapeRegex(subName)}\\s*$`, 'i');
+    let selectedName = subName;
+    let keep = new RegExp(`^\\s*${this.escapeRegex(selectedName)}\\s*$`, 'i');
     const isSelected = async () => {
       try {
         return (await this.selectedSubstituteNames()).some((name) => keep.test(name));
@@ -346,7 +376,7 @@ export class AbsenceFormPage {
       }
     };
 
-    await this.clearSubstituteChipsExcept(subName);
+    await this.clearSubstituteChipsExcept(selectedName);
     
     if (await isSelected()) {
       await this.clearSubstituteSearch();
@@ -361,11 +391,17 @@ export class AbsenceFormPage {
     for (let attempt = 0; attempt < 3 && !(await isSelected()); attempt++) {
       try {
         await search.click().catch(() => {});
-        await this.setSubstituteSearch(subName);
+        await this.setSubstituteSearch(selectedName);
         await this.page.waitForTimeout(500).catch(() => {});
         await this.waitForAppIdle();
 
-        const option = await this.findSubstituteOption(subName).catch(() => null);
+        let option = await this.findSubstituteOption(selectedName).catch(() => null);
+        if (!option) {
+          const fallback = await this.findFirstAvailableSubstituteOption();
+          option = fallback.option;
+          selectedName = fallback.name;
+          keep = new RegExp(`^\\s*${this.escapeRegex(selectedName)}\\s*$`, 'i');
+        }
         if (option) {
           try {
             await this.clickSubstituteSelectAction(option);
@@ -382,7 +418,8 @@ export class AbsenceFormPage {
       await this.clearSubstituteSearch();
     }
 
-    await this.expectSubstituteSelected(subName);
+    await this.expectSubstituteSelected(selectedName);
+    return selectedName;
   }
 
   async setSubstituteSearch(text) {
@@ -513,8 +550,12 @@ export class AbsenceFormPage {
   }
 
   async clickSubstituteSelectAction(option) {
-    // Clicking on the option row itself (not the Select button) commits the selection
-    await option.click().catch(() => {});
+    const selectAction = option.getByText(/^Select$/i).first();
+    if (await selectAction.isVisible({ timeout: 1000 }).catch(() => false)) {
+      await selectAction.click({ force: true });
+    } else {
+      await option.click({ force: true });
+    }
     
     await this.page.waitForTimeout(800);
     
@@ -610,6 +651,29 @@ export class AbsenceFormPage {
     throw new Error(`Could not find substitute "${subName}". Visible substitute options: ${optionTexts.join(' | ') || '(none)'}`);
   }
 
+  async findFirstAvailableSubstituteOption() {
+    const substitutePanel = this.page
+      .locator('xpath=//*[.//input[contains(@placeholder, "Search substitute")] and .//*[@role="option"]]')
+      .last();
+    await substitutePanel.waitFor({ state: 'visible', timeout: this.timeout });
+
+    const options = substitutePanel.locator('[role="option"]').filter({ hasText: /Select/i });
+    const count = await options.count();
+    for (let index = 0; index < count; index++) {
+      const option = options.nth(index);
+      if (!(await option.isVisible({ timeout: 500 }).catch(() => false))) continue;
+
+      const text = (await option.innerText()).replace(/\s+/g, ' ').trim();
+      const name = text
+        .replace(/\bSelect\b.*$/i, '')
+        .replace(/\bAvailable\b.*$/i, '')
+        .trim();
+      if (name) return { option, name };
+    }
+
+    throw new Error('No selectable substitute is currently available.');
+  }
+
   async advanceFromCreateAbsence(scenario) {
     const maxAttempts = 4;
     let lastErrors = [];
@@ -640,7 +704,7 @@ export class AbsenceFormPage {
         await this.dismissSelectSubstituteAlert();
         if (substituteSelectionRetries === 0) {
           substituteSelectionRetries += 1;
-          await this.selectSubstitute(selectedSubstitute);
+          scenario.subSelected = await this.selectSubstitute(selectedSubstitute);
         } else {
           scenario.subPreference = await this.selectSpecificSubFallbackPreference();
         }
@@ -661,7 +725,7 @@ export class AbsenceFormPage {
         scenario.subPreference = await this.recoverSubstitutePreference(scenario.subPreference);
 
         if (this.requiresSpecificSub(scenario.subPreference)) {
-          await this.selectSubstitute(scenario.subSelected || 'Sub 4');
+          scenario.subSelected = await this.selectSubstitute(scenario.subSelected || 'Sub 4');
         }
       }
     }

@@ -1,0 +1,21 @@
+{
+  "ticket": "ISE-1564",
+  "spec": "tests/ISE-1564.spec.ts",
+  "generatedAt": "2026-06-24T11:46:18.635Z",
+  "targets": [
+    {
+      "target": "tests/ISE-1564.spec.ts",
+      "lineTarget": "tests/ISE-1564.spec.ts:187",
+      "test": "ISE-1564.spec.ts >> ISE-1564: data-driven regression >> T4: Illness-Family Member",
+      "source": "test-results/layer6-reruns/01-t4-illness-family-member/ISE-1564-ISE-1564-data-dri-07e04-on-T4-Illness-Family-Member-chromium/error-context.md",
+      "error": "Error: Substitute \"Sub 1\" is not the committed selection. Committed chips: (none)."
+    },
+    {
+      "target": "tests/ISE-1564.spec.ts",
+      "lineTarget": "tests/ISE-1564.spec.ts:187",
+      "test": "ISE-1564.spec.ts >> ISE-1564: data-driven regression >> T14: Personal",
+      "source": "test-results/layer6-reruns/02-t14-personal/ISE-1564-ISE-1564-data-driven-regression-T14-Personal-chromium/error-context.md",
+      "error": "Error: Substitute \"Sub 1\" is not the committed selection. Committed chips: (none)."
+    }
+  ]
+}

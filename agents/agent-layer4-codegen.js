@@ -17,14 +17,43 @@ const context = require('../vector-db/context-api.js');
 const tpl = require('./lib/codegen-templates.js');
 
 class Layer4Agent {
-  constructor(ticketId = 'ISE-1551') {
-    this.ticketId = ticketId;
-    this.testResultsDir = path.join(__dirname, '..', 'test-results');
-    this.contextDir = path.join(__dirname, '..', 'context');
-    this.pomDir = path.join(__dirname, '..', 'pom');
-    this.testsDir = path.join(__dirname, '..', 'tests');
-    // If a retrieved POM scores at/above this, reuse it instead of scaffolding new.
-    this.REUSE_THRESHOLD = 0.55;
+
+  constructor(workItemId = '') {
+    this.workItemId = String(
+      workItemId ||
+      process.env.WORK_ITEM_ID ||
+      process.env.TEST_ID ||
+      'GENERATED'
+    ).trim().toUpperCase();
+    this.artifactId = this.workItemId
+      .replace(/[^A-Z0-9._-]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'GENERATED';
+    this.projectRoot = path.join(__dirname, '..');
+    this.testResultsDir = this._resolveConfiguredPath(process.env.CODEGEN_RESULTS_DIR, 'test-results');
+    this.contextDir = this._resolveConfiguredPath(process.env.CODEGEN_CONTEXT_DIR, 'context');
+    this.pomDir = this._resolveConfiguredPath(process.env.CODEGEN_POM_DIR, 'pom');
+    this.testsDir = this._resolveConfiguredPath(process.env.CODEGEN_TESTS_DIR, 'tests');
+    this.generationContextPath = this._resolveConfiguredPath(
+      process.env.CODEGEN_REPORT_PATH,
+      path.join(path.relative(this.projectRoot, this.contextDir), 'layer4-generation-context.json')
+    );
+    const configuredThreshold = Number(process.env.REUSE_THRESHOLD ?? 0.55);
+    this.REUSE_THRESHOLD =
+      Number.isFinite(configuredThreshold) && configuredThreshold >= 0 && configuredThreshold <= 1
+        ? configuredThreshold
+        : 0.55;
+    const configuredQueryLimit = Number(process.env.MAX_RETRIEVAL_QUERIES ?? 40);
+    this.MAX_RETRIEVAL_QUERIES =
+      Number.isInteger(configuredQueryLimit) && configuredQueryLimit > 0
+        ? configuredQueryLimit
+        : 40;
+    this.vectorSearchCompleted = false;
+    this.reuseDecisions = [];
+
+    fs.mkdirSync(this.contextDir, { recursive: true });
+    fs.mkdirSync(this.pomDir, { recursive: true });
+    fs.mkdirSync(this.testsDir, { recursive: true });
+    fs.mkdirSync(path.dirname(this.generationContextPath), { recursive: true });
 
     // Strict guard rules for Playwright code generation
     this.GUARD_RULES = {
@@ -54,7 +83,7 @@ class Layer4Agent {
         'Do not expose raw Page objects or selectors inside the test spec files.'
       ],
       screenplayPattern: [
-        'Model tests around Actors, Abilities, and Tasks for deep reusability (e.g., actor.attemptsTo(CheckoutProduct.withItems())).',
+        'Model tests around Actors, Abilities, and Tasks only when the repository already uses that architecture.',
         'Keep page micro-interactions cleanly separated from business-logic tasks.'
       ],
       strategyPattern: [
@@ -66,7 +95,7 @@ class Layer4Agent {
         'Decorate test tracking hooks to passively capture console logs or network performance metrics without cluttering test code.'
       ],
       builderPattern: [
-        'Use Data Builders for complex payloads (e.g., UserBuilder.withAdminRoles().build()).',
+        'Use Data Builders for complex payloads when they reduce duplication.',
         'Avoid hardcoded JSON fixtures directly in the test body to preserve flexibility.'
       ],
       factoryPattern: [
@@ -81,11 +110,23 @@ class Layer4Agent {
         'Set an explicit, unified timeout strategy (default 10s timeout per action).',
         'Add custom console log details on failure for CI/CD debugging wrappers.'
       ],
-      databaseVerification: [
-        'Execute direct DB calls inside separate backend utility helpers, not inside the UI flow.',
-        'Verify data state only after the UI indicates the action is fully completed.'
+      backendVerification: [
+        'Keep API, service, or persistence verification inside dedicated helpers rather than UI page objects.',
+        'Verify backend state only after the user-facing operation reports completion.'
       ]
     };
+  }
+
+  _resolveConfiguredPath(configuredPath, fallbackRelativePath) {
+    const selected = configuredPath || fallbackRelativePath;
+    return path.isAbsolute(selected) ? selected : path.join(this.projectRoot, selected);
+  }
+
+  _contextFile(environmentName, fileName) {
+    return this._resolveConfiguredPath(
+      process.env[environmentName],
+      path.join(path.relative(this.projectRoot, this.contextDir), fileName)
+    );
   }
 
   /**
@@ -93,9 +134,18 @@ class Layer4Agent {
    * Layer 3 can surface reusable assets for exactly these scenarios.
    */
   buildQueries(testPlan) {
-    const layer2Context = this.loadJson(path.join(this.contextDir, 'layer2-strategy-context.json'), null);
-    const manualMcpContext = this.loadJson(path.join(this.contextDir, 'mcp-playwright-context.json'), null);
-    const explorerContext = this.loadJson(path.join(this.contextDir, 'explorer-context.json'), null);
+    const layer2Context = this.loadJson(
+      this._contextFile('LAYER2_STRATEGY_CONTEXT_PATH', 'layer2-strategy-context.json'),
+      null
+    );
+    const manualMcpContext = this.loadJson(
+      this._contextFile('PLAYWRIGHT_MCP_CONTEXT_PATH', 'mcp-playwright-context.json'),
+      null
+    );
+    const explorerContext = this.loadJson(
+      this._contextFile('EXPLORER_CONTEXT_PATH', 'explorer-context.json'),
+      null
+    );
     const queries = testPlan
       .map((tc) => tc && tc.description)
       .filter(Boolean);
@@ -113,14 +163,27 @@ class Layer4Agent {
     if (explorerContext?.snapshots?.elements?.buttons) {
       queries.push(...explorerContext.snapshots.elements.buttons.map((button) => `button ${button.text} ${button.selector}`));
     }
-    // Always include a couple of structural queries for shared building blocks.
-    queries.push('page object model selectors', 'database verification helper');
-    return Array.from(new Set(queries));
+    queries.push(
+      `existing Playwright page object for ${this.workItemId}`,
+      'existing Playwright page object for this workflow',
+      'similar Playwright test specification',
+      'reusable Playwright fixtures and authentication setup',
+      'repository selector and assertion conventions',
+      'page object model selectors',
+      'test data builder or verification helper'
+    );
+    return Array.from(
+      new Set(queries.map((query) => String(query || '').trim()).filter(Boolean))
+    ).slice(0, this.MAX_RETRIEVAL_QUERIES);
   }
 
   loadJson(filePath, fallback) {
     if (!fs.existsSync(filePath)) return fallback;
-    return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    try {
+      return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    } catch (error) {
+      throw new Error(`Invalid JSON in ${path.relative(this.projectRoot, filePath)}: ${error.message}`);
+    }
   }
 
   /** Relative TS import path (no extension) from one dir to a target file. */
@@ -130,48 +193,351 @@ class Layer4Agent {
     return rel;
   }
 
-  /**
-   * Write the actual *.page.ts and *.spec.ts files using the retrieved POM
-   * selectors and DatabaseHelper. Returns the list of written file paths.
-   */
-  writeArtifacts(retrieval, testPlan) {
-    if (this._isEmployeePairwisePlan(testPlan)) {
-      return this.writeEmployeePairwiseArtifacts(testPlan);
+  _assetPath(asset) {
+    if (!asset?.path) return '';
+    return path.isAbsolute(asset.path) ? asset.path : path.join(this.projectRoot, asset.path);
+  }
+
+  _resolveTypeScriptImport(fromFile, importPath) {
+    if (!importPath?.startsWith('.')) return '';
+    const base = path.resolve(path.dirname(fromFile), importPath);
+    const candidates = [
+      base,
+      `${base}.ts`,
+      `${base}.js`,
+      path.join(base, 'index.ts'),
+      path.join(base, 'index.js'),
+    ];
+    return candidates.find((candidate) => fs.existsSync(candidate)) || '';
+  }
+
+  _findReusableDataDrivenContract(retrieval) {
+    const specAssets = (retrieval.assets || [])
+      .filter((asset) => asset.type === 'Spec' && fs.existsSync(this._assetPath(asset)))
+      .sort((left, right) => right.similarity - left.similarity);
+
+    for (const asset of specAssets) {
+      const specPath = this._assetPath(asset);
+      const source = fs.readFileSync(specPath, 'utf-8');
+      if (!/const\s+scenarios(?:\s*:\s*[^=]+)?\s*=\s*\[/s.test(source)) continue;
+      if (!/for\s*\(\s*const\s+scenario\s+of\s+scenarios\s*\)/.test(source)) continue;
+
+      const relativeImports = Array.from(
+        source.matchAll(/import\s*\{([^}]+)\}\s*from\s*(['"])(\.[^'"]+)\2/g)
+      );
+      let contractImport = null;
+      let instanceName = '';
+      let className = '';
+
+      for (const imported of relativeImports) {
+        const importedNames = imported[1].split(',').map((name) => name.trim()).filter(Boolean);
+        const declarations = Array.from(
+          source.matchAll(/let\s+([A-Za-z_$][\w$]*)\s*:\s*([A-Za-z_$][\w$]*)/g)
+        );
+        const instance = declarations.find((declaration) => importedNames.includes(declaration[2]));
+        if (!instance) continue;
+
+        contractImport = { imported, importedNames };
+        instanceName = instance[1];
+        className = instance[2];
+        break;
+      }
+      if (!contractImport) continue;
+
+      const pomPath = this._resolveTypeScriptImport(specPath, contractImport.imported[3]);
+      if (!pomPath) continue;
+
+      const scenarioType = contractImport.importedNames.find((name) => name !== className) || '';
+      const loopStart = source.search(/for\s*\(\s*const\s+scenario\s+of\s+scenarios\s*\)/);
+      const loopSource = loopStart === -1 ? '' : source.slice(loopStart);
+      const methodPattern = new RegExp(
+        `await\\s+${this.escapeRegex(instanceName)}\\.([A-Za-z_$][\\w$]*)\\(([^;]*)\\);`,
+        'g'
+      );
+      const calls = [];
+      let methodMatch;
+      while ((methodMatch = methodPattern.exec(loopSource)) !== null) {
+        calls.push({
+          method: methodMatch[1],
+          usesScenario: /\bscenario\b/.test(methodMatch[2]),
+          acceptsOptions: /\bscenario\s*,/.test(methodMatch[2]),
+        });
+      }
+      if (calls.length === 0 || !calls.some((call) => call.usesScenario)) continue;
+
+      const pomSource = fs.readFileSync(pomPath, 'utf-8');
+      const methods = context.extractMethods(pomSource);
+      const exports = context.extractExports(pomSource);
+      if (!exports.includes(className) || calls.some((call) => !methods.includes(call.method))) continue;
+      if (scenarioType && !exports.includes(scenarioType)) continue;
+
+      return {
+        sourceSpec: asset,
+        specPath,
+        pomPath,
+        className,
+        scenarioType,
+        calls,
+      };
     }
 
-    const pomAsset = retrieval.assets.find((a) => a.type === 'POM');
-    const dbAsset = retrieval.assets.find((a) => a.type === 'Utility');
+    return null;
+  }
 
-    if (!pomAsset || !pomAsset.selectors.length) {
-      console.log('⚠️  No POM selectors retrieved — skipping file generation.');
+  escapeRegex(value) {
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  _classNameForAsset(asset) {
+    const exportedClass = (asset?.exports || []).find((name) => /Page$|PageObject$/i.test(name));
+    if (exportedClass) return exportedClass;
+    return String(asset?.fileName || '')
+      .replace(/\.page\.ts$/i, '')
+      .replace(/\.ts$/i, '');
+  }
+
+  _requiredMethodsForPlan(testPlan, asset = null) {
+    const layer2Context = this.loadJson(
+      this._contextFile('LAYER2_STRATEGY_CONTEXT_PATH', 'layer2-strategy-context.json'),
+      {}
+    );
+    const configured = layer2Context?.codegenHints?.requiredPageObjectMethods || [];
+    const planned = (testPlan || []).flatMap((testCase) =>
+      (testCase?.steps || []).flatMap((step) => [
+        step?.method,
+        step?.pageObjectMethod,
+        step?.actionMethod,
+      ])
+    );
+    const templateMethods = asset ? this._templateMethodsForAsset(asset, testPlan) : [];
+
+    return Array.from(
+      new Set(
+        [...configured, ...planned, ...templateMethods]
+          .map((value) => String(value || '').trim())
+          .filter(Boolean)
+      )
+    );
+  }
+
+  _templateMethodsForAsset(asset, testPlan) {
+    const locators = tpl.describeLocators(asset?.selectors || []);
+    const methods = ['navigateTo'];
+
+    for (const testCase of testPlan || []) {
+      const category = String(testCase?.category || '').toUpperCase();
+      const target = category === 'NEGATIVE'
+        ? locators.find((locator) => /error/i.test(locator.prop))
+        : locators.find((locator) => /confirm|success|result/i.test(locator.prop)) ||
+          locators.find((locator) => locator.tag !== 'button');
+      if (target) methods.push(`is${target.Prop}Visible`);
+    }
+
+    return Array.from(new Set(methods));
+  }
+
+  _requiredExportsForPlan() {
+    const layer2Context = this.loadJson(
+      this._contextFile('LAYER2_STRATEGY_CONTEXT_PATH', 'layer2-strategy-context.json'),
+      {}
+    );
+    return Array.from(
+      new Set(
+        (layer2Context?.codegenHints?.requiredExports || [])
+          .map((value) => String(value || '').trim())
+          .filter(Boolean)
+      )
+    );
+  }
+
+  _scoreAssetCompatibility(asset, testPlan) {
+    const absolutePath = this._assetPath(asset);
+    const exists = Boolean(absolutePath && fs.existsSync(absolutePath));
+    const isPom = asset?.type === 'POM';
+    const className = this._classNameForAsset(asset);
+    const hasExport = Boolean(className && (asset?.exports || []).includes(className));
+    const requiredMethods = this._requiredMethodsForPlan(testPlan, asset);
+    const missingMethods = requiredMethods.filter((method) => !(asset?.methods || []).includes(method));
+    const requiredExports = this._requiredExportsForPlan();
+    const missingExports = requiredExports.filter((name) => !(asset?.exports || []).includes(name));
+    const selectorCount = asset?.selectors?.length || 0;
+    const hasExplicitContract = requiredMethods.length > 0 || requiredExports.length > 0;
+    const satisfiesExplicitContract =
+      hasExplicitContract &&
+      missingMethods.length === 0 &&
+      missingExports.length === 0;
+    const meetsSemanticThreshold = Number(asset.similarity || 0) >= this.REUSE_THRESHOLD;
+    const reusable =
+      exists &&
+      isPom &&
+      hasExport &&
+      meetsSemanticThreshold &&
+      satisfiesExplicitContract &&
+      missingMethods.length === 0 &&
+      missingExports.length === 0;
+
+    let compatibility = Number(asset?.similarity || 0);
+    if (exists) compatibility += 0.1;
+    if (isPom) compatibility += 0.15;
+    if (hasExport) compatibility += 0.1;
+    if (selectorCount > 0) compatibility += 0.05;
+    if (missingMethods.length > 0) compatibility -= 0.25;
+    if (missingExports.length > 0) compatibility -= 0.15;
+
+    return {
+      asset,
+      absolutePath,
+      className,
+      exists,
+      isPom,
+      hasExport,
+      selectorCount,
+      requiredMethods,
+      missingMethods,
+      requiredExports,
+      missingExports,
+      hasExplicitContract,
+      satisfiesExplicitContract,
+      meetsSemanticThreshold,
+      reusable,
+      compatibility,
+    };
+  }
+
+  matchVectorAssets(retrieval, testPlan) {
+    if (!this.vectorSearchCompleted) {
+      throw new Error('Vector DB matching must complete before code-generation decisions are made.');
+    }
+
+    const ranked = (retrieval.assets || [])
+      .map((asset) => this._scoreAssetCompatibility(asset, testPlan))
+      .sort((a, b) => b.compatibility - a.compatibility);
+    const selectedPom = ranked.find((candidate) => candidate.reusable) || null;
+    const referencePom = ranked.find((candidate) =>
+      candidate.exists && candidate.isPom && candidate.hasExport && candidate.selectorCount > 0
+    ) || null;
+
+    this.reuseDecisions = ranked.map((candidate) => ({
+      path: candidate.asset.path,
+      type: candidate.asset.type,
+      similarity: candidate.asset.similarity,
+      decision: selectedPom?.asset.path === candidate.asset.path
+        ? 'reused'
+        : referencePom?.asset.path === candidate.asset.path
+          ? 'adapted'
+          : 'rejected',
+      reason: selectedPom?.asset.path === candidate.asset.path
+        ? 'Compatible exported Page Object met the semantic threshold and the context-declared method/export contract.'
+        : !candidate.exists
+          ? 'Indexed source file no longer exists.'
+          : !candidate.isPom
+            ? 'Asset is useful context but is not a Page Object.'
+            : !candidate.hasExport
+              ? 'No reusable exported Page Object class was identified.'
+              : !candidate.hasExplicitContract
+                ? 'No explicit Page Object method/export contract was provided; using matched code only as a generation reference.'
+              : candidate.missingMethods.length > 0
+                ? `Missing required methods: ${candidate.missingMethods.join(', ')}.`
+                : candidate.missingExports.length > 0
+                  ? `Missing required exports: ${candidate.missingExports.join(', ')}.`
+                : candidate.asset.similarity < this.REUSE_THRESHOLD
+                  ? `Similarity is below the ${this.REUSE_THRESHOLD} reuse threshold.`
+                  : 'A stronger compatible Page Object was selected.',
+    }));
+
+    return { ranked, selectedPom, referencePom };
+  }
+
+  async retrieveAndMatch(testPlan) {
+    const queries = this.buildQueries(testPlan);
+    console.log(`\n📚 Querying vector DB before any code-generation decision...`);
+    console.log(`   ${queries.length} semantic queries prepared`);
+
+    let retrieval;
+    try {
+      retrieval = await context.retrieveContext(queries);
+      this.vectorSearchCompleted = true;
+    } catch (error) {
+      this.vectorSearchCompleted = true;
+      retrieval = { assets: [], queries, error: error.message };
+      console.log(`⚠️  Vector DB retrieval unavailable: ${error.message}`);
+    }
+
+    if (!retrieval.assets.length) {
+      console.log('⚠️  Vector DB returned no reusable repository assets.');
+      console.log('    Run: npm run vector-db:index\n');
+    } else {
+      console.log(`✅ Vector DB returned ${retrieval.assets.length} candidate asset(s):`);
+      retrieval.assets.forEach((asset) => {
+        console.log(`   - [${asset.type}] ${asset.fileName} (${(asset.similarity * 100).toFixed(1)}% match)`);
+      });
+      console.log(`\n${context.formatContext(retrieval)}\n`);
+    }
+
+    const matches = this.matchVectorAssets(retrieval, testPlan);
+    if (matches.selectedPom) {
+      console.log(
+        `♻️  Matched reusable POM: ${matches.selectedPom.asset.fileName} ` +
+        `(${(matches.selectedPom.asset.similarity * 100).toFixed(1)}%)`
+      );
+    } else if (matches.referencePom) {
+      console.log(
+        `🧩 No direct POM reuse match; ${matches.referencePom.asset.fileName} will be used as a selector/code-style reference.`
+      );
+    } else {
+      console.log('🆕 No compatible POM matched; new code may be generated only after this completed search.');
+    }
+
+    return { retrieval, matches };
+  }
+
+  /**
+   * Write generic *.page.ts and *.spec.ts files using vector-matched repository
+   * assets. No application workflow is encoded in this layer.
+   */
+  writeArtifacts(retrieval, matches, testPlan) {
+    if (!this.vectorSearchCompleted) {
+      throw new Error('Refusing to generate code before vector DB retrieval and matching.');
+    }
+
+    const dataDrivenContract = this._findReusableDataDrivenContract(retrieval);
+    if (dataDrivenContract) {
+      return this.writeDataDrivenArtifacts(dataDrivenContract, testPlan);
+    }
+
+    const selected = matches.selectedPom || matches.referencePom;
+    const pomAsset = selected?.asset;
+
+    if (!pomAsset || !pomAsset.selectors?.length) {
+      console.log('⚠️  No compatible or adaptable POM selectors were found — skipping file generation.');
       console.log('    Index the repo first: npm run vector-db:index\n');
       return { files: [] };
     }
 
     const locators = tpl.describeLocators(pomAsset.selectors);
-    const describeTitle = `${this.ticketId} — Generated Playwright Suite`;
+    const describeTitle = `${this.workItemId} — Generated Playwright Suite`;
     const written = [];
 
-    // Resolve the DatabaseHelper import (retrieved utility, or sensible default).
-    const dbImportPath = dbAsset
-      ? this._toImport(this.testsDir, dbAsset.path.replace(/\.ts$/, ''))
-      : '../utilities/DatabaseHelper';
-
     // Decide: reuse the existing POM (strong match) or scaffold a new one.
-    const reuse = pomAsset.similarity >= this.REUSE_THRESHOLD;
+    const reuse = Boolean(matches.selectedPom);
     let className;
     let pomImportPath;
 
     if (reuse) {
-      className = pomAsset.fileName.replace(/\.ts$/, '');
-      pomImportPath = this._toImport(this.testsDir, pomAsset.path.replace(/\.ts$/, ''));
+      className = matches.selectedPom.className;
+      pomImportPath = this._toImport(this.testsDir, matches.selectedPom.absolutePath.replace(/\.ts$/, ''));
       console.log(
         `♻️  POM match ${(pomAsset.similarity * 100).toFixed(1)}% ≥ ${(this.REUSE_THRESHOLD * 100)}% — ` +
           `reusing existing ${className} (no duplicate POM written).`
       );
     } else {
-      className = `${tpl.pascal(this.ticketId)}Page`;
-      const pomFile = path.join(this.pomDir, `${className}.page.ts`);
+      className = String(process.env.CODEGEN_PAGE_CLASS || `${tpl.pascal(this.artifactId)}Page`)
+        .replace(/[^A-Za-z0-9_$]/g, '') || 'GeneratedPage';
+      const pomFile = this._resolveConfiguredPath(
+        process.env.CODEGEN_POM_PATH,
+        path.join(path.relative(this.projectRoot, this.pomDir), `${className}.page.ts`)
+      );
+      fs.mkdirSync(path.dirname(pomFile), { recursive: true });
       const pomCode = tpl.renderPageObject({
         className,
         sourceFile: pomAsset.fileName,
@@ -181,17 +547,20 @@ class Layer4Agent {
       written.push(pomFile);
       pomImportPath = this._toImport(this.testsDir, pomFile.replace(/\.ts$/, ''));
       console.log(
-        `🆕 POM match ${(pomAsset.similarity * 100).toFixed(1)}% < ${(this.REUSE_THRESHOLD * 100)}% — ` +
+        `🆕 No directly reusable POM met the compatibility contract — ` +
           `scaffolded new ${className} reusing ${pomAsset.selectors.length} exact selector(s).`
       );
     }
 
-    const specFile = path.join(this.testsDir, `${this.ticketId}.spec.ts`);
+    const specFile = this._resolveConfiguredPath(
+      process.env.CODEGEN_SPEC_PATH,
+      path.join(path.relative(this.projectRoot, this.testsDir), `${this.artifactId}.spec.ts`)
+    );
+    fs.mkdirSync(path.dirname(specFile), { recursive: true });
     const specCode = tpl.renderSpec({
       describeTitle,
       className,
       pomImportPath,
-      dbImportPath,
       locators,
       testCases: testPlan,
     });
@@ -201,138 +570,88 @@ class Layer4Agent {
     return { files: written };
   }
 
-  _isEmployeePairwisePlan(testPlan) {
-    return (
-      Array.isArray(testPlan) &&
-      testPlan.length > 0 &&
-      testPlan.every(
-        (tc) =>
-          tc &&
-          tc.category === 'PAIRWISE-REGRESSION' &&
-          tc.id &&
-          tc.date &&
-          tc.reason &&
-          tc.duration &&
-          tc.subPreference
-      )
+  _scenarioOptions() {
+    const layer2Context = this.loadJson(
+      this._contextFile('LAYER2_STRATEGY_CONTEXT_PATH', 'layer2-strategy-context.json'),
+      {}
+    );
+    if (layer2Context?.codegenHints?.scenarioOptions) {
+      return layer2Context.codegenHints.scenarioOptions;
+    }
+
+    const explorerContext = this.loadJson(
+      this._contextFile('EXPLORER_CONTEXT_PATH', 'explorer-context.json'),
+      {}
+    );
+    const requestType = explorerContext?.flowDocs?.wizardExploration?.scenario?.requestType;
+    return requestType ? { requestType } : {};
+  }
+
+  _normalizeScenarioValue(key, value) {
+    if (!/date$/i.test(key) || typeof value !== 'string') return value;
+    const parsed = new Date(`${value} UTC`);
+    if (Number.isNaN(parsed.getTime())) return value;
+    return `${parsed.getUTCMonth() + 1}/${parsed.getUTCDate()}/${parsed.getUTCFullYear()}`;
+  }
+
+  _scenarioFromTestCase(testCase) {
+    const metadata = new Set([
+      'category',
+      'description',
+      'priority',
+      'expectedResult',
+      'retryCount',
+      'playwrightTitle',
+      'source',
+    ]);
+    return Object.fromEntries(
+      Object.entries(testCase)
+        .filter(([key, value]) => !metadata.has(key) && value !== undefined && value !== null && value !== '—')
+        .map(([key, value]) => [key, this._normalizeScenarioValue(key, value)])
     );
   }
 
-  writeEmployeePairwiseArtifacts(testPlan) {
-    const pomFile = path.join(this.pomDir, 'AbsenceFormPage.page.ts');
-    const specFile = path.join(this.testsDir, `${this.ticketId}.spec.ts`);
-    const requestType = this._requestTypeForPairwisePlan(testPlan);
-    const school = this._schoolForPairwisePlan(testPlan);
-
-    if (!fs.existsSync(pomFile)) {
-      throw new Error('Pairwise absence generation requires pom/AbsenceFormPage.page.ts to exist.');
-    }
-
-    const scenarios = testPlan.map((tc) => ({
-      id: tc.id,
-      date: this._normalizeDateForUi(tc.date),
-      reason: tc.reason,
-      duration: String(tc.duration).replace(/–/g, '-'),
-      subPreference: tc.subPreference,
-      subSelected: tc.subSelected && tc.subSelected !== '—' ? tc.subSelected : undefined,
-      school: tc.school || school || undefined,
-    }));
-
-    fs.writeFileSync(specFile, this._renderEmployeePairwiseSpec(scenarios, requestType));
-
-    console.log(`🧭 Detected ${requestType} pairwise absence plan — generated executable wizard flow.`);
-    if (requestType === 'Employee') {
-      console.log('   • Employee search uses configured ABSENCE_EMPLOYEE_SEARCH/ABSENCE_EMPLOYEE_LABEL values');
-    } else if (requestType === 'Teacher') {
-      console.log('   • Teacher flow uses direct absence UI and skips admin radio/search selection');
-    } else {
-      console.log('   • Self flow skips Employee radio/search selection');
-    }
-    console.log('   • Angular Material dropdowns use CDK overlay selectors');
-    if (school) console.log(`   • School dropdown uses "${school}" from Layer 3 explorer context`);
-    console.log('   • Actual submit uses AbsenceFormPage.submitAbsence()');
-
-    return { files: [specFile] };
+  _formatTsLiteral(value) {
+    return JSON.stringify(value, null, 2).replace(/"([A-Za-z_$][\w$]*)":/g, '$1:');
   }
 
-  _requestTypeForPairwisePlan(testPlan) {
-    const layer1Context = this.loadJson(path.join(this.contextDir, 'layer1-requirements.json'), {});
-    const layer2Context = this.loadJson(path.join(this.contextDir, 'layer2-strategy-context.json'), {});
-    const searchable = [
-      this.ticketId,
-      layer1Context.title,
-      layer1Context.description,
-      layer1Context.summary,
-      ...(layer1Context.acceptanceCriteria || []),
-      ...(layer1Context.testableItems || []),
-      layer2Context.sourceRequirements?.title,
-      ...(testPlan || []).map((tc) => tc.description),
-    ]
-      .flat()
-      .filter(Boolean)
-      .join(' ');
-
-    if (this.ticketId === 'ISE-1559' || this.ticketId === 'ISE-1562') return 'Teacher';
-    if (/\bself\b/i.test(searchable) || this.ticketId === 'ISE-1558') return 'Self';
-    return 'Employee';
-  }
-
-  _schoolForPairwisePlan(testPlan) {
-    const explicitSchool = process.env.ABSENCE_SCHOOL || process.env.SCHOOL_NAME || process.env.EXPLORER_SCHOOL;
-    if (explicitSchool) return explicitSchool;
-
-    const plannedSchool = (testPlan || []).map((tc) => tc.school).find(Boolean);
-    if (plannedSchool) return plannedSchool;
-
-    const explorerContext = this.loadJson(path.join(this.contextDir, 'explorer-context.json'), {});
-    return (
-      explorerContext?.flowDocs?.wizardExploration?.scenario?.school ||
-      explorerContext?.explorerActions?.find((action) => /Selected school/i.test(action))?.match(/"([^"]+)"/)?.[1] ||
-      ''
+  writeDataDrivenArtifacts(contract, testPlan) {
+    const scenarios = testPlan.map((testCase) => this._scenarioFromTestCase(testCase));
+    const scenarioTitleField = ['reason', 'title', 'description', 'name']
+      .find((field) => scenarios.some((scenario) => scenario[field])) || 'id';
+    const scenarioOptions = this._scenarioOptions();
+    const specFile = this._resolveConfiguredPath(
+      process.env.CODEGEN_SPEC_PATH,
+      path.join(path.relative(this.projectRoot, this.testsDir), `${this.artifactId}.spec.ts`)
     );
-  }
+    fs.mkdirSync(path.dirname(specFile), { recursive: true });
+    const pomImportPath = this._toImport(path.dirname(specFile), contract.pomPath.replace(/\.(ts|js)$/, ''));
 
-  _normalizeDateForUi(value) {
-    const text = String(value || '').trim();
-    const numeric = text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-    if (numeric) return `${Number(numeric[1])}/${Number(numeric[2])}/${numeric[3]}`;
+    const scenarioType = contract.scenarioType || 'Record<string, unknown>';
+    const optionLiteral = Object.keys(scenarioOptions).length
+      ? `, ${this._formatTsLiteral(scenarioOptions)}`
+      : '';
+    const calls = contract.calls
+      .map((call, index) => {
+        const options = index === 0 && call.acceptsOptions ? optionLiteral : '';
+        const argumentsList = call.usesScenario ? `scenario${options}` : '';
+        return `      await pageObject.${call.method}(${argumentsList});`;
+      })
+      .join('\n');
 
-    const parsed = new Date(`${text} UTC`);
-    if (!Number.isNaN(parsed.getTime())) {
-      return `${parsed.getUTCMonth() + 1}/${parsed.getUTCDate()}/${parsed.getUTCFullYear()}`;
-    }
+    const code = `import { test, Page } from '@playwright/test';
+import { ${contract.className}${contract.scenarioType ? `, ${contract.scenarioType}` : ''} } from '${pomImportPath}';
 
-    return text;
-  }
+const scenarios: ${scenarioType}[] = ${this._formatTsLiteral(scenarios)};
 
-  _renderEmployeePairwiseSpec(scenarios, requestType = 'Employee') {
-    const requestArg = requestType === 'Employee' ? '' : `, { requestType: '${requestType}' }`;
-    const teacherGuard = this.ticketId === 'ISE-1559' ? `
-const EXPECTED_USERNAME = 'staffuser210@mailinator.com';
-` : '';
-    const beforeAll = this.ticketId === 'ISE-1559' ? `
-  test.beforeAll(() => {
-    if (process.env.Teacher_USERNAME !== EXPECTED_USERNAME) {
-      throw new Error(\`ISE-1559 must use Teacher_USERNAME=\${EXPECTED_USERNAME}. Current Teacher_USERNAME=\${process.env.Teacher_USERNAME || '(unset)'}\`);
-    }
-  });
-` : '';
-
-    return `import { test, Page } from '@playwright/test';
-import { AbsenceFormPage, AbsenceScenario } from '../pom/AbsenceFormPage.page';
-
-${teacherGuard}
-const scenarios: AbsenceScenario[] = ${this._formatTsLiteral(scenarios)};
-
-test.describe('${this.ticketId}: ${requestType} absence pairwise regression', () => {
+test.describe('${this.workItemId}: data-driven regression', () => {
   let page: Page;
-  let absencePage: AbsenceFormPage;
+  let pageObject: ${contract.className};
 
-${beforeAll}
   test.beforeEach(async ({ browser }) => {
     page = await browser.newPage();
-    absencePage = new AbsenceFormPage(page);
-    await absencePage.navigateTo();
+    pageObject = new ${contract.className}(page);
+    await pageObject.navigateTo();
   });
 
   test.afterEach(async () => {
@@ -340,20 +659,20 @@ ${beforeAll}
   });
 
   for (const scenario of scenarios) {
-    test(\`\${scenario.id}: \${scenario.reason} absence with \${scenario.duration} and \${scenario.subPreference}\`, async () => {
+    test(\`\${scenario.id}: \${scenario.${scenarioTitleField}}\`, async () => {
       test.setTimeout(90000);
-
-      await absencePage.completeScenario(scenario${requestArg});
-      await absencePage.expectReviewVisible(scenario);
-      await absencePage.submitAbsence();
+${calls}
     });
   }
 });
 `;
-  }
 
-  _formatTsLiteral(value) {
-    return JSON.stringify(value, null, 2).replace(/"([^"]+)":/g, '$1:');
+    fs.writeFileSync(specFile, code);
+    console.log(
+      `♻️  Reused executable workflow contract from ` +
+      `${path.relative(this.projectRoot, contract.specPath)} and ${path.relative(this.projectRoot, contract.pomPath)}.`
+    );
+    return { files: [specFile] };
   }
 
   async initMCPServer() {
@@ -362,6 +681,7 @@ ${beforeAll}
 
     return {
       protocol: 'MCP',
+      server: process.env.PLAYWRIGHT_MCP_SERVER || 'mcp://playwright',
       capabilities: [
         'playwright-code-generation',
         'selector-optimization',
@@ -394,16 +714,51 @@ ${beforeAll}
     // - Code generation & validation
 
     return {
-      status: 'generated-via-mcp',
+      status: 'planned',
       timestamp: new Date().toISOString(),
       mcpVersion: 'playwright-1.0',
-      artifactsGenerated: [
-        '*.page.ts (POM with optimized selectors)',
-        '*.spec.ts (test spec with guard rules)',
-        'assertions (auto-generated web-first)',
-        'error-handling (built-in retry logic)',
-      ],
+      note: 'MCP metadata initialized; no remote MCP generation call was made by this script.',
+      artifactsGenerated: [],
     };
+  }
+
+  saveGenerationContext({ testPlan, retrieval, matches, files, warnings = [] }) {
+    const payload = {
+      layer: 4,
+      generatedAt: new Date().toISOString(),
+      workItemId: this.workItemId,
+      testCases: testPlan.length,
+      vectorDatabase: {
+        searchedBeforeGeneration: this.vectorSearchCompleted,
+        status: retrieval.error ? 'unavailable' : retrieval.assets.length ? 'matched' : 'empty',
+        error: retrieval.error || null,
+        queries: retrieval.queries || [],
+        candidateCount: retrieval.assets.length,
+        reuseThreshold: this.REUSE_THRESHOLD,
+      },
+      reuseDecisions: this.reuseDecisions,
+      selectedAsset: matches.selectedPom
+        ? {
+            path: path.relative(this.projectRoot, matches.selectedPom.absolutePath),
+            fileName: matches.selectedPom.asset.fileName,
+            className: matches.selectedPom.className,
+            similarity: matches.selectedPom.asset.similarity,
+          }
+        : null,
+      referenceAsset: !matches.selectedPom && matches.referencePom
+        ? {
+            path: path.relative(this.projectRoot, matches.referencePom.absolutePath),
+            fileName: matches.referencePom.asset.fileName,
+            className: matches.referencePom.className,
+            similarity: matches.referencePom.asset.similarity,
+          }
+        : null,
+      files: files.map((file) => path.relative(this.projectRoot, file)),
+      warnings,
+    };
+
+    fs.writeFileSync(this.generationContextPath, JSON.stringify(payload, null, 2));
+    return payload;
   }
 
   async generate() {
@@ -412,19 +767,31 @@ ${beforeAll}
 
     // Load strategy if available
     let testPlan = [];
-    const contextPlanPath = path.join(this.contextDir, 'layer2-test-plan.json');
-    const layer2ContextPath = path.join(this.contextDir, 'layer2-strategy-context.json');
-    const layer3ContextPath = path.join(this.contextDir, 'layer3-retrieval-context.json');
-    const manualMcpContextPath = path.join(this.contextDir, 'mcp-playwright-context.json');
-    const explorerContextPath = path.join(this.contextDir, 'explorer-context.json');
-    const planPath = path.join(this.testResultsDir, 'LAYER2-TEST-PLAN.json');
+    const contextPlanPath = this._contextFile('LAYER2_TEST_PLAN_PATH', 'layer2-test-plan.json');
+    const layer2ContextPath = this._contextFile(
+      'LAYER2_STRATEGY_CONTEXT_PATH',
+      'layer2-strategy-context.json'
+    );
+    const layer3ContextPath = this._contextFile(
+      'LAYER3_RETRIEVAL_CONTEXT_PATH',
+      'layer3-retrieval-context.json'
+    );
+    const manualMcpContextPath = this._contextFile(
+      'PLAYWRIGHT_MCP_CONTEXT_PATH',
+      'mcp-playwright-context.json'
+    );
+    const explorerContextPath = this._contextFile('EXPLORER_CONTEXT_PATH', 'explorer-context.json');
+    const planPath = this._resolveConfiguredPath(
+      process.env.LAYER2_RESULTS_PLAN_PATH,
+      path.join(path.relative(this.projectRoot, this.testResultsDir), 'LAYER2-TEST-PLAN.json')
+    );
 
     if (fs.existsSync(contextPlanPath)) {
       testPlan = this.loadJson(contextPlanPath, []);
-      console.log(`📎 Loaded test plan from context/layer2-test-plan.json`);
+      console.log(`📎 Loaded test plan from ${path.relative(this.projectRoot, contextPlanPath)}`);
     } else if (fs.existsSync(planPath)) {
       testPlan = this.loadJson(planPath, []);
-      console.log(`📎 Loaded test plan from test-results/LAYER2-TEST-PLAN.json`);
+      console.log(`📎 Loaded test plan from ${path.relative(this.projectRoot, planPath)}`);
     }
 
     const layer2Context = this.loadJson(layer2ContextPath, null);
@@ -432,7 +799,10 @@ ${beforeAll}
     const manualMcpContext = this.loadJson(manualMcpContextPath, null);
     const explorerContext = this.loadJson(explorerContextPath, null);
     if (layer2Context) {
-      console.log(`📎 Loaded Layer 2 strategy context for ${layer2Context.ticket || this.ticketId}`);
+      console.log(
+        `📎 Loaded Layer 2 strategy context for ` +
+        `${layer2Context.workItemId || layer2Context.ticket || this.workItemId}`
+      );
     }
     if (layer3Context) {
       console.log(`📎 Loaded Layer 3 retrieval context with ${layer3Context.assets?.length || 0} asset hint(s)`);
@@ -451,37 +821,41 @@ ${beforeAll}
       );
     }
 
-    // --- Layer 3 wiring: pull reusable assets BEFORE generating code -------
-    console.log(`\n📚 Querying Layer 3 vector store for reusable assets...`);
-    let retrieval = { assets: [], queries: [] };
-    try {
-      retrieval = await context.retrieveContext(this.buildQueries(testPlan));
-      if (retrieval.assets.length) {
-        console.log(`✅ Reusing ${retrieval.assets.length} existing asset(s):`);
-        retrieval.assets.forEach((a) =>
-          console.log(`   - [${a.type}] ${a.fileName} (${(a.similarity * 100).toFixed(1)}% match)`)
-        );
-        console.log(`\n${context.formatContext(retrieval)}\n`);
-      } else {
-        console.log(`⚠️  No reusable assets found — run: npm run vector-db:index\n`);
-      }
-    } catch (err) {
-      console.log(`⚠️  Layer 3 retrieval unavailable (${err.message}). Generating without reuse.\n`);
+    if (!Array.isArray(testPlan) || testPlan.length === 0) {
+      throw new Error(
+        'No Layer 2 test plan was found. Run Layer 2 before Layer 4 so vector matching has scenario context.'
+      );
     }
+
+    // Every generation path must search and match repository code first.
+    const { retrieval, matches } = await this.retrieveAndMatch(testPlan);
 
     // --- Write the actual files -------------------------------------------
     console.log(`\n📝 Writing Playwright artifacts...`);
-    const written = this.writeArtifacts(retrieval, testPlan);
+    const written = this.writeArtifacts(retrieval, matches, testPlan);
     const relFiles = written.files.map((f) => path.relative(path.join(__dirname, '..'), f));
+    const warnings = [];
+    if (retrieval.error) warnings.push(`Vector DB unavailable: ${retrieval.error}`);
+    if (!retrieval.assets.length) warnings.push('Vector DB returned no assets; no code was generated.');
+    if (!matches.selectedPom && matches.referencePom) {
+      warnings.push('No asset met the direct-reuse contract; selectors from the best compatible reference were adapted.');
+    }
+    if (!written.files.length) warnings.push('No files were written because no compatible vector-DB context was available.');
+    this.saveGenerationContext({
+      testPlan,
+      retrieval,
+      matches,
+      files: written.files,
+      warnings,
+    });
 
-    const generatedCount = testPlan.length || 1;
+    const generatedCount = testPlan.length;
 
-    console.log(`✅ Generated test spec with ${generatedCount} test case(s)`);
-    console.log(`✅ Applied ${this.GUARD_RULES.locators.length + this.GUARD_RULES.assertions.length} strict guard rules`);
-    console.log(`✅ Core Patterns (POM, Builder, Factory, Singleton) enforced`);
-    console.log(`✅ Advanced Patterns (Screenplay, Strategy, Interceptor) integrated`);
-    console.log(`✅ Explicit wait strategies enforced (10s timeout)`);
-    console.log(`✅ Database verification rules isolated\n`);
+    if (written.files.length) {
+      console.log(`✅ Generated test spec with ${generatedCount} test case(s)`);
+      console.log(`✅ Vector DB search and compatibility matching completed before file generation`);
+    }
+    console.log(`💾 Saved: ${path.relative(this.projectRoot, this.generationContextPath)}\n`);
 
     return {
       testCases: generatedCount,
@@ -492,11 +866,14 @@ ${beforeAll}
         'Edge cases',
         'Flakiness detection (No hardcoded timeouts)',
         'Multi-browser compatibility',
-        'Isolated DB verification',
+        'Isolated backend verification',
       ],
       guardRulesApplied: this.GUARD_RULES,
       bestPracticesApplied: this.BEST_PRACTICES,
-      reusedAssets: retrieval.assets,
+      reusedAssets: matches.selectedPom ? [matches.selectedPom.asset] : [],
+      retrievalQueries: retrieval.queries,
+      reuseDecisions: this.reuseDecisions,
+      generationContextPath: path.relative(this.projectRoot, this.generationContextPath),
     };
   }
 }
@@ -504,8 +881,15 @@ ${beforeAll}
 // CLI Entry Point
 async function main() {
   try {
-    const ticketId = process.argv[2] || 'ISE-1551';
-    const agent = new Layer4Agent(ticketId);
+    const args = process.argv.slice(2);
+    const inlineWorkItem = args.find((arg) => arg.startsWith('--work-item='));
+    const workItemIndex = args.indexOf('--work-item');
+    const workItemId =
+      inlineWorkItem?.slice('--work-item='.length) ||
+      (workItemIndex !== -1 ? args[workItemIndex + 1] : '') ||
+      args.find((arg) => !arg.startsWith('--')) ||
+      '';
+    const agent = new Layer4Agent(workItemId);
     const result = await agent.generate();
 
     console.log('📋 Generated Files:');
